@@ -8,45 +8,37 @@ import Signin from './auth/signin.jsx';
 import Signup from './auth/signup.jsx';
 import Explore from './components/Explore.jsx';
 import MyPlaces from './components/MyPlaces.jsx';
+import Flights from './components/Flights.jsx';
 import axios from 'axios';
+
+//remove itinerary from Explore.js
 
 ReactDOM.render(
   <Router history={browserHistory}>
-
+    
     <Route path="/" component={App}>
       <IndexRedirect to="/explore" />
-      <Route path="/explore" component={Explore} onEnter={requireAuth}/>
-      <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
+      
+      <Route path="/auth" component={Auth}>
+        <Route path="/auth/signin" component={Signin}/>
+        <Route path="/auth/signup" component={Signup}/>
+        <Route path="/explore" component={Explore}/>
+        <Route path="/flights" component={Flights}/>
+        <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
+      </Route>
+
     </Route>
-    <Route path="/auth" component={Auth}>
-      <Route path="/auth/signin" component={Signin}/>
-      <Route path="/auth/signup" component={Signup}/>
-    </Route>
+  
   </Router>, document.getElementById('app'));
 
-const blah = () => { console.log("I'm here to make requireAuth asynchronous!"); };
 
-//verifies the user's token serverside.
-//check out line 60 in server/db/users/usersController.js
-function requireAuth(nextState, replace, blah) {
-
-  axios.get('/users/auth', {
-    headers: { token: localStorage.token || null }
-  })
-  .then((res) => {
-    //res.data.user = user email
-    //res.data.id = user id
-    blah(); //requireauth doesn't exit until I'm called! I do nothing!
-  })
-  .catch((err) => {
-    console.log(err);
+function requireAuth(nextState, replace) {
+  if (!localStorage.token) {
     replace({
       pathname: '/auth/signin',
       state: {
-        nextPathName: nextState.location.pathname
+        nextPathName: nextState.location.pathname,
       }
     });
-    blah(); //I also do nothing!
-  });
-
+  }
 }
