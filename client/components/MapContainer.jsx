@@ -63,7 +63,7 @@ export default class MapContainer extends React.Component {
 
       map = new google.maps.Map(document.getElementById('googleMaps'), {
         center: location,
-        zoom: 8,
+        zoom: 15,
         zoomControl: true,
         mapTypeControl: false,
         scaleControl: false,
@@ -82,9 +82,16 @@ export default class MapContainer extends React.Component {
       autocomplete.addListener('place_changed', onPlaceChanged);
 
       map.addListener('dragend', zoomFilter);
-    }};
 
-    setTimeout(delayMapUntilLocationFound, 1000)
+      axios.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+ 
+                currentLocation.lat + ',' +
+                currentLocation.lng)
+        .then(function(response){
+          window.formatedUserCity = response.data.results[2].formatted_address;
+          console.log(response.data.results[2].formatted_address); // ex.: { user: 'Your User'}
+          console.log(response.status); // ex.: 200
+        });  
+    }
 
     function zoomFilter() {
       if (map.getZoom() > 10) { search(); }
@@ -186,5 +193,8 @@ export default class MapContainer extends React.Component {
           context.props.updatePlace(place);
         });
     }
+    };
+
+    setTimeout(delayMapUntilLocationFound, 1000);
   }
 }
