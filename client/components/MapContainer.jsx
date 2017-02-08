@@ -29,10 +29,18 @@ export default class MapContainer extends React.Component {
   }
 
   createMap() {
+    const currentLocation = {};
+      navigator.geolocation.getCurrentPosition(function(position) {
+        currentLocation.lat = position.coords.latitude;
+        currentLocation.lng = position.coords.longitude;
+        console.log('POSITION FOUND! ', currentLocation);
+    });
     const context = this;
 
+    function delayMapUntilLocationFound(){
+
     /* ########## JSONP call for Google Map data ########## */
-    (function fetchMap() {
+      ((function fetchMap() {
       window.initMap = initMap;
       const ref = window.document.getElementsByTagName('script')[0];
       const script = window.document.createElement('script');
@@ -41,19 +49,20 @@ export default class MapContainer extends React.Component {
       script.onload = function () {
         this.remove();
       };
-    })();
+    })());
 
     /* ################### Map Init ################### */
     let map, places, autocomplete;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
 
-
     function initMap() {
-      const sanFrancisco = {lat: 37.775, lng: -122.42};
+      //const sanFrancisco = {lat: 37.775, lng: -122.42};
+      let location = {lat: currentLocation.lat || 37.775, lng: currentLocation.lng || -122.42}
+
 
       map = new google.maps.Map(document.getElementById('googleMaps'), {
-        center: sanFrancisco,
+        center: location,
         zoom: 8,
         zoomControl: true,
         mapTypeControl: false,
@@ -73,7 +82,9 @@ export default class MapContainer extends React.Component {
       autocomplete.addListener('place_changed', onPlaceChanged);
 
       map.addListener('dragend', zoomFilter);
-    }
+    }};
+
+    setTimeout(delayMapUntilLocationFound, 1000)
 
     function zoomFilter() {
       if (map.getZoom() > 10) { search(); }

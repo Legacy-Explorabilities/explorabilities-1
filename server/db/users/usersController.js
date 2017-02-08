@@ -58,7 +58,7 @@ const controller = {
   },
 
   authenticate: function(req, res) {
-    let token = req.headers.token;
+    var token = req.headers.token;
     jwt.verify(token, dbconfig.secret, function(err, payload) {
       if (err) {
         res.status(403).send('Invalid authentication token');
