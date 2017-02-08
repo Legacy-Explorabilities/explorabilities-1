@@ -37,6 +37,7 @@ function requireAuth(nextState, replace, blah) {
     blah(); //requireauth doesn't exit until I'm called! I do nothing!
   })
   .catch((err) => {
+    console.log(err);
     replace({
       pathname: '/auth/signin',
       state: {

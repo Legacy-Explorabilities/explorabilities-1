@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const routes = require('./server/routes.js');
 const app = express();

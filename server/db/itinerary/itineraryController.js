@@ -2,7 +2,7 @@ const Itinerary = require('./itineraryModel.js');
 const jwt = require('jsonwebtoken');
 const dbconfig = require('../dbconfig.js');
 
-const controller = {
+const controller = { //comment
   save: function(req, res, next) {
     const token = req.body.token;
     const placeIDs = req.body.placeIDs;

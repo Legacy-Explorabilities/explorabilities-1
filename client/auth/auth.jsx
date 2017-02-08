@@ -8,7 +8,7 @@ export default class Auth extends React.Component {
     this.state = {
       error: ''
     };
-
+//comment
     this.handleSignin = this.handleSignin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.routeToExplore = this.routeToExplore.bind(this);
