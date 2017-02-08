@@ -10,7 +10,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      buttonText: ''
+      // buttonText: ''
     };
 
   }
@@ -22,7 +22,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav buttonText={this.state.buttonText} />
         {this.props.children}
       </div>
     );
@@ -38,7 +38,7 @@ export default class App extends React.Component {
       //res.data.id = user id
       console.log('User is logged in');
       console.log('Response is: ', res);
-      this.props.buttonText = 'Log Out'; //change the buttonText state to Log Out
+      this.state.buttonText = 'Log Out'; //change the buttonText state to Log Out
       console.log('State button', this.state.buttonText);
     })
     .catch((err) => {

@@ -31,7 +31,7 @@ export default class Nav extends React.Component {
             <button>Explore!</button>
           </Link>
           <Link to="auth/signin">
-            <button onClick={authHelpers.logout}>{this.state.buttonText} *</button>
+            <button onClick={authHelpers.logout}>{this.props.buttonText} *</button>
           </Link>
         </nav>
       </div>
