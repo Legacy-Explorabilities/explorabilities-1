@@ -91,9 +91,7 @@ export default class MapContainer extends React.Component {
           console.log(response.data.results[2].formatted_address); // ex.: { user: 'Your User'}
           console.log(response.status); // ex.: 200
         });  
-    }};
-
-    setTimeout(delayMapUntilLocationFound, 1000)
+    }
 
     function zoomFilter() {
       if (map.getZoom() > 10) { search(); }
@@ -195,5 +193,8 @@ export default class MapContainer extends React.Component {
           context.props.updatePlace(place);
         });
     }
+    };
+
+    setTimeout(delayMapUntilLocationFound, 1000);
   }
 }
