@@ -28,14 +28,15 @@ export default class Nav extends React.Component {
             <button>My Places</button>
           </Link>
           <Link to="auth/signin">
-            <button onClick={authHelpers.logout}>{this.props.buttonText} *</button>
+            <button onClick={authHelpers.logout}>Log Out *</button>
           </Link>
         </nav>
       </div>
     );
   }
-
 } 
+
+
 
 
 // var text = function() {
