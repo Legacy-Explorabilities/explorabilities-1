@@ -1,25 +1,5 @@
 //API Key for Google QPX - AIzaSyDuf6lwcJMGBRt4exA2HdQlCy8PdDSRFDE 
 //API Key for IATA Airport Codes 23116fc6-26dc-471e-a90c-537e7511569a (http://iatacodes.org/)
-/*
-
-
-
-
-
-==================================================
-      TODO: SEE IF EXPEDIA IS SIMPLER FOR FLIGHT LOOKUP
-      CHECK MAYBE EVEN HOTWIRE OR KAYAK
-==================================================
-
-
-
-
-
-
-
-
-
-*/
 //Get ALL THE WORLD'S AIRPORTS
 import React from 'react';
 import axios from 'axios';
@@ -46,10 +26,10 @@ export default class Flights extends React.Component {
     var today = new Date();
     var dd = today.getDate();
     //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.
-    var mm = today.getMonth()+2; 
+    var mm = today.getMonth() + 2; 
     var yyyy = today.getFullYear();
     var fullDate = yyyy + '-' + mm + '-' + dd;
-    console.log(fullDate)
+    console.log(fullDate);
 
     //TODO: Create an input field for customer to choose the date
 
@@ -72,9 +52,9 @@ export default class Flights extends React.Component {
         "solutions": 3,
         "refundable": false
       }
-    }
+    };
     
-    var params = JSON.stringify(flightSearchOptions)
+    var params = JSON.stringify(flightSearchOptions);
     console.log(params);
 
     axios({
@@ -85,46 +65,29 @@ export default class Flights extends React.Component {
         'content-type': 'application/json'
       }
     })
-    .then(function(response){
-        console.log('Success', response);
-      })
+    .then(function(response) {
+      console.log('Success', response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    }); 
+  }
+  //make a post request to the server, so server can make get request for IATA CODES (Circumvent CORS)
+  findAirports() {
+    console.log('find airports');
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/iatacodes/',
+      data: {
+        lat: 37.775,
+        lng: -122.42,
+      }
+    })
+    .then(function(response) {
+      console.log('Success FROM SERVER', response);
+    })
       .catch(function(error) {
         console.log(error);
-      }); 
+      });  
   }
-
-  findAirports(){
-    console.log('find airports');
-    // axios({
-    //   method: 'get',
-    //   url: 'https://iatacodes.org/api/v6/nearby?api_key=23116fc6-26dc-471e-a90c-537e7511569a&lat=37.775&lng=-122.42&distance=50',
-    //   //data: params,
-    //   headers: {
-    //     'content-type': /*'application/json'*/ 'application/x-www-form-urlencoded',
-    //     'Access-Control-Allow-Origin': '*'
-    //   }
-    // })
-    // .then(function(response){
-    //     console.log('Success', response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   }); 
-    function httpGetAsync(theUrl, callback) {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() { 
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-                callback(xmlHttp.responseText);
-              }
-        }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-        xmlHttp.send(null);
-    };
-    function printResponse(){
-      console.log(arguments);
-    }
-    httpGetAsync('https://iatacodes.org/api/v6/nearby?api_key=23116fc6-26dc-471e-a90c-537e7511569a&lat=37.775&lng=-122.42&distance=50', printResponse);
-
-  }
-
 }
