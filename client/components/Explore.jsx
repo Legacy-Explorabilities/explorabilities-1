@@ -15,10 +15,14 @@ export default class Explore extends React.Component {
       saveMessage: ''
     };
   }
+
+  componentWillMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <div id="exploreContainer">
-        <MapContainer updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)}/>
+        <MapContainer getInterests={this.getInterests.bind(this)} updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)}/>
         <div id="exploreContent" className="clearfix">
           <Place place={this.state.place} addItem={this.addItem.bind(this)}/>
           <ItineraryList
@@ -84,5 +88,10 @@ export default class Explore extends React.Component {
     .catch(function(error) {
       console.log(error, 'error saving itinerary');
     });
+  }
+  getInterests(e){
+    e.preventDefault();
+    var interests = document.getElementById('interestSearch').value;
+    console.log(this.state.place);
   }
 }
