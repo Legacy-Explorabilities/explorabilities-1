@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import InterestsSearch from './InterestsSearch.jsx'
 
 export default class MapContainer extends React.Component {
   constructor(props) {
