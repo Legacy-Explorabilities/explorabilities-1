@@ -1,5 +1,25 @@
 //API Key for Google QPX - AIzaSyDuf6lwcJMGBRt4exA2HdQlCy8PdDSRFDE 
 //API Key for IATA Airport Codes 23116fc6-26dc-471e-a90c-537e7511569a (http://iatacodes.org/)
+/*
+
+
+
+
+
+==================================================
+      TODO: SEE IF EXPEDIA IS SIMPLER FOR FLIGHT LOOKUP
+      CHECK MAYBE EVEN HOTWIRE OR KAYAK
+==================================================
+
+
+
+
+
+
+
+
+
+*/
 //Get ALL THE WORLD'S AIRPORTS
 import React from 'react';
 import axios from 'axios';
