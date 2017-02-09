@@ -17,6 +17,7 @@ export default class Flights extends React.Component {
 
   componentDidMount() {
     this.findFlights();
+    this.findAirports();
   }
 
   findFlights() {
@@ -68,6 +69,10 @@ export default class Flights extends React.Component {
       .catch(function(error) {
         console.log(error);
       }); 
+  }
+
+  findAirports(){
+    console.log('find airports');
   }
 
 }

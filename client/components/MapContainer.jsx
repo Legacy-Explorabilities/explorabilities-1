@@ -76,8 +76,25 @@ export default class MapContainer extends React.Component {
           document.getElementById('searchForm')), {
             types: ['geocode']
           });
+      
 
       places = new google.maps.places.PlacesService(map);
+      //Finding airports is handled here because google places is also handled here (possibly refactor to use in Flights.jsx)
+      window.findNearbyAirports = function(targetDestination){
+        //find all airports based on location within radius
+        var request = {
+          location: targetDestination,
+          radius: '264000',//50 miles
+          types: ['airport']
+        };
+
+        var successAirport = function (results, status){
+          console.log(results.length +' Airports Found!', results, status);
+        }
+        places.nearbySearch(request, successAirport);
+      }
+      //find airports based on user's current location
+      findNearbyAirports(location);
 
       autocomplete.addListener('place_changed', onPlaceChanged);
 
@@ -105,7 +122,10 @@ export default class MapContainer extends React.Component {
 
       if (place.geometry) {
         map.panTo(place.geometry.location);
-        console.log(map.getCenter().toUrlValue());
+        //console.log(map.getCenter().toUrlValue());
+        //On location change, find those airports too
+        var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
+        findNearbyAirports(exploreDestination);
         map.setZoom(15);
         search();
       } else {
