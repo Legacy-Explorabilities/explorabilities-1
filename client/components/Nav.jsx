@@ -8,15 +8,15 @@ import authHelpers from '../auth/auth-helpers.js';
 //need to send user login status down as props?
 //need to make this stateful class
 
-export default class Nav extends React.Component {
-  
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      // buttonText: 'Default'
-    };
+function checkAuth() {
+  if (!localStorage.token) {
+    return 'Log In';
+  } else {
+    return 'Log Out';
   }
+}
+
+export default class Nav extends React.Component {
 
   render() {
     console.log('inside render');
@@ -28,15 +28,13 @@ export default class Nav extends React.Component {
             <button>My Places</button>
           </Link>
           <Link to="auth/signin">
-            <button onClick={authHelpers.logout}>Log Out *</button>
+            <button onClick={authHelpers.logout}>{checkAuth()}</button>
           </Link>
         </nav>
       </div>
     );
   }
 } 
-
-
 
 
 // var text = function() {
