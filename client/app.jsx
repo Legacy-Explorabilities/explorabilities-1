@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Nav from './components/Nav.jsx';
 import axios from 'axios';
 
 
@@ -7,11 +8,6 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      // buttonText: ''
-    };
-
   }
 
   componentDidMount() {
@@ -21,6 +17,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
+        <Nav/>
         {this.props.children}
       </div>
     );

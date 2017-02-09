@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Nav from '../components/Nav.jsx';
 import axios from 'axios';
 
 export default class Auth extends React.Component {
@@ -45,7 +44,6 @@ export default class Auth extends React.Component {
   render () {
     return (    
         <div>
-          <Nav buttonText={this.state.buttonText} />
           <div>
             {React.cloneElement(this.props.children, {
               error: this.state.error,
