@@ -3,6 +3,7 @@ import axios from 'axios';
 import MapContainer from './MapContainer.jsx';
 import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
+import Flights from './Flights.jsx';
 
 export default class Explore extends React.Component {
 
@@ -28,6 +29,7 @@ export default class Explore extends React.Component {
             removeItem={this.removeItem.bind(this)}
             saveItinerary={this.saveItinerary.bind(this)}
           />
+          <Flights/>
         </div>
       </div>
     );
