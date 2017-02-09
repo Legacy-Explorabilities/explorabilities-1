@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 const Signin = (props) => (
   <div id="signin">
@@ -10,7 +11,8 @@ const Signin = (props) => (
       <div>
         <input type="password" name="password" placeholder="Password" required />
       </div>
-      <button type="submit" className="btn">Signin</button>
+      <button type="submit" className="btn">Signin</button> 
+       <span> Don't have an account? <Link to="/auth/signup">Signup</Link></span>
     </form>
     <div className="error-text">{props.error}</div>
   </div>

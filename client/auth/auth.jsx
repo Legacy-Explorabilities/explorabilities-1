@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Nav from '../components/Nav.jsx';
 import axios from 'axios';
 
 export default class Auth extends React.Component {
@@ -15,15 +16,44 @@ export default class Auth extends React.Component {
     this.setError = this.setError.bind(this);
   }
 
+  componentWillMount(nextState, replace) {
+    console.log('inside componentWillMount');
+    axios.get('/users/auth', {
+      headers: { token: localStorage.token || null }
+    })
+    .then((res) => {
+      //res.data.user = user email
+      //res.data.id = user id
+      console.log('User is logged in');
+      console.log('Response is: ', res);
+      this.state.buttonText = 'Log Out'; //change the buttonText state to Log Out
+      console.log('State button', this.state.buttonText);
+    })
+    .catch((err) => {
+      console.log('User is NOT logged in');
+      this.state.buttonText = 'Log In'; //change the buttonText state to Log In
+      console.log('State button', this.state.buttonText);
+      replace({
+        pathname: '/auth/signin',
+        state: {
+          nextPathName: nextState.location.pathname
+        }
+      });
+    });
+  }
+
   render () {
     return (    
-      <div>
-        {React.cloneElement(this.props.children, {
-          error: this.state.error,
-          signin: this.handleSignin,
-          signup: this.handleSignup
-        })}
-      </div>
+        <div>
+          <Nav buttonText={this.state.buttonText} />
+          <div>
+            {React.cloneElement(this.props.children, {
+              error: this.state.error,
+              signin: this.handleSignin,
+              signup: this.handleSignup
+            })}
+          </div>
+        </div>
     );
   }
 

@@ -6,7 +6,8 @@ html, body {
 }
 
 body {
-  background: url('img/beach.jpg') no-repeat center center fixed;
+  /*background: url('img/beach.jpg') no-repeat center center fixed;*/
+  background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
   font-family: 'Lato', sans-serif;
 }
@@ -59,7 +60,8 @@ button {
 }
 
 .beautify {
-  font-family: 'Kaushan Script', cursive;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 30px;
 }
 
 #searchForm {

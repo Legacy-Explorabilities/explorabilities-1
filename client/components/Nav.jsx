@@ -22,13 +22,10 @@ export default class Nav extends React.Component {
     console.log('inside render');
     return (
       <div className="clearfix nav">
-        <h2 className="beautify nav-title">Explorabilities</h2>
+        <Link to="explore"><h2 className="beautify nav-title">Explorapedia</h2></Link>
         <nav>
           <Link to="myplaces">
             <button>My Places</button>
-          </Link>
-          <Link to="explore">
-            <button>Explore!</button>
           </Link>
           <Link to="auth/signin">
             <button onClick={authHelpers.logout}>{this.props.buttonText} *</button>
