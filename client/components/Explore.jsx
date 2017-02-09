@@ -13,13 +13,14 @@ export default class Explore extends React.Component {
       place: {},
       query: '',
       itinerary: {},
-      saveMessage: ''
+      saveMessage: '',
+      localAirports: []
     };
   }
   render() {
     return (
       <div id="exploreContainer">
-        <MapContainer updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)}/>
+        <MapContainer updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)} searchTargetLocation={this.searchTargetLocation.bind(this)} currentUserLocation={this.currentUserLocation.bind(this)}/>
         <div id="exploreContent" className="clearfix">
           <Place place={this.state.place} addItem={this.addItem.bind(this)}/>
           <ItineraryList
@@ -29,7 +30,7 @@ export default class Explore extends React.Component {
             removeItem={this.removeItem.bind(this)}
             saveItinerary={this.saveItinerary.bind(this)}
           />
-          <Flights/>
+          <Flights searchTargetLocation={this.state.userSearchLocation} currentUserLocation={this.state.userLocation}/>
         </div>
       </div>
     );
@@ -38,6 +39,20 @@ export default class Explore extends React.Component {
   updatePlace(place) {
     this.setState({
       place: place
+    });
+  }
+  //user's target location - set from map container
+  searchTargetLocation(location){
+    //console.log(airports);
+    this.setState({
+      userSearchLocation: location
+    });
+  }
+  //user's current locaiton - set from map container
+  currentUserLocation(location) {
+    console.log('invoked currentUserLocation ', location)
+    this.setState({
+      userLocation: location
     });
   }
 
