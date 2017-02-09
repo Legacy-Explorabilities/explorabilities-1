@@ -7,6 +7,10 @@ export default class Place extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    
+  }
+
   renderReviews () {
     if (!this.props.reviews) {
       if (this.props.place.reviews) {
@@ -30,6 +34,17 @@ export default class Place extends React.Component {
   }
 
   render() {
+    console.log('Place props: ', this.props); //Find out what's in props
+
+    
+
+    //need to connect to database to retrieve Place data, 
+    //or do 3rd party API queries, e.g. hotels.
+    //or somehow store the places in the Explore.jsx?
+    //or use localStorage!!!! Make Explore write to local storage before sending the props
+    //or use getInitialState to initialize component state. https://css-tricks.com/learning-react-container-components/
+
+
     if (Object.keys(this.props.place).length > 0) {
       return (
         <div id='place'>

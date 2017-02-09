@@ -6,9 +6,19 @@ import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
 
 //TODO
-//currently Explore doesn't remember the last location user entered
+//popup login dialog
+//currently Explore doesn't remember the last location user entered (1)
+  //may need to store the state in the localStorage
+  //this function setPlace() in MapContainer set the prop, which call updatePlace method in Explore (this file).
+  //in local storage create hotel, airline, deals property, then use array to store the many object. Do fancy sorting algorithm? Or use Hash to retrieve.  
+
+//Use ComponentDidLoad to do all the 3rd party API queries and save it to localStorage
+  // and retrieve the object to be rendered on the screen.
+
 //Adding and removing to itenenary should be handled in Places component.
 //Remove itinerary component from Explore
+//Populate the area below the map with: Hotels, Airlines, Restaurants, Activities, etc in the vicinity of the destinations.
+//research infinity scrolling
 
 function checkAuth() {
   if (!localStorage.token) {
@@ -31,9 +41,15 @@ export default class Explore extends React.Component {
     };
   }
 
-  componentWillMount() {
-    console.log(this.props);
+  componentDidMount() {
+    console.log('Explore.jsx componentDidMount localStorage', localStorage);
+    if (localStorage.place) {
+      this.setState({
+        place: JSON.parse(localStorage.place)
+      });
+    }
   }
+
   render() {
     return (
       <div id="exploreContainer">
@@ -63,12 +79,20 @@ export default class Explore extends React.Component {
       </div>
     );
   }
-
+//MapContainer
+//
   updatePlace(place) {
+    //set data to localStorage
+    localStorage.place = JSON.stringify(place);
+    console.log('Explore.jsx place object given from MapContainer.jsx', place);
+    console.log('Explore.jsx localStorage is set with place given from MapContainer.jsx', localStorage);
+    //get data from localStorage
+    //setState is a built in method
     this.setState({
-      place: place
+      place: JSON.parse(localStorage.place)
     });
   }
+<<<<<<< HEAD
   //user's target location - set from map container
   searchTargetLocation(location){
     //console.log(airports);
@@ -84,6 +108,9 @@ export default class Explore extends React.Component {
     });
   }
 
+=======
+//MapContainer
+>>>>>>> Able to write Places to and read it back from localStorage
   updateQuery(query) {
     this.setState({
       place: {},
@@ -92,7 +119,7 @@ export default class Explore extends React.Component {
       saveMessage: ''
     });
   }
-
+//Place
   addItem() {
     //check if user is logged in
     console.log('Logged in is: ', checkAuth());
@@ -106,7 +133,7 @@ export default class Explore extends React.Component {
       alert('Please login');
     }
   }
-
+//ItineraryList
   removeItem(key) {
     delete this.state.itinerary[key];
     this.setState({
@@ -114,7 +141,7 @@ export default class Explore extends React.Component {
       saveMessage: ''
     });
   }
-
+//ItineraryList
   saveItinerary() {
     const context = this;
     console.log(this.state.query, 'query');
