@@ -5,6 +5,19 @@ import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
 
+//TODO
+//currently Explore doesn't remember the last location user entered
+//Adding and removing to itenenary should be handled in Places component.
+//Remove itinerary component from Explore
+
+function checkAuth() {
+  if (!localStorage.token) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 export default class Explore extends React.Component {
 
   constructor(props) {
@@ -81,10 +94,17 @@ export default class Explore extends React.Component {
   }
 
   addItem() {
-    this.state.itinerary[this.state.place.place_id] = this.state.place;
-    this.setState({
-      itinerary: this.state.itinerary
-    });
+    //check if user is logged in
+    console.log('Logged in is: ', checkAuth());
+    if (checkAuth()) {
+      console.log('i am in addItem checkAuth');
+      this.state.itinerary[this.state.place.place_id] = this.state.place;
+      this.setState({
+        itinerary: this.state.itinerary
+      });  
+    } else {
+      alert('Please login');
+    }
   }
 
   removeItem(key) {

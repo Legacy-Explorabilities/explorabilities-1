@@ -13,12 +13,11 @@ export default class MapContainer extends React.Component {
       <div>
         <form>
           <label id="searchLabel">
-            <img src="img/magnifying-glass.png"/>
           </label>
           <input
             id="searchForm"
             type="text"
-            placeholder="Enter a Destination (E.g. Cancun, Mexico)"
+            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
           />
           <input
               id="interestSearch"
