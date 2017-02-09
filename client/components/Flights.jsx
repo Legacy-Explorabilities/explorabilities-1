@@ -1,4 +1,6 @@
 //API Key for Google QPX - AIzaSyDuf6lwcJMGBRt4exA2HdQlCy8PdDSRFDE 
+//API Key for IATA Airport Codes 23116fc6-26dc-471e-a90c-537e7511569a (http://iatacodes.org/)
+//Get ALL THE WORLD'S AIRPORTS
 import React from 'react';
 import axios from 'axios';
 
@@ -73,6 +75,36 @@ export default class Flights extends React.Component {
 
   findAirports(){
     console.log('find airports');
+    // axios({
+    //   method: 'get',
+    //   url: 'https://iatacodes.org/api/v6/nearby?api_key=23116fc6-26dc-471e-a90c-537e7511569a&lat=37.775&lng=-122.42&distance=50',
+    //   //data: params,
+    //   headers: {
+    //     'content-type': /*'application/json'*/ 'application/x-www-form-urlencoded',
+    //     'Access-Control-Allow-Origin': '*'
+    //   }
+    // })
+    // .then(function(response){
+    //     console.log('Success', response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   }); 
+    function httpGetAsync(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                callback(xmlHttp.responseText);
+              }
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    };
+    function printResponse(){
+      console.log(arguments);
+    }
+    httpGetAsync('https://iatacodes.org/api/v6/nearby?api_key=23116fc6-26dc-471e-a90c-537e7511569a&lat=37.775&lng=-122.42&distance=50', printResponse);
+
   }
 
 }
