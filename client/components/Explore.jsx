@@ -5,29 +5,6 @@ import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
 
-//TODO
-//popup login dialog
-//currently Explore doesn't remember the last location user entered (1)
-  //may need to store the state in the localStorage
-  //this function setPlace() in MapContainer set the prop, which call updatePlace method in Explore (this file).
-  //in local storage create hotel, airline, deals property, then use array to store the many object. Do fancy sorting algorithm? Or use Hash to retrieve.  
-
-//Use ComponentDidLoad to do all the 3rd party API queries and save it to localStorage
-  // and retrieve the object to be rendered on the screen.
-
-//Adding and removing to itenenary should be handled in Places component.
-//Remove itinerary component from Explore
-//Populate the area below the map with: Hotels, Airlines, Restaurants, Activities, etc in the vicinity of the destinations.
-//research infinity scrolling
-
-function checkAuth() {
-  if (!localStorage.token) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
 export default class Explore extends React.Component {
 
   constructor(props) {
@@ -53,24 +30,9 @@ export default class Explore extends React.Component {
   render() {
     return (
       <div id="exploreContainer">
-
-        <MapContainer 
-          getInterests={this.getInterests.bind(this)} 
-          updatePlace={this.updatePlace.bind(this)} 
-          updateQuery={this.updateQuery.bind(this)} 
-          searchTargetLocation={this.searchTargetLocation.bind(this)} 
-          currentUserLocation={this.currentUserLocation.bind(this)}
-        />
-        
+        <MapContainer updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)}/>
         <div id="exploreContent" className="clearfix">
-          <Place place={this.state.place} addItem={this.addItem.bind(this)}/>
-          <ItineraryList
-            list={this.state.itinerary}
-            query={this.state.query}
-            saveMessage={this.state.saveMessage}
-            removeItem={this.removeItem.bind(this)}
-            saveItinerary={this.saveItinerary.bind(this)}
-          />
+          <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
           <Flights 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
@@ -92,7 +54,12 @@ export default class Explore extends React.Component {
       place: JSON.parse(localStorage.places)
     });
   }
-<<<<<<< HEAD
+
+  updatePlace(place) {
+      this.setState({
+        place: place
+      });
+    }
   //user's target location - set from map container
   searchTargetLocation(location){
     //console.log(airports);
@@ -107,10 +74,7 @@ export default class Explore extends React.Component {
       userLocation: location,
     });
   }
-
-=======
 //MapContainer
->>>>>>> Able to write Places to and read it back from localStorage
   updateQuery(query) {
     this.setState({
       place: {},
@@ -120,7 +84,7 @@ export default class Explore extends React.Component {
     });
   }
 //Place
-  addItem() {
+  /*addItem() {
     //check if user is logged in
     console.log('Logged in is: ', checkAuth());
     if (checkAuth()) {
@@ -132,7 +96,7 @@ export default class Explore extends React.Component {
     } else {
       alert('Please login');
     }
-  }
+  }*/
 //ItineraryList
   removeItem(key) {
     delete this.state.itinerary[key];
@@ -141,32 +105,59 @@ export default class Explore extends React.Component {
       saveMessage: ''
     });
   }
-//ItineraryList
+//ItineraryList. This function will save the item to database.
   saveItinerary() {
-    const context = this;
-    console.log(this.state.query, 'query');
+    if (checkAuth()) {
+      const context = this;
+      console.log('saveItinerary this.state.query: ', this.state.query);
+      
+      console.log('token', localStorage.token);
+      console.log('itineraryID', this.state.query.place_id);
+      console.log('itineraryName', this.state.query.name);
+      console.log('placeIDs', Object.keys(this.state.itinerary));
 
-    axios.post('/itinerary', {
-      token: localStorage.token,
-      itineraryID: this.state.query.place_id,
-      itineraryName: this.state.query.name,
-      placeIDs: Object.keys(this.state.itinerary)
-    })
-    .then(function(res) {
-      if (res.status === 200) {
-        context.setState({
-          saveMessage: 'Saved'
-        });
-        console.log(context.state.saveMessage);
-      }
-    })
-    .catch(function(error) {
-      console.log(error, 'error saving itinerary');
-    });
-  }
-  getInterests(e){
-    e.preventDefault();
-    var interests = document.getElementById('interestSearch').value;
-    console.log(this.state.place);
+      axios.post('/itinerary', {
+        token: localStorage.token,
+        itineraryID: this.state.query.place_id,
+        itineraryName: this.state.query.name,
+        placeIDs: Object.keys(this.state.itinerary)
+      })
+      .then(function(res) {
+        if (res.status === 200) {
+          context.setState({
+            saveMessage: 'Saved'
+          });
+          console.log(context.state.saveMessage);
+        }
+      })
+      .catch(function(error) {
+        console.log(error, 'error saving itinerary');
+      });
+    } else {
+      alert('Please login');
+    }
   }
 }
+
+function checkAuth() {
+  if (!localStorage.token) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+//TODO
+//popup login dialog
+//currently Explore doesn't remember the last location user entered (1)
+  //may need to store the state in the localStorage
+  //this function setPlace() in MapContainer set the prop, which call updatePlace method in Explore (this file).
+  //in local storage create hotel, airline, deals property, then use array to store the many object. Do fancy sorting algorithm? Or use Hash to retrieve.  
+
+//Use ComponentDidLoad to do all the 3rd party API queries and save it to localStorage
+  // and retrieve the object to be rendered on the screen.
+
+//Adding and removing to itenenary should be handled in Places component.
+//Remove itinerary component from Explore
+//Populate the area below the map with: Hotels, Airlines, Restaurants, Activities, etc in the vicinity of the destinations.
+//research infinity scrolling
