@@ -7,6 +7,10 @@ export default class Place extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    
+  }
+
   renderReviews () {
     if (!this.props.reviews) {
       if (this.props.place.reviews) {
@@ -30,11 +34,25 @@ export default class Place extends React.Component {
   }
 
   render() {
+    console.log('Place.jsx props: ', this.props); //Find out what's in props
+
+    
+
+    //need to connect to database to retrieve Place data, 
+    //or do 3rd party API queries, e.g. hotels.
+    //or somehow store the places in the Explore.jsx?
+    //or use localStorage!!!! Make Explore write to local storage before sending the props
+    //or use getInitialState to initialize component state. https://css-tricks.com/learning-react-container-components/
+
+    //Make adding itinerary from Place to actually save it to database
+      //move the method here? No, the method is available in Explore (parent)
+
+
     if (Object.keys(this.props.place).length > 0) {
       return (
         <div id='place'>
           <div id="placeContent">
-            <button onClick={this.props.addItem}>Add to Itinerary</button>
+            <button onClick={this.props.saveItinerary}>Add to Itinerary</button>
             <h2>{this.props.place.name}</h2>
             <table>
               <tbody>

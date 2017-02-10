@@ -15,30 +15,38 @@ export default class Auth extends React.Component {
     this.setError = this.setError.bind(this);
   }
 
+  componentWillMount(nextState, replace) {
+    console.log('inside componentWillMount');
+    axios.get('/users/auth', {
+      headers: { token: localStorage.token || null }
+    })
+    .then((res) => {
+      //res.data.user = user email
+      //res.data.id = user id
+      console.log('State button', this.state.buttonText);
+    })
+    .catch((err) => {
+      console.log('User is NOT logged in');
+      replace({
+        pathname: '/auth/signin',
+        state: {
+          nextPathName: nextState.location.pathname
+        }
+      });
+    });
+  }
+
   render () {
-    return (
-      <div id="authBody">
-        <div id="authContainer">
-          <div id="authHeader">
-            <h1>Welcome to <span className="beautify">Explorabilities</span></h1>
-          </div>
-          <div id="authContent">
+    return (    
+        <div>
+          <div>
             {React.cloneElement(this.props.children, {
               error: this.state.error,
               signin: this.handleSignin,
               signup: this.handleSignup
             })}
           </div>
-          <div id="authNav">
-            <Link to="/auth/signin">
-              <button>Signin</button>
-            </Link>
-            <Link to="/auth/signup">
-              <button>Signup</button>
-            </Link>
-          </div>
         </div>
-      </div>
     );
   }
 

@@ -4,6 +4,7 @@ module.exports = {
   },
   logout() {
     delete localStorage.token;
+    delete localStorage.places;
   },
   loggedIn() {
     return !!localStorage.token;
