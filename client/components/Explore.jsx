@@ -30,7 +30,13 @@ export default class Explore extends React.Component {
   render() {
     return (
       <div id="exploreContainer">
-        <MapContainer updatePlace={this.updatePlace.bind(this)} updateQuery={this.updateQuery.bind(this)}/>
+        <MapContainer 
+          getInterests={this.getInterests.bind(this)} 
+          updatePlace={this.updatePlace.bind(this)} 
+          updateQuery={this.updateQuery.bind(this)} 
+          searchTargetLocation={this.searchTargetLocation.bind(this)} 
+          currentUserLocation={this.currentUserLocation.bind(this)}
+        />
         <div id="exploreContent" className="clearfix">
           <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
           <Flights 
@@ -137,6 +143,11 @@ export default class Explore extends React.Component {
       alert('Please login');
     }
   }
+  getInterests(e){
+    e.preventDefault();
+    var interests = document.getElementById('interestSearch').value;
+    console.log(this.state.place);
+  }
 }
 
 function checkAuth() {
@@ -145,6 +156,7 @@ function checkAuth() {
   } else {
     return true;
   }
+
 }
 
 //TODO
