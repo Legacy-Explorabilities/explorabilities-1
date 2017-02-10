@@ -27,9 +27,6 @@ export default class Flights extends React.Component {
       }, ()=>{
       context.findFlights(context.state.userSelectedDepartureAirport, context.state.userSelectedArrivalAirport);
       });
-      //call find flights function (it will not trigger unless both arrival and departure
-      //have been selected)
-      /*context.findFlights*/
     }
 
     function clickArrivalAirport(e, airport){
@@ -98,16 +95,18 @@ export default class Flights extends React.Component {
               "origin": origin,
               "destination": destination,
               "date": "2017-03-29"
-            }
+            },
+            {
+              "origin": destination,
+              "destination": origin,
+              "date": "2017-04-29"
+            },
           ],
           "passengers": {
             "adultCount": 1,
-            "infantInLapCount": 0,
-            "infantInSeatCount": 0,
             "childCount": 0,
-            "seniorCount": 0
           },
-          "solutions": 3,
+          "solutions": 1,
           "refundable": false
         }
       }
@@ -124,7 +123,7 @@ export default class Flights extends React.Component {
         }
       })
       .then(function(response) {
-        console.log('Success QPX', response);
+        console.log('Success QPX', JSON.stringify(response));
       })
       .catch(function(error) {
         console.log('ERROR QPX!', error);
