@@ -38,10 +38,9 @@ export default class MapContainer extends React.Component {
 
   createMap() {
     const currentLocation = {};
-      navigator.geolocation.getCurrentPosition(function(position) {
-        currentLocation.lat = position.coords.latitude;
-        currentLocation.lng = position.coords.longitude;
-        console.log('POSITION FOUND! ', currentLocation);
+    navigator.geolocation.getCurrentPosition(function(position) {
+      currentLocation.lat = position.coords.latitude;
+      currentLocation.lng = position.coords.longitude;      
     });
     const context = this;
 
@@ -67,8 +66,8 @@ export default class MapContainer extends React.Component {
     function initMap() {
       //const sanFrancisco = {lat: 37.775, lng: -122.42};
       let location = {lat: currentLocation.lat || 37.775, lng: currentLocation.lng || -122.42}
-
-
+      //pass the current location to explorer parent to be used by flights component
+      context.props.currentUserLocation(location)
       map = new google.maps.Map(document.getElementById('googleMaps'), {
         center: location,
         zoom: 15,
@@ -84,6 +83,7 @@ export default class MapContainer extends React.Component {
           document.getElementById('searchForm')), {
             types: ['geocode']
           });
+      
 
       places = new google.maps.places.PlacesService(map);
 
@@ -115,8 +115,12 @@ export default class MapContainer extends React.Component {
 
       if (place.geometry) {
         map.panTo(place.geometry.location);
-        console.log(map.getCenter().toUrlValue());
+        //console.log(map.getCenter().toUrlValue());
+        var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
+        //on location change pass location to Explore parent, to be used by flights component
+        context.props.searchTargetLocation(exploreDestination);
         map.setZoom(13);
+
         search();
       } else {
         // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
