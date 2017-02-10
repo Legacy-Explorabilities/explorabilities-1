@@ -12,14 +12,15 @@ import axios from 'axios';
 
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/auth" component={Auth}>
-      <Route path="/auth/signin" component={Signin}/>
-      <Route path="/auth/signup" component={Signup}/>
-    </Route>
+
     <Route path="/" component={App}>
       <IndexRedirect to="/explore" />
       <Route path="/explore" component={Explore} onEnter={requireAuth}/>
       <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
+    </Route>
+    <Route path="/auth" component={Auth}>
+      <Route path="/auth/signin" component={Signin}/>
+      <Route path="/auth/signup" component={Signup}/>
     </Route>
   </Router>, document.getElementById('app'));
 
@@ -28,6 +29,7 @@ const blah = () => { console.log("I'm here to make requireAuth asynchronous!"); 
 //verifies the user's token serverside.
 //check out line 60 in server/db/users/usersController.js
 function requireAuth(nextState, replace, blah) {
+
   axios.get('/users/auth', {
     headers: { token: localStorage.token || null }
   })
@@ -46,4 +48,5 @@ function requireAuth(nextState, replace, blah) {
     });
     blah(); //I also do nothing!
   });
+
 }

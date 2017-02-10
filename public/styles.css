@@ -67,6 +67,12 @@ button {
   height: 2em;
   margin: 20px auto;
 }
+#interestSearch {
+  width: 30%;
+  height: 2em;
+  margin: 20px auto;
+  margin-left: 10px;
+}
 
 #searchLabel {
   padding-right: 5px;

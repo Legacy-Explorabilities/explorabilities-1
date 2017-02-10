@@ -5,7 +5,9 @@ export default class MapContainer extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  componentWillMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <div>
@@ -18,6 +20,12 @@ export default class MapContainer extends React.Component {
             type="text"
             placeholder="Enter a Destination (E.g. Cancun, Mexico)"
           />
+          <input
+              id="interestSearch"
+              type="text"
+              placeholder="Interests"
+              />
+          <button type="submit" onClick={this.props.getInterests}>Submit</button>
         </form>
         <div id="googleMaps"></div>
       </div>
@@ -101,6 +109,8 @@ export default class MapContainer extends React.Component {
     // zoom the map in on the city.
     function onPlaceChanged() {
       const place = autocomplete.getPlace();
+      console.log(place);
+      console.log(map.getCenter().toUrlValue());
       context.props.updateQuery(place);
 
       if (place.geometry) {
@@ -109,7 +119,8 @@ export default class MapContainer extends React.Component {
         var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
         //on location change pass location to Explore parent, to be used by flights component
         context.props.searchTargetLocation(exploreDestination);
-        map.setZoom(15);
+        map.setZoom(13);
+
         search();
       } else {
         // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
@@ -119,32 +130,37 @@ export default class MapContainer extends React.Component {
 
     // Search for attractions in the selected city, within the viewport of the map.
     function search() {
+      const interest = document.getElementById('interestSearch').value;
+      const radius = '500';
       const search = {
-        bounds: map.getBounds(),
-        types: [
-          'amusement_park',
-          'aquarium',
-          'art_gallery',
-          'bar',
-          'book_store',
-          'bowling_alley',
-          'cafe',
-          'campground',
-          'casino',
-          'library',
-          //'lodging',
-          'movie_theater',
-          'museum',
-          'night_club',
-          'park',
-          //'restaurant',
-          'spa',
-          'stadium',
-          'zoo'
-        ]
+        location: map.getCenter(),
+        radius: radius,
+        query: interest
+
+        //types: [
+        //  'amusement_park',
+        //  'aquarium',
+        //  'art_gallery',
+        //  'bar',
+        //  'book_store',
+        //  'bowling_alley',
+        //  'cafe',
+        //  'campground',
+        //  'casino',
+        //  'library',
+        //  'lodging',
+        //  'movie_theater',
+        //  'museum',
+        //  'night_club',
+        //  'park',
+        //  //'restaurant',
+        //  'spa',
+        //  'stadium',
+        //  'zoo'
+        //]
       };
 
-      places.nearbySearch(search, function(results, status) {
+      places.textSearch(search, function(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           clearMarkers();
           // Create a marker for each item found
