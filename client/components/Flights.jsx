@@ -7,30 +7,54 @@ import axios from 'axios';
 export default class Flights extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      departureAirports: [],
+      arrivalAirports: []
+    }
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
+
   render() {
+    var departureAirportsView = this.state.departureAirports.map(function(airport) {
+      return (
+        <li key={airport.code}>
+          <span>{airport.code}: </span>
+          <span>{airport.name}</span>
+        </li>
+      )
+    });
+
+    var arrivalAirportsView = this.state.arrivalAirports.map(function(airport) {
+      return (
+        <li key={airport.code}>
+          <span>{airport.code}: </span>
+          <span>{airport.name}</span>
+        </li>
+      )
+    });
+
     return (
       <div>
-        <p>Hello!</p>
+        <ul>{departureAirportsView}</ul>
+        <ul>{arrivalAirportsView}</ul>
       </div>
     );
   }
+  //listen for updates in props (e.g. finding user's location)
   componentWillReceiveProps(location) {
     console.log('Location from Flights.jsx ', location)
     if (location.currentUserLocation && location.searchTargetLocation) {
-      //this.findFlights();
+      //only after both curent location and target (vacation/trip) location are found
+      //invoke findDepartureAirports and ArrivalAirports
       this.findDepartureAirports(location.currentUserLocation);
       this.findArrivalAirports(location.searchTargetLocation);
     }
   }
   // componentDidMount() {
-    
   // }
 
-  findFlights() {
+  findFlights(origin, destination) {
     console.log('huh lets see', this.props);
     var today = new Date();
     var dd = today.getDate();
@@ -83,17 +107,41 @@ export default class Flights extends React.Component {
   }
   //make a post request to the server, so server can make get request for IATA CODES (Circumvent CORS)
   findDepartureAirports(currentUserLocation) {
-    //'https://iatacodes.org/api/v6/nearby?api_key=23116fc6-26dc-471e-a90c-537e7511569a&lat=37.775&lng=-122.42&distance=50'
+    const context = this;
     console.log('findDepartureAirports');
-    this.getAirportDataFromServer(currentUserLocation)
+    /*Make a request to the server which will make ghe get request
+    when data comes back, set this (Flights) component's state to that data*/
+    this.getAirportDataFromServer(currentUserLocation, function (data){
+      
+      var filteredAirports = data.filter(function(airport){
+        return (!airport.name.match(/heliport/gi) && !airport.name.match(/bus/gi))
+      });
+      context.setState({
+        departureAirports: filteredAirports
+      });
+      console.log('departureAirportData', filteredAirports); 
+    })
+    
   }
 
   findArrivalAirports(searchTargetLocation) {
+    const context = this;
     console.log('findArrivalAirports');
-    this.getAirportDataFromServer(searchTargetLocation)
+    /*Make a request to the server which will make ghe get request
+    when data comes back, set this (Flights) component's state to that data*/
+    this.getAirportDataFromServer(searchTargetLocation, function (data){
+      var filteredAirports = data.filter(function(airport){
+        return (!airport.name.match(/heliport/gi) && !airport.name.match(/bus/gi))
+      })
+      context.setState({
+        arrivalAirports: filteredAirports
+      });
+      console.log('arrivalAirportData', filteredAirports);  
+      
+    })
   }
 
-  getAirportDataFromServer(searchLocation){
+  getAirportDataFromServer(searchLocation, findDepartureOrArrivalAirports){
     axios({
       method: 'post',
       url: 'http://localhost:3000/iatacodes/',
@@ -103,11 +151,7 @@ export default class Flights extends React.Component {
       }
     })
     .then(function(response) {
-      var nearbyAirportCodes = [];
-      response.data.response.forEach(function(airport) {
-        nearbyAirportCodes.push(airport.code);
-      });
-      console.log('Success FROM SERVER', nearbyAirportCodes);
+      findDepartureOrArrivalAirports(response.data.response)
     })
     .catch(function(error) {
       console.log(error);

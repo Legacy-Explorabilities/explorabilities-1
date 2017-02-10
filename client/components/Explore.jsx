@@ -30,7 +30,10 @@ export default class Explore extends React.Component {
             removeItem={this.removeItem.bind(this)}
             saveItinerary={this.saveItinerary.bind(this)}
           />
-          <Flights searchTargetLocation={this.state.userSearchLocation} currentUserLocation={this.state.userLocation}/>
+          <Flights 
+            searchTargetLocation   = {this.state.userSearchLocation} 
+            currentUserLocation    = {this.state.userLocation} 
+          />
         </div>
       </div>
     );
@@ -45,14 +48,14 @@ export default class Explore extends React.Component {
   searchTargetLocation(location){
     //console.log(airports);
     this.setState({
-      userSearchLocation: location
+      userSearchLocation: location,
     });
   }
   //user's current locaiton - set from map container
   currentUserLocation(location) {
     console.log('invoked currentUserLocation ', location)
     this.setState({
-      userLocation: location
+      userLocation: location,
     });
   }
 
