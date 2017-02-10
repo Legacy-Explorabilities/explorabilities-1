@@ -26,7 +26,7 @@ export default class Explore extends React.Component {
       });
     }
   }
-
+  //Flights's searchTargetLocation and currentUserLocation are passed down from here
   render() {
     return (
       <div id="exploreContainer">

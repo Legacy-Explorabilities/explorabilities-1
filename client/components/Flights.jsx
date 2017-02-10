@@ -36,6 +36,7 @@ export default class Flights extends React.Component {
 
     return (
       <div>
+        <h2>Select airports:</h2>
         <ul>{departureAirportsView}</ul>
         <ul>{arrivalAirportsView}</ul>
       </div>
@@ -144,7 +145,7 @@ export default class Flights extends React.Component {
   getAirportDataFromServer(searchLocation, findDepartureOrArrivalAirports){
     axios({
       method: 'post',
-      url: 'http://localhost:3000/iatacodes/',
+      url: 'http://127.0.0.1:3000/iatacodes/',
       data: {
         lat: searchLocation.lat,
         lng: searchLocation.lng,
