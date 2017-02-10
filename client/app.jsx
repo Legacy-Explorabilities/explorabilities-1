@@ -11,7 +11,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('THIS', this.props);
+    console.log('app.jsx componentDidMount this.props', this.props);
   };
 
   render() {

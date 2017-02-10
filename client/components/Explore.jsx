@@ -43,9 +43,9 @@ export default class Explore extends React.Component {
 
   componentDidMount() {
     console.log('Explore.jsx componentDidMount localStorage', localStorage);
-    if (localStorage.place) {
+    if (localStorage.places) {
       this.setState({
-        place: JSON.parse(localStorage.place)
+        place: JSON.parse(localStorage.places)
       });
     }
   }
@@ -83,13 +83,13 @@ export default class Explore extends React.Component {
 //
   updatePlace(place) {
     //set data to localStorage
-    localStorage.place = JSON.stringify(place);
+    localStorage.places = JSON.stringify(place);
     console.log('Explore.jsx place object given from MapContainer.jsx', place);
     console.log('Explore.jsx localStorage is set with place given from MapContainer.jsx', localStorage);
     //get data from localStorage
     //setState is a built in method
     this.setState({
-      place: JSON.parse(localStorage.place)
+      place: JSON.parse(localStorage.places)
     });
   }
 <<<<<<< HEAD

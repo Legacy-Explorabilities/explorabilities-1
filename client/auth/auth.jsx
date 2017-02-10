@@ -23,15 +23,10 @@ export default class Auth extends React.Component {
     .then((res) => {
       //res.data.user = user email
       //res.data.id = user id
-      console.log('User is logged in');
-      console.log('Response is: ', res);
-      this.state.buttonText = 'Log Out'; //change the buttonText state to Log Out
       console.log('State button', this.state.buttonText);
     })
     .catch((err) => {
       console.log('User is NOT logged in');
-      this.state.buttonText = 'Log In'; //change the buttonText state to Log In
-      console.log('State button', this.state.buttonText);
       replace({
         pathname: '/auth/signin',
         state: {
