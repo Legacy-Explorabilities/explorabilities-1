@@ -207,6 +207,7 @@ export default class MapContainer extends React.Component {
       const marker = this;
       places.getDetails({placeId: marker.placeResult.place_id},
         function(place, status) {
+          console.log('Inside setPlace', arguments);
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;
           }

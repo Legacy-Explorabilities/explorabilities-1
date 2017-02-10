@@ -50,7 +50,7 @@ export default class Explore extends React.Component {
   }
 //MapContainer
 //
-  updatePlace(place) {
+  /*updatePlace(place) {
     //set data to localStorage
     localStorage.places = JSON.stringify(place);
     console.log('Explore.jsx place object given from MapContainer.jsx', place);
@@ -60,13 +60,13 @@ export default class Explore extends React.Component {
     this.setState({
       place: JSON.parse(localStorage.places)
     });
-  }
+  }*/
 
   updatePlace(place) {
-      this.setState({
-        place: place
-      });
-    }
+    this.setState({
+      place: place
+    });
+  }
   //user's target location - set from map container
   searchTargetLocation(location){
     //console.log(airports);
@@ -90,20 +90,7 @@ export default class Explore extends React.Component {
       saveMessage: ''
     });
   }
-//Place
-  /*addItem() {
-    //check if user is logged in
-    console.log('Logged in is: ', checkAuth());
-    if (checkAuth()) {
-      console.log('i am in addItem checkAuth');
-      this.state.itinerary[this.state.place.place_id] = this.state.place;
-      this.setState({
-        itinerary: this.state.itinerary
-      });  
-    } else {
-      alert('Please login');
-    }
-  }*/
+
 //ItineraryList
   removeItem(key) {
     delete this.state.itinerary[key];
@@ -116,12 +103,11 @@ export default class Explore extends React.Component {
   saveItinerary() {
     if (checkAuth()) {
       const context = this;
-      console.log('saveItinerary this.state.query: ', this.state.query);
       
-      console.log('token', localStorage.token);
-      console.log('itineraryID', this.state.query.place_id);
-      console.log('itineraryName', this.state.query.name);
-      console.log('placeIDs', Object.keys(this.state.itinerary));
+      this.state.itinerary[this.state.place.place_id] = this.state.place;
+      this.setState({
+        itinerary: this.state.itinerary
+      });
 
       axios.post('/itinerary', {
         token: localStorage.token,
