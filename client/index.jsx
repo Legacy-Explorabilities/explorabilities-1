@@ -23,11 +23,7 @@ ReactDOM.render(
         <Route path="/auth/signin" component={Signin}/>
         <Route path="/auth/signup" component={Signup}/>
         <Route path="/explore" component={Explore}/>
-<<<<<<< HEAD
         <Route path="/flights" component={Flights}/>
-=======
-        <Route path="/airlines" component={Airlines}/>
->>>>>>> Cut number of steps to add itenerary to DB. Prepare Airlines.jsx.
         <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
       </Route>
 
