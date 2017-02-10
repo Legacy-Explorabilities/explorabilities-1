@@ -4,6 +4,7 @@ import MapContainer from './MapContainer.jsx';
 import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
+import Form from './airportDropdown.jsx';
 
 export default class Explore extends React.Component {
 
@@ -44,6 +45,7 @@ export default class Explore extends React.Component {
             currentUserLocation    = {this.state.userLocation} 
             placeVicinity = {this.state.place.vicinity}
           />
+          <Form/>
         </div>
       </div>
     );

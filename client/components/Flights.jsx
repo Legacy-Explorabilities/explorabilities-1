@@ -9,19 +9,40 @@ export default class Flights extends React.Component {
     super(props);
     this.state = {
       departureAirports: [],
-      arrivalAirports: []
+      arrivalAirports: [],
+      userSelectedDepartureAirport: '',
+      userSelectedArrivalAirport: '',
     }
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
   render() {
-    var departureAirportsView = this.state.departureAirports.map(function(airport) {
+    const context = this;
+    //listen for user clicks on departure airports
+    function clickDepartureAirport(e, airport){
+      e.preventDefault();
+      context.setState({
+        userSelectedDepartureAirport: airport
+      }, ()=>{
+      context.findFlights(context.state.userSelectedDepartureAirport, context.state.userSelectedArrivalAirport);
+      });
+    }
+
+    function clickArrivalAirport(e, airport){
+      e.preventDefault();
+      context.setState({
+        userSelectedArrivalAirport: airport
+      }, () => {
+        context.findFlights(context.state.userSelectedDepartureAirport, context.state.userSelectedArrivalAirport);
+      });
+    }
+    let departureAirportsView = this.state.departureAirports.map(function(airport) {
       return (
         <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
     });
 
-    var arrivalAirportsView = this.state.arrivalAirports.map(function(airport) {
+    let arrivalAirportsView = this.state.arrivalAirports.map(function(airport) {
       return (
         <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
@@ -52,7 +73,7 @@ export default class Flights extends React.Component {
   }
   //listen for updates in props (e.g. finding user's location)
   componentWillReceiveProps(location) {
-    console.log('Location from Flights.jsx ', location)
+    console.log('componentWillReceiveProps ', location)
     if (location.currentUserLocation && location.searchTargetLocation) {
       //only after both curent location and target (vacation/trip) location are found
       //invoke findDepartureAirports and ArrivalAirports
@@ -62,55 +83,59 @@ export default class Flights extends React.Component {
   }
 
   findFlights(origin, destination) {
-    console.log('huh lets see', this.props);
-    var today = new Date();
-    var dd = today.getDate();
-    //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.
-    var mm = today.getMonth() + 2; 
-    var yyyy = today.getFullYear();
-    var fullDate = yyyy + '-' + mm + '-' + dd;
-    //console.log(fullDate);
+    if (origin && destination) {   
+      console.log('origin and destination present in findFlights', origin, destination);
+      var today = new Date();
+      var dd = today.getDate();
+      //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.
+      var mm = today.getMonth() + 2; 
+      var yyyy = today.getFullYear();
+      var fullDate = yyyy + '-' + mm + '-' + dd;
+      //console.log(fullDate);
 
-    //TODO: Create an input field for customer to choose the date
+      //TODO: Create an input field for customer to choose the date
 
-    var flightSearchOptions = {
-      "request": {
-        "slice": [
-          {
-            "origin": "SFO",
-            "destination": "LAX",
-            "date": "2017-03-29"
-          }
-        ],
-        "passengers": {
-          "adultCount": 1,
-          "infantInLapCount": 0,
-          "infantInSeatCount": 0,
-          "childCount": 0,
-          "seniorCount": 0
-        },
-        "solutions": 3,
-        "refundable": false
+      var flightSearchOptions = {
+        "request": {
+          "slice": [
+            {
+              "origin": origin,
+              "destination": destination,
+              "date": "2017-03-29"
+            },
+            {
+              "origin": destination,
+              "destination": origin,
+              "date": "2017-04-29"
+            },
+          ],
+          "passengers": {
+            "adultCount": 1,
+            "childCount": 0,
+          },
+          "solutions": 1,
+          "refundable": false
+        }
       }
-    };
     
-    var params = JSON.stringify(flightSearchOptions);
-    //console.log(params);
+      var params = JSON.stringify(flightSearchOptions);
+      //console.log(params);
 
-    axios({
-      method: 'post',
-      url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDAneVe-LTFEqyCEcq2FwgIoXzYalmi3is',
-      data: params,
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(function(response) {
-      console.log('Success QPX', response);
-    })
-    .catch(function(error) {
-      console.log('ERROR QPX!', error);
-    }); 
+      axios({
+        method: 'post',
+        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDAneVe-LTFEqyCEcq2FwgIoXzYalmi3is',
+        data: params,
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .then(function(response) {
+        console.log('Success QPX', JSON.stringify(response));
+      })
+      .catch(function(error) {
+        console.log('ERROR QPX!', error);
+      }); 
+    }
   }
   //make a post request to the server, so server can make get request for IATA CODES (Circumvent CORS)
   findDepartureAirports(currentUserLocation) {
