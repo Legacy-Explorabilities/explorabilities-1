@@ -6,7 +6,7 @@ export default class MapContainer extends React.Component {
     super(props);
   }
   componentWillMount() {
-    console.log(this.props);
+    console.log('MapContainer props', this.props);
   }
   render() {
     return (
@@ -108,8 +108,10 @@ export default class MapContainer extends React.Component {
     // zoom the map in on the city.
     function onPlaceChanged() {
       const place = autocomplete.getPlace();
-      console.log(place);
-      console.log(map.getCenter().toUrlValue());
+      console.log('MapContainer onPlaceChanged (Explore props.query)', place);
+      
+      sessionStorage.targetVicinity = place.vicinity;
+
       context.props.updateQuery(place);
 
       if (place.geometry) {

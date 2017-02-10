@@ -42,6 +42,7 @@ export default class Explore extends React.Component {
           <Flights 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
+            placeVicinity = {this.state.place.vicinity}
           />
         </div>
       </div>

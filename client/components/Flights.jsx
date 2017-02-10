@@ -14,31 +14,39 @@ export default class Flights extends React.Component {
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
-
   render() {
     var departureAirportsView = this.state.departureAirports.map(function(airport) {
       return (
-        <li key={airport.code}>
-          <span>{airport.code}: </span>
-          <span>{airport.name}</span>
-        </li>
+        <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
     });
 
     var arrivalAirportsView = this.state.arrivalAirports.map(function(airport) {
       return (
-        <li key={airport.code}>
-          <span>{airport.code}: </span>
-          <span>{airport.name}</span>
-        </li>
+        <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
     });
 
     return (
       <div>
-        <h2>Select airports:</h2>
-        <ul>{departureAirportsView}</ul>
-        <ul>{arrivalAirportsView}</ul>
+        <div id='place' class='airport'>
+          <div id="placeContent">
+            <form>
+              <h3 className="placeHeader">Airlines</h3>
+              <p>&nbsp;</p>
+              <p>Select an Airport near you</p>
+              <select name="departureAirports">
+                {departureAirportsView}
+              </select>
+              <p>&nbsp;</p>
+              <p>Select an Airport near {sessionStorage.targetVicinity}</p>
+              <select name="arrivalAirports">
+                {arrivalAirportsView}
+              </select>
+              <button>Search Deals</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
@@ -52,8 +60,6 @@ export default class Flights extends React.Component {
       this.findArrivalAirports(location.searchTargetLocation);
     }
   }
-  // componentDidMount() {
-  // }
 
   findFlights(origin, destination) {
     console.log('huh lets see', this.props);

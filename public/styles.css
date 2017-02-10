@@ -173,10 +173,11 @@ button {
 #itinerary, #place, #itineraries {
   background-color: rgba(255, 255, 255, 0.9);
   min-height: 100px;
-  width: 49%;
+  width: 47%;
   border-radius: 5px;
   max-height: 700px;
   overflow-y: auto;
+  margin: 0 20px 0 0;
 }
 
 #placeContent {
