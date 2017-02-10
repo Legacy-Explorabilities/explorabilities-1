@@ -2,21 +2,31 @@ import React from 'react';
 import {Link} from 'react-router';
 import authHelpers from '../auth/auth-helpers.js';
 
-const Nav = () => (
-  <div className="clearfix nav">
-    <h2 className="beautify nav-title">Explorabilities</h2>
-    <nav>
-      <Link to="myplaces">
-        <button>My Places</button>
-      </Link>
-      <Link to="explore">
-        <button>Explore!</button>
-      </Link>
-      <Link to="auth/signin">
-        <button onClick={authHelpers.logout}>Log Out</button>
-      </Link>
-    </nav>
-  </div>
-);
+export default class Nav extends React.Component {
 
-export default Nav;
+  render() {
+    console.log('inside render');
+    return (
+      <div className="clearfix nav">
+        <Link to="explore"><h2 className="beautify nav-title">Explorapedia</h2></Link>
+        <Link to="airlines"><p>Airlines</p></Link>
+        <nav>
+          <Link to="myplaces">
+            <button>My Places</button>
+          </Link>
+          <Link to="auth/signin">
+            <button onClick={authHelpers.logout}>{checkAuth()}</button>
+          </Link>
+        </nav>
+      </div>
+    );
+  }
+}
+
+function checkAuth() {
+  if (!localStorage.token) {
+    return 'Log In';
+  } else {
+    return 'Log Out';
+  }
+}

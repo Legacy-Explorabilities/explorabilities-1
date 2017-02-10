@@ -16,7 +16,6 @@ export default class Flights extends React.Component {
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
-
   render() {
     const context = this;
     //listen for user clicks on departure airports
@@ -39,26 +38,36 @@ export default class Flights extends React.Component {
     }
     let departureAirportsView = this.state.departureAirports.map(function(airport) {
       return (
-        <li value={airport.code} key={airport.code} onClick={(e)=>{clickDepartureAirport(e, airport.code)}}>
-          <a href="#">{airport.code}: </a>
-          <span>{airport.name}</span>
-        </li>
+        <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
     });
 
     let arrivalAirportsView = this.state.arrivalAirports.map(function(airport) {
       return (
-        <li key={airport.code} onClick={(e)=>{clickArrivalAirport(e, airport.code)}}>
-          <a href="#">{airport.code}: </a>
-          <span>{airport.name}</span>
-        </li>
+        <option value="{airport.code}">{airport.code}:{airport.name}</option>
       )
     });
 
     return (
       <div>
-        <ul>{departureAirportsView}</ul>
-        <ul>{arrivalAirportsView}</ul>
+        <div id='place' class='airport'>
+          <div id="placeContent">
+            <form>
+              <h3 className="placeHeader">Airlines</h3>
+              <p>&nbsp;</p>
+              <p>Select an Airport near you</p>
+              <select name="departureAirports">
+                {departureAirportsView}
+              </select>
+              <p>&nbsp;</p>
+              <p>Select an Airport near {sessionStorage.targetVicinity}</p>
+              <select name="arrivalAirports">
+                {arrivalAirportsView}
+              </select>
+              <button>Search Deals</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
@@ -72,8 +81,6 @@ export default class Flights extends React.Component {
       this.findArrivalAirports(location.searchTargetLocation);
     }
   }
-  // componentDidMount() {
-  // }
 
   findFlights(origin, destination) {
     if (origin && destination) {   
@@ -169,7 +176,7 @@ export default class Flights extends React.Component {
   getAirportDataFromServer(searchLocation, findDepartureOrArrivalAirports){
     axios({
       method: 'post',
-      url: 'http://localhost:3000/iatacodes/',
+      url: 'http://127.0.0.1:3000/iatacodes/',
       data: {
         lat: searchLocation.lat,
         lng: searchLocation.lng,

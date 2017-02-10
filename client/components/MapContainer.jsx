@@ -6,19 +6,18 @@ export default class MapContainer extends React.Component {
     super(props);
   }
   componentWillMount() {
-    console.log(this.props);
+    console.log('MapContainer props', this.props);
   }
   render() {
     return (
       <div>
         <form>
           <label id="searchLabel">
-            <img src="img/magnifying-glass.png"/>
           </label>
           <input
             id="searchForm"
             type="text"
-            placeholder="Enter a Destination (E.g. Cancun, Mexico)"
+            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
           />
           <input
               id="interestSearch"
@@ -109,8 +108,10 @@ export default class MapContainer extends React.Component {
     // zoom the map in on the city.
     function onPlaceChanged() {
       const place = autocomplete.getPlace();
-      console.log(place);
-      console.log(map.getCenter().toUrlValue());
+      console.log('MapContainer onPlaceChanged (Explore props.query)', place);
+      
+      sessionStorage.targetVicinity = place.vicinity;
+
       context.props.updateQuery(place);
 
       if (place.geometry) {
@@ -206,6 +207,7 @@ export default class MapContainer extends React.Component {
       const marker = this;
       places.getDetails({placeId: marker.placeResult.place_id},
         function(place, status) {
+          console.log('Inside setPlace', arguments);
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;
           }
