@@ -15,6 +15,8 @@ export default class Flights extends React.Component {
       arrivalAirports: [],
       userSelectedDepartureAirport: '',
       userSelectedArrivalAirport: '',
+      departureDate: '',
+      returnDate: '',
     }
     console.log("PROPSSSSSS TEST", props);
     //setInterval(function(){console.log('hello', props)}, 1000)
@@ -42,6 +44,19 @@ export default class Flights extends React.Component {
       console.log('setArrivalAirport', airport, e.target.value);
 
     }
+
+    function setDepartureDate (date) {
+      context.setState({
+        departureDate: date
+      });
+    }
+
+    function setReturnDate (date) {
+      context.setState({
+        returnDate: date
+      });
+    }
+
     let departureAirportsView = this.state.departureAirports.map(function(airport) {
       return (
         <option 
@@ -63,7 +78,7 @@ export default class Flights extends React.Component {
     });
 
     return (
-      <div>
+      <div> 
         <div id='place' className='airport'>
           <div id="placeContent">
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
@@ -82,12 +97,22 @@ export default class Flights extends React.Component {
               >
                 {arrivalAirportsView}
               </select>
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange} />
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange} />
+              <p>&nbsp;</p>
+              <div>
+                <p>Choose departure date</p>
+                <DatePicker
+                  selected={context.state.departureDate}
+                  onChange={setDepartureDate}
+                />
+              </div>
+              <p>&nbsp;</p>
+              <div>
+                <p>Choose return date (for round-trip flights)</p>
+                <DatePicker
+                  selected={context.state.returnDate}
+                  onChange={setReturnDate}
+                />
+              </div>
               <button type="submit">Search Deals</button>
             </form>
           </div>
@@ -108,10 +133,10 @@ export default class Flights extends React.Component {
   handleSubmit(e, context, a, d){
     e.preventDefault();
     console.log('button triggered submit', context.state, a)
-    context.findFlights(
-      context.state.userSelectedDepartureAirport, 
-      context.state.userSelectedArrivalAirport
-    );
+    // context.findFlights(
+    //   context.state.userSelectedDepartureAirport, 
+    //   context.state.userSelectedArrivalAirport
+    // );
   }
   findFlights(origin, destination) {
     if (origin && destination) {   
