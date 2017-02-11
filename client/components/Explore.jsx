@@ -28,7 +28,7 @@ export default class Explore extends React.Component {
   //     });
   //   }
   // }
-  
+
   //Flights's searchTargetLocation and currentUserLocation are passed down from here
   render() {
     return (
@@ -106,7 +106,7 @@ export default class Explore extends React.Component {
   saveItinerary() {
     if (checkAuth()) {
       const context = this;
-      
+      console.log('Exlore.jsx saveItinerary()');
       this.state.itinerary[this.state.place.place_id] = this.state.place;
       this.setState({
         itinerary: this.state.itinerary

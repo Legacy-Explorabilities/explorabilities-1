@@ -27,7 +27,7 @@ ReactDOM.render(
         <Route path="/auth/signin" component={Signin}/>
         <Route path="/auth/signup" component={Signup}/>
         <Route path="/explore" component={Explore}/>
-        <Route path="myplaces" component={MyPlaces} onEnter={requireAuth}/>
+        <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
         <Route path="/airlines" component={Airlines} onEnter={requireAuth}/>
 
         <Route path="/deals" component={Deals} onEnter={requireAuth}/>

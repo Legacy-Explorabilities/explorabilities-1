@@ -7,6 +7,7 @@ export default class Place extends React.Component {
   constructor(props) {
     super(props);
   }
+
 /*
   renderReviews () {
     if (!this.props.reviews) {
@@ -38,6 +39,7 @@ export default class Place extends React.Component {
         <div>
         {this.props.place.map((placeitem, index) => (
           <PlaceItem 
+            index={placeitem.index}
             name={placeitem.name}
             rating={placeitem.rating} 
             vicinity={placeitem.vicinity}
