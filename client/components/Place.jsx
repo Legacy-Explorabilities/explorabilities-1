@@ -20,8 +20,7 @@ export default class Place extends React.Component {
             review={review.text}
             reviewer={review.author_name}
             rating={review.rating}
-            date={review.relative_time_description}
-          />
+            date={review.relative_time_description}/>
         );
       } else {
         return;
@@ -71,8 +70,7 @@ export default class Place extends React.Component {
                       name="rate2"
                       editing={false}
                       starCount={5}
-                      value={this.props.place.rating}
-                    />
+                      value={this.props.place.rating}/>
                   </td>
 
                 </tr>

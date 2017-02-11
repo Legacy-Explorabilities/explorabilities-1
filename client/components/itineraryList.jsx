@@ -1,5 +1,6 @@
 import React from 'react';
 import ItineraryListItem from './itineraryListItem.jsx';
+import BestHotelsInfo from './bestHotelsInfo.jsx'
 
 const ItineraryList = (props)  => {
   let headerText = 'Itinerary';
@@ -26,8 +27,7 @@ const ItineraryList = (props)  => {
               key={props.list[key].place_id}
               place={props.list[key]}
               /* Binding list[key].id as the first argument when RemoveItem is called */
-              removeItem={props.removeItem.bind(this, props.list[key].place_id)}
-            />
+              removeItem={props.removeItem.bind(this, props.list[key].place_id)}/>
           ))}
       </ul>
     </div>

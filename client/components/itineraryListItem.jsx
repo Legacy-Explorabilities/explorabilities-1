@@ -14,8 +14,7 @@ const ItineraryListItem = ({place, removeItem}) => {
           name="rate2"
           editing={false}
           starCount={5}
-          value={place.rating}
-        />
+          value={place.rating}/>
         <br/>
 
         <label>Website: </label><a href ={`${place.website}`}>{place.website}</a>
@@ -23,6 +22,5 @@ const ItineraryListItem = ({place, removeItem}) => {
     </li>
   );
 };
-
 
 export default ItineraryListItem;
