@@ -46,15 +46,27 @@ export default class Flights extends React.Component {
     }
 
     function setDepartureDate (date) {
-      context.setState({
-        departureDate: date
-      });
+      var now = moment();
+      if (now.isAfter(date)) {
+        alert('You can\'t select a date that has passed. Please select a valid date')
+      } else {
+        context.setState({
+          departureDate: date
+        });
+      } 
     }
 
     function setReturnDate (date) {
-      context.setState({
-        returnDate: date
-      });
+      //var now = moment();
+      if (!context.state.departureDate) {
+        alert('Please select a departure date first!');
+      } else if (context.state.departureDate.isAfter(date)) {
+        alert('You can\'t select a date earlier than departure date. Please select a valid date')
+      } else {
+        context.setState({
+          returnDate: date
+        });
+      }
     }
 
     let departureAirportsView = this.state.departureAirports.map(function(airport) {
@@ -113,7 +125,10 @@ export default class Flights extends React.Component {
                   onChange={setReturnDate}
                 />
               </div>
-              <button type="submit">Search Deals</button>
+              <p>&nbsp;</p>
+              <button type="submit">Search Flights!</button>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
             </form>
           </div>
         </div>
@@ -132,50 +147,90 @@ export default class Flights extends React.Component {
   }
   handleSubmit(e, context, a, d){
     e.preventDefault();
-    console.log('button triggered submit', context.state, a)
-    // context.findFlights(
-    //   context.state.userSelectedDepartureAirport, 
-    //   context.state.userSelectedArrivalAirport
-    // );
-  }
-  findFlights(origin, destination) {
-    if (origin && destination) {   
-      console.log('origin and destination present in findFlights', origin, destination);
-      var today = new Date();
-      var dd = today.getDate();
-      //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.
-      var mm = today.getMonth() + 2; 
-      var yyyy = today.getFullYear();
-      var fullDate = yyyy + '-' + mm + '-' + dd;
-      //console.log(fullDate);
+    if (!context.state.departureDate || 
+        !context.state.returnDate ||
+        !context.state.userSelectedDepartureAirport ||
+        !context.state.userSelectedArrivalAirport){
+      alert('please select the choose city and flight dates')
+    } else {
+      console.log('button triggered submit', context.state, a)
 
+      console.log(context.state.returnDate.isAfter(context.state.departureDate));
+
+      if (!!context.state.returnDate){
+        context.findFlights(
+          context,
+          context.state.userSelectedDepartureAirport, 
+          context.state.userSelectedArrivalAirport, 
+          true
+        );
+      } else {
+        context.findFlights(
+          context,
+          context.state.userSelectedDepartureAirport, 
+          context.state.userSelectedArrivalAirport, 
+          false
+        );
+      }
+    }
+    
+  }
+  findFlights(context, origin, destination, roundTrip) {
+    if (!origin || !destination) {
+      alert('please search for destination city')
+    } else if (origin && destination) {   
+      console.log('origin and destination present in findFlights', origin, destination, context.state);
+     
       //TODO: Create an input field for customer to choose the date
 
-      var flightSearchOptions = {
-        "request": {
-          "slice": [
-            {
-              "origin": origin,
-              "destination": destination,
-              "date": "2017-03-29"
+      
+
+      var params = '';
+      if (roundTrip) {
+        var roundTripFlightSearch = {
+          "request": {
+            "slice": [
+              {
+                "origin": origin,
+                "destination": destination,
+                "date": context.state.departureDate.format("YYYY-MM-DD")
+              },
+              {
+                "origin": destination,
+                "destination": origin,
+                "date": context.state.returnDate.format("YYYY-MM-DD")
+              },
+            ],
+            "passengers": {
+              "adultCount": 1,
+              "childCount": 0,
             },
-            {
-              "origin": destination,
-              "destination": origin,
-              "date": "2017-04-29"
-            },
-          ],
-          "passengers": {
-            "adultCount": 1,
-            "childCount": 0,
-          },
-          "solutions": 1,
-          "refundable": false
+            "solutions": 1,
+            "refundable": false
+          }
         }
+        params = JSON.stringify(roundTripFlightSearch); 
+      } else {
+        var oneWayFlightSearch = {
+          "request": {
+            "slice": [
+              {
+                "origin": origin,
+                "destination": destination,
+                "date": context.state.departureDate.format("YYYY-MM-DD")
+              }
+            ],
+            "passengers": {
+              "adultCount": 1,
+              "childCount": 0,
+            },
+            "solutions": 1,
+            "refundable": false
+          }
+        }
+        params = JSON.stringify(oneWayFlightSearch); 
       }
-    
-      var params = JSON.stringify(flightSearchOptions);
-      //console.log(params);
+      console.log('FLIGHT PARAMETERS', params);
 
       axios({
         method: 'post',
@@ -199,6 +254,7 @@ export default class Flights extends React.Component {
     console.log('findDepartureAirports');
     /*Make a request to the server which will make ghe get request
     when data comes back, set this (Flights) component's state to that data*/
+
     this.getAirportDataFromServer(currentUserLocation, function (data){
       
       var filteredAirports = data.filter(function(airport){
