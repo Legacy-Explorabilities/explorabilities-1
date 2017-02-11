@@ -206,7 +206,7 @@ export default class Flights extends React.Component {
               "adultCount": 1,
               "childCount": 0,
             },
-            "solutions": 1,
+            "solutions": 5,
             "refundable": false
           }
         }
@@ -225,7 +225,7 @@ export default class Flights extends React.Component {
               "adultCount": 1,
               "childCount": 0,
             },
-            "solutions": 1,
+            "solutions": 5,
             "refundable": false
           }
         }
