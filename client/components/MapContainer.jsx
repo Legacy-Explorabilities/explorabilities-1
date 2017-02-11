@@ -24,7 +24,7 @@ export default class MapContainer extends React.Component {
               type="text"
               placeholder="Interests"
               />
-          <button type="submit" onClick={this.props.getInterests}>Submit</button>
+          <button id="submitInterest" type="submit">Submit</button>
         </form>
         <div id="googleMaps"></div>
       </div>
@@ -58,7 +58,7 @@ export default class MapContainer extends React.Component {
     })());
 
     /* ################### Map Init ################### */
-    let map, places, autocomplete;
+    let map, places, autocomplete, place;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
 
@@ -86,6 +86,9 @@ export default class MapContainer extends React.Component {
 
       places = new google.maps.places.PlacesService(map);
 
+      var button = document.getElementById('submitInterest');
+      button.addEventListener('click', onInterestChanged);
+
       autocomplete.addListener('place_changed', onPlaceChanged);
 
       map.addListener('dragend', zoomFilter);
@@ -107,9 +110,9 @@ export default class MapContainer extends React.Component {
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
     function onPlaceChanged() {
-      const place = autocomplete.getPlace();
+      place = autocomplete.getPlace();
       console.log('MapContainer onPlaceChanged (Explore props.query)', place);
-      
+      document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
 
       context.props.updateQuery(place);
@@ -128,65 +131,116 @@ export default class MapContainer extends React.Component {
         searchForm.value = '';
       }
     }
-
-    // Search for attractions in the selected city, within the viewport of the map.
-    function search() {
-      const interest = document.getElementById('interestSearch').value;
-      const radius = '500';
-      const search = {
-        location: map.getCenter(),
-        radius: radius,
-        query: interest
-
-        //types: [
-        //  'amusement_park',
-        //  'aquarium',
-        //  'art_gallery',
-        //  'bar',
-        //  'book_store',
-        //  'bowling_alley',
-        //  'cafe',
-        //  'campground',
-        //  'casino',
-        //  'library',
-        //  'lodging',
-        //  'movie_theater',
-        //  'museum',
-        //  'night_club',
-        //  'park',
-        //  //'restaurant',
-        //  'spa',
-        //  'stadium',
-        //  'zoo'
-        //]
-      };
-
-      places.textSearch(search, function(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          clearMarkers();
-          // Create a marker for each item found
-          for (var i = 0; i < results.length; i++) {
-            let iconImage = {
-              url: results[i].icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(15, 15)
-            };
-            // Use marker animation to drop the icons incrementally on the map.
-            markers[i] = new google.maps.Marker({
-              position: results[i].geometry.location,
-              animation: google.maps.Animation.DROP,
-              icon: iconImage
-            });
-            // If the user clicks a marker, call setPlace to update the object in the Place component.
-            markers[i].placeResult = results[i];
-            google.maps.event.addListener(markers[i], 'click', setPlace);
-            setTimeout(dropMarker(i), i * 10);
-          }
+      // if the user selects a particular interest in a city, get the details for the city filtered by that interest
+      function onInterestChanged(e) {
+        e.preventDefault();
+        console.log(place);
+        if (place.geometry) {
+          map.panTo(place.geometry.location);
+          map.setZoom(13);
+          search();
+        } else {
+          // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
+          searchForm.value = '';
         }
-      });
-    }
+      }
+    // Search for attractions in the selected city, within the viewport of the map.
+      function search() {
+        const interest = document.getElementById('interestSearch').value;
+        // if ppl are looking for a new city;
+        if (interest === ''){
+          console.log('not checking for interests');
+          const search = {
+            bounds: map.getBounds(),
+            //radius: radius,
+            //query: interest
+
+            types: [
+              'amusement_park',
+              'aquarium',
+              'art_gallery',
+              'bar',
+              'book_store',
+              'bowling_alley',
+              'cafe',
+              'campground',
+              'casino',
+              'library',
+              //'lodging',
+              'movie_theater',
+              'museum',
+              'night_club',
+              'park',
+              'restaurant',
+              'spa',
+              'stadium',
+              'zoo'
+            ]
+          };
+          places.nearbySearch(search, function(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              clearMarkers();
+              console.log(results);
+              // Create a marker for each item found
+              for (var i = 0; i < results.length; i++) {
+                let iconImage = {
+                  url: results[i].icon,
+                  size: new google.maps.Size(71, 71),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  scaledSize: new google.maps.Size(15, 15)
+                };
+                // Use marker animation to drop the icons incrementally on the map.
+                markers[i] = new google.maps.Marker({
+                  position: results[i].geometry.location,
+                  animation: google.maps.Animation.DROP,
+                  icon: iconImage
+                });
+                // If the user clicks a marker, call setPlace to update the object in the Place component.
+                markers[i].placeResult = results[i];
+                google.maps.event.addListener(markers[i], 'click', setPlace);
+                setTimeout(dropMarker(i), i * 10);
+              }
+            }
+          });
+        }
+        // if ppl are looking for a particular interest in that city;
+        else{
+          console.log('checking for interests');
+          const search = {
+            location: map.getCenter(),
+            radius: '700',
+            query: interest
+
+          };
+          places.textSearch(search, function(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              clearMarkers();
+              console.log(results);
+              // Create a marker for each item found
+              for (var i = 0; i < results.length; i++) {
+                let iconImage = {
+                  url: results[i].icon,
+                  size: new google.maps.Size(71, 71),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  scaledSize: new google.maps.Size(15, 15)
+                };
+                // Use marker animation to drop the icons incrementally on the map.
+                markers[i] = new google.maps.Marker({
+                  position: results[i].geometry.location,
+                  animation: google.maps.Animation.DROP,
+                  icon: iconImage
+                });
+                // If the user clicks a marker, call setPlace to update the object in the Place component.
+                markers[i].placeResult = results[i];
+                google.maps.event.addListener(markers[i], 'click', setPlace);
+                setTimeout(dropMarker(i), i * 10);
+              }
+            }
+          });
+        }
+      }
 
     function clearMarkers() {
       for (var i = 0; i < markers.length; i++) {
