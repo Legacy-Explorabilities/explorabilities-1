@@ -8,7 +8,6 @@ import Signin from './auth/signin.jsx';
 import Signup from './auth/signup.jsx';
 import Explore from './components/Explore.jsx';
 import MyPlaces from './components/MyPlaces.jsx';
-
 import Airlines from './components/Airlines.jsx';
 // import Flights from './components/Flights.jsx'
 import Hotels from './components/bestHotelsInfo.jsx'

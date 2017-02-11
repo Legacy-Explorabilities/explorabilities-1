@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link, browserHistory} from 'react-router';
+import Hotels from './bestHotelsInfo.jsx'
 
 export default class MapContainer extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ export default class MapContainer extends React.Component {
     this.state = {
       hotelData: []
     }
-  }
+}
+
   componentWillMount() {
     console.log('MapContainer props', this.props);
   }
@@ -22,13 +24,11 @@ export default class MapContainer extends React.Component {
             id="searchForm"
             type="text"
 
-            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
-          />
+            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "/>
           <input
               id="interestSearch"
               type="text"
-              placeholder="Interests"
-              />
+              placeholder="Interests"/>
           <button id="submitInterest" type="submit">Submit</button>
 
         </form>
@@ -94,6 +94,11 @@ export default class MapContainer extends React.Component {
       var button = document.getElementById('submitInterest');
       button.addEventListener('click', onInterestChanged);
 
+      var hotelButton = document.getElementById('hotels');
+      hotelButton.addEventListener('click', onHotelSelected);
+
+
+
       autocomplete.addListener('place_changed', onPlaceChanged);
 
 
@@ -118,6 +123,32 @@ export default class MapContainer extends React.Component {
 
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
+    function onHotelSelected(e){
+      e.preventDefault();
+      place = autocomplete.getPlace();
+
+      if (place.geometry) {
+        map.panTo(place.geometry.location);
+        //console.log(map.getCenter().toUrlValue());
+        var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
+        //on location change pass location to Explore parent, to be used by flights component
+        context.props.searchTargetLocation(exploreDestination);
+        map.setZoom(13);
+
+        search();
+        browserHistory.push({
+          pathname: '/hotels',
+          state: {
+            hotelData: context.state.hotelData
+          }
+        })
+        //hotels();
+      } else {
+        // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
+        searchForm.value = '';
+      }
+
+    }
 
     function onPlaceChanged() {
       place = autocomplete.getPlace();
@@ -146,6 +177,7 @@ export default class MapContainer extends React.Component {
       // if the user selects a particular interest in a city, get the details for the city filtered by that interest
       function onInterestChanged(e) {
         e.preventDefault();
+        place = autocomplete.getPlace();
         console.log(place);
         if (place.geometry) {
           map.panTo(place.geometry.location);
@@ -160,6 +192,13 @@ export default class MapContainer extends React.Component {
 
       function search() {
         const interest = document.getElementById('interestSearch').value;
+        //get the hotels for the hotels page
+
+        const hotelSearch= {
+          bounds: map.getBounds(),
+          types: ['lodging']
+        }
+
         // if ppl are looking for a new city;
         if (interest === ''){
           console.log('not checking for interests');
@@ -167,7 +206,7 @@ export default class MapContainer extends React.Component {
             bounds: map.getBounds(),
             //radius: radius,
             //query: interest
-
+            //types: someCondition === true ? types = [everything] : types = [lodging]
             types: [
               'amusement_park',
               'aquarium',
@@ -216,7 +255,14 @@ export default class MapContainer extends React.Component {
               }
             }
           });
-        }
+        //search specifically for hotels for the hotels page
+        places.nearbySearch(hotelSearch, function(results, status) {
+            var hotels = results;
+            context.setState({
+              hotelData: hotels
+          });
+        })
+      }
         // if ppl are looking for a particular interest in that city;
         else{
           console.log('checking for interests');
