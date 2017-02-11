@@ -1,9 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import {Link, browserHistory} from 'react-router';
 
 export default class MapContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hotelData: []
+    }
   }
   componentWillMount() {
     console.log('MapContainer props', this.props);
@@ -17,6 +21,7 @@ export default class MapContainer extends React.Component {
           <input
             id="searchForm"
             type="text"
+
             placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
           />
           <input
@@ -25,12 +30,12 @@ export default class MapContainer extends React.Component {
               placeholder="Interests"
               />
           <button id="submitInterest" type="submit">Submit</button>
+
         </form>
         <div id="googleMaps"></div>
       </div>
     );
   }
-
   componentDidMount() {
     this.createMap();
   }
@@ -86,10 +91,17 @@ export default class MapContainer extends React.Component {
 
       places = new google.maps.places.PlacesService(map);
 
+<<<<<<< HEAD
       var button = document.getElementById('submitInterest');
       button.addEventListener('click', onInterestChanged);
 
       autocomplete.addListener('place_changed', onPlaceChanged);
+=======
+      var hotelButton = document.getElementById('hotels');
+      hotelButton.addEventListener('click', onPlaceChanged);
+
+      // autocomplete.addListener('place_changed', onPlaceChanged);
+>>>>>>> hotels data retrive
 
       map.addListener('dragend', zoomFilter);
 
@@ -109,11 +121,13 @@ export default class MapContainer extends React.Component {
 
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
+
     function onPlaceChanged() {
       place = autocomplete.getPlace();
       console.log('MapContainer onPlaceChanged (Explore props.query)', place);
       document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
+
 
       context.props.updateQuery(place);
 
@@ -126,6 +140,7 @@ export default class MapContainer extends React.Component {
         map.setZoom(13);
 
         search();
+        //hotels();
       } else {
         // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
         searchForm.value = '';
@@ -145,6 +160,7 @@ export default class MapContainer extends React.Component {
         }
       }
     // Search for attractions in the selected city, within the viewport of the map.
+
       function search() {
         const interest = document.getElementById('interestSearch').value;
         // if ppl are looking for a new city;

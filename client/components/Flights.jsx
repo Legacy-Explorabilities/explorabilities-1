@@ -49,6 +49,7 @@ export default class Flights extends React.Component {
           name="userSelectedDepartureAirport">
             {airport.code}:{airport.name}
         </option>
+
       )
     });
 
@@ -59,6 +60,7 @@ export default class Flights extends React.Component {
           name="userSelectedArrivalAirport">
             {airport.code}:{airport.name}
         </option>
+
       )
     });
 

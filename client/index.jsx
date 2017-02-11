@@ -8,8 +8,10 @@ import Signin from './auth/signin.jsx';
 import Signup from './auth/signup.jsx';
 import Explore from './components/Explore.jsx';
 import MyPlaces from './components/MyPlaces.jsx';
+<<<<<<< HEAD
 import Airlines from './components/Airlines.jsx';
-// import Flights from './components/Flights.jsx';
+// import Flights from './components/Flights.jsx'
+import Hotels from './components/bestHotelsInfo.jsx'
 import axios from 'axios';
 
 //remove itinerary from Explore.js
@@ -25,9 +27,9 @@ ReactDOM.render(
         <Route path="/explore" component={Explore}/>
         <Route path="myplaces" component={MyPlaces} onEnter={requireAuth}/>
         <Route path="/airlines" component={Airlines} onEnter={requireAuth}/>
+         <Route path="/hotels" component={Hotels}/>
       </Route>
     </Route>   
-  
   </Router>, document.getElementById('app'));
 
 

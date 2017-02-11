@@ -4,6 +4,7 @@ import MapContainer from './MapContainer.jsx';
 import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
+import Hotels from './bestHotelsInfo.jsx';
 
 export default class Explore extends React.Component {
 
@@ -14,7 +15,8 @@ export default class Explore extends React.Component {
       query: '',
       itinerary: {},
       saveMessage: '',
-      localAirports: []
+      localAirports: [],
+      hotels:[]
     };
   }
 
@@ -34,15 +36,14 @@ export default class Explore extends React.Component {
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
-          currentUserLocation={this.currentUserLocation.bind(this)}
-        />
+          currentUserLocation={this.currentUserLocation.bind(this)}/>
         <div id="exploreContent" className="clearfix">
           <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
           <Flights 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
-            placeVicinity = {this.state.place.vicinity}
-          />
+            placeVicinity = {this.state.place.vicinity}/>
+
         </div>
       </div>
     );
@@ -80,7 +81,18 @@ export default class Explore extends React.Component {
       userLocation: location,
     });
   }
+<<<<<<< HEAD
 //MapContainer
+=======
+
+  searchHotelLocation(hotels){
+    console.log('invoked hotelsLocation', hotels)
+    this.setState({
+      name:hotels
+    })
+  }
+
+>>>>>>> hotels data retrive
   updateQuery(query) {
     this.setState({
       place: {},
