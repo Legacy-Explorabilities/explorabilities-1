@@ -147,9 +147,8 @@ export default class Flights extends React.Component {
   }
   handleSubmit(e, context, a, d){
     e.preventDefault();
-    if (!context.state.departureDate || 
-        !context.state.returnDate ||
-        !context.state.userSelectedDepartureAirport ||
+    if (!context.state.departureDate && 
+        !context.state.userSelectedDepartureAirport &&
         !context.state.userSelectedArrivalAirport){
       alert('please select the choose city and flight dates')
     } else {
