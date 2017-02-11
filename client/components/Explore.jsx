@@ -30,8 +30,7 @@ export default class Explore extends React.Component {
   render() {
     return (
       <div id="exploreContainer">
-        <MapContainer 
-          getInterests={this.getInterests.bind(this)} 
+        <MapContainer
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
@@ -129,11 +128,6 @@ export default class Explore extends React.Component {
     } else {
       alert('Please login');
     }
-  }
-  getInterests(e){
-    e.preventDefault();
-    var interests = document.getElementById('interestSearch').value;
-    console.log(this.state.place);
   }
 }
 
