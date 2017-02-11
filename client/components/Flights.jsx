@@ -3,6 +3,9 @@
 //Get ALL THE WORLD'S AIRPORTS
 import React from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+require('style!css!../../node_modules/react-datepicker/dist/react-datepicker.css');
 
 export default class Flights extends React.Component {
   constructor(props) {
@@ -79,6 +82,12 @@ export default class Flights extends React.Component {
               >
                 {arrivalAirportsView}
               </select>
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange} />
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange} />
               <button type="submit">Search Deals</button>
             </form>
           </div>
