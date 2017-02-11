@@ -33,6 +33,15 @@ button {
   height: 30px;
 }
 
+.navLink {
+  padding-top: 20px;
+}
+
+.logo {
+  width: 350px;
+  padding: 10px 10px 10px 10px;
+}
+
 #itinerary, nav, .save-itinerary, #place button, .itineraryItem button {
   float: right;
 }
@@ -51,13 +60,13 @@ button {
   font-size: 14px;
 }
 
-.container {
+/*.container {
   width: 980px;
   min-height: 100%;
   margin: 0 auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.3);
-}
+}*/
 
 .beautify {
   font-family: 'Maven Pro', sans-serif;
