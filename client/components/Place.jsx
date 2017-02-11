@@ -1,13 +1,13 @@
 import React from 'react';
 import Review from './Review.jsx';
-import placeItem from './placeItem.jsx';
+import PlaceItem from './PlaceItem.jsx';
 import StarRatingComponent from 'react-star-rating-component';
 
 export default class Place extends React.Component {
   constructor(props) {
     super(props);
   }
-
+/*
   renderReviews () {
     if (!this.props.reviews) {
       if (this.props.place.reviews) {
@@ -27,50 +27,23 @@ export default class Place extends React.Component {
         <Review />
       );
     }
-  }
+  }*/
+
 
   render() {
-    //need to populate place with array of objects instead of a single object
     console.log('Place.jsx props.place: ', this.props.place); //Find out what's in props
 
-    if (Object.keys(this.props.place).length > 0) {
+    if (this.props.place.length > 0) {
       return (
-        <div id='place'>
-          <div id="placeContent">
-            <button onClick={this.props.saveItinerary}>Add to Itinerary</button>
-            <h2>{this.props.place.name}</h2>
-            <table>
-              <tbody>
-                <tr id="place-address-row" className="place_row">
-                  <td className="place_attribute_name">Address:</td>
-                  <td id="place-address">{this.props.place.formatted_address}</td>
-                </tr>
-                <tr id="place-phone-row" className="place_row">
-                  <td className="place_attribute_name">Telephone:</td>
-                  <td id="place-phone">{this.props.place.formatted_phone_number}</td>
-                </tr>
-                <tr id="place-rating-row" className="place_row">
-                  <td className="place_attribute_name">Rating:</td>
-                  <td id="place-rating">
-                    <StarRatingComponent
-                      name="rate2"
-                      editing={false}
-                      starCount={5}
-                      value={this.props.place.rating}/>
-                  </td>
-
-                </tr>
-                <tr id="place-website-row" className="place_row">
-                  <td className="place_attribute_name">Website:</td>
-                  <td id="place-website"><a href={`${this.props.place.website}`}>{this.props.place.website}</a></td>
-                </tr>
-                <tr id="place-review-row" className="place_row">
-                  <td className="place_attribute_name">Reviews:</td>
-                  {this.renderReviews()}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div>
+        {this.props.place.map((placeitem, index) => (
+          <PlaceItem 
+            name={placeitem.name}
+            rating={placeitem.rating} 
+            vicinity={placeitem.vicinity}
+            saveItinerary={this.props.saveItinerary}
+          />
+        ))}
         </div>
       );
     }
