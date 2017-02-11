@@ -33,12 +33,24 @@ button {
   height: 30px;
 }
 
+.searchBox {
+  background-color: #777;
+  margin-top: 35px;
+  padding-left: 20px;
+}
+
+.searchText {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
 .navLink {
   padding-top: 20px;
+  font-weight: bold ;
 }
 
 .logo {
-  width: 350px;
+  width: 400px;
   padding: 10px 10px 10px 10px;
 }
 

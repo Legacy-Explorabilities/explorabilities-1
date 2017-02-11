@@ -10,7 +10,7 @@ export default class Nav extends React.Component {
       <nav className="navbar navbar-fixed-top">
         
           
-          <div className="col-md-3">
+          <div className="col-md-4">
             <Link to="explore"><img src="img/logo-explorapedia.png" className="logo"/></Link>
           </div>
 
@@ -18,11 +18,11 @@ export default class Nav extends React.Component {
             <Link to="airlines"><p className="navLink">Airlines</p></Link>
           </div>
           
-          <div className="col-md-4">
+          <div className="col-md-1">
             <Link to="hotels"><p className="navLink">Hotels</p></Link>
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-6">
             <Link to="myplaces">
               <button>My Places</button>
             </Link>

@@ -17,22 +17,26 @@ componentWillMount() {
   render() {
     return (
       <div>
-        <form>
-          <label id="searchLabel">
-          </label>
-          <input
-            id="searchForm"
-            type="text"
-
-            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "/>
-          <input
-              id="interestSearch"
+        <div className="searchBox">
+          <form>
+            <label id="searchLabel">
+            </label>
+            <input className="searchText"
+              id="searchForm"
               type="text"
-              placeholder="Interests"/>
-          <button id="submitInterest" type="submit">Submit</button>
+              placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
+            />
+            <input className="searchText"
+                id="interestSearch"
+                type="text"
+                placeholder="Narrow down your search"
+                />
+            &nbsp;&nbsp;&nbsp;<button id="submitInterest" type="submit">Submit</button>
+          </form>
+        </div>
 
-        </form>
         <div id="googleMaps"></div>
+
       </div>
     );
   }
