@@ -4,6 +4,7 @@ import MapContainer from './MapContainer.jsx';
 import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
 import Flights from './Flights.jsx';
+import Hotels from './bestHotelsInfo.jsx';
 
 export default class Explore extends React.Component {
 
@@ -14,7 +15,8 @@ export default class Explore extends React.Component {
       query: '',
       itinerary: {},
       saveMessage: '',
-      localAirports: []
+      localAirports: [],
+      hotels:[]
     };
   }
 
@@ -30,20 +32,18 @@ export default class Explore extends React.Component {
   render() {
     return (
       <div id="exploreContainer">
-        <MapContainer 
-          getInterests={this.getInterests.bind(this)} 
+        <MapContainer
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
-          currentUserLocation={this.currentUserLocation.bind(this)}
-        />
+          currentUserLocation={this.currentUserLocation.bind(this)}/>
         <div id="exploreContent" className="clearfix">
           <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
           <Flights 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
-            placeVicinity = {this.state.place.vicinity}
-          />
+            placeVicinity = {this.state.place.vicinity}/>
+
         </div>
       </div>
     );
@@ -81,6 +81,8 @@ export default class Explore extends React.Component {
       userLocation: location,
     });
   }
+
+
 //MapContainer
   updateQuery(query) {
     this.setState({
@@ -129,11 +131,6 @@ export default class Explore extends React.Component {
     } else {
       alert('Please login');
     }
-  }
-  getInterests(e){
-    e.preventDefault();
-    var interests = document.getElementById('interestSearch').value;
-    console.log(this.state.place);
   }
 }
 
