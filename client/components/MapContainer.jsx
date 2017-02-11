@@ -91,17 +91,14 @@ export default class MapContainer extends React.Component {
 
       places = new google.maps.places.PlacesService(map);
 
-<<<<<<< HEAD
       var button = document.getElementById('submitInterest');
       button.addEventListener('click', onInterestChanged);
 
       autocomplete.addListener('place_changed', onPlaceChanged);
-=======
-      var hotelButton = document.getElementById('hotels');
-      hotelButton.addEventListener('click', onPlaceChanged);
+
 
       // autocomplete.addListener('place_changed', onPlaceChanged);
->>>>>>> hotels data retrive
+
 
       map.addListener('dragend', zoomFilter);
 

@@ -81,18 +81,9 @@ export default class Explore extends React.Component {
       userLocation: location,
     });
   }
-<<<<<<< HEAD
+
+
 //MapContainer
-=======
-
-  searchHotelLocation(hotels){
-    console.log('invoked hotelsLocation', hotels)
-    this.setState({
-      name:hotels
-    })
-  }
-
->>>>>>> hotels data retrive
   updateQuery(query) {
     this.setState({
       place: {},
