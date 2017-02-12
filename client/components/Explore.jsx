@@ -11,7 +11,7 @@ export default class Explore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      place: [],
+      place: {},
       query: '',
       itinerary: {},
       saveMessage: '',
@@ -20,15 +20,14 @@ export default class Explore extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   console.log('Explore.jsx componentDidMount localStorage', localStorage);
-  //   if (localStorage.places) {
-  //     this.setState({
-  //       place: JSON.parse(localStorage.places)
-  //     });
-  //   }
-  // }
-
+  componentDidMount() {
+    console.log('Explore.jsx componentDidMount localStorage', localStorage);
+    if (localStorage.places) {
+      this.setState({
+        place: JSON.parse(localStorage.places)
+      });
+    }
+  }
   //Flights's searchTargetLocation and currentUserLocation are passed down from here
   render() {
     return (

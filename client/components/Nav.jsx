@@ -19,7 +19,7 @@ export default class Nav extends React.Component {
           </div>
           
           <div className="col-md-1">
-            <Link to="hotels"><p className="navLink">Hotels</p></Link>
+            <Link to="hotels" id="hotels"><p className="navLink">Hotels</p></Link>
           </div>
 
           <div className="col-md-6">
