@@ -11,28 +11,32 @@ export default class MapContainer extends React.Component {
     }
 }
 
-  componentWillMount() {
+componentWillMount() {
     console.log('MapContainer props', this.props);
   }
   render() {
     return (
       <div>
-        <form>
-          <label id="searchLabel">
-          </label>
-          <input
-            id="searchForm"
-            type="text"
-
-            placeholder=" Enter a Destination (E.g. Cancun, Mexico) "/>
-          <input
-              id="interestSearch"
+        <div className="searchBox">
+          <form>
+            <label id="searchLabel">
+            </label>
+            <input className="searchText"
+              id="searchForm"
               type="text"
-              placeholder="Interests"/>
-          <button id="submitInterest" type="submit">Submit</button>
+              placeholder=" Enter a Destination (E.g. Cancun, Mexico) "
+            />
+            <input className="searchText"
+                id="interestSearch"
+                type="text"
+                placeholder="Narrow down your search"
+                />
+            &nbsp;&nbsp;&nbsp;<button id="submitInterest" type="submit">Submit</button>
+          </form>
+        </div>
 
-        </form>
         <div id="googleMaps"></div>
+
       </div>
     );
   }
@@ -63,7 +67,10 @@ export default class MapContainer extends React.Component {
     })());
 
     /* ################### Map Init ################### */
-    let map, places, autocomplete, place
+
+
+    let map, places, autocomplete, place;
+
     let hotelSelected = false;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
@@ -87,7 +94,7 @@ export default class MapContainer extends React.Component {
       autocomplete = new google.maps.places.Autocomplete((
           document.getElementById('searchForm')), {
             types: ['geocode']
-          });
+      });
       
 
       places = new google.maps.places.PlacesService(map);
@@ -160,7 +167,11 @@ export default class MapContainer extends React.Component {
       // if the user selects a particular interest in a city, get the details for the city filtered by that interest
       function onInterestChanged(e) {
         e.preventDefault();
+
+        console.log(place);
+
         place = autocomplete.getPlace();
+
         if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(13);
@@ -184,6 +195,7 @@ export default class MapContainer extends React.Component {
         console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
+
           if (hotelSelected === false) {
             const search = {
               bounds: map.getBounds(),
@@ -253,7 +265,77 @@ export default class MapContainer extends React.Component {
               });
             })
           }
+
+
+          if(hotelSelected === false){
+          console.log('not checking for interests');
+          const search = {
+            bounds: map.getBounds(),
+            //radius: radius,
+            //query: interest
+            //types: someCondition === true ? types = [everything] : types = [lodging]
+            types: [
+              'amusement_park',
+              'aquarium',
+              'art_gallery',
+              'bar',
+              'book_store',
+              'bowling_alley',
+              'cafe',
+              'campground',
+              'casino',
+              'library',
+              //'lodging',
+              'movie_theater',
+              'museum',
+              'night_club',
+              'park',
+              'restaurant',
+              'spa',
+              'stadium',
+              'zoo'
+            ]
+          };
+          places.nearbySearch(search, function(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              clearMarkers();
+              // Create a marker for each item found
+              for (var i = 0; i < results.length; i++) {
+                let iconImage = {
+                  url: results[i].icon,
+                  size: new google.maps.Size(71, 71),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  scaledSize: new google.maps.Size(15, 15)
+                };
+                // Use marker animation to drop the icons incrementally on the map.
+                markers[i] = new google.maps.Marker({
+                  position: results[i].geometry.location,
+                  animation: google.maps.Animation.DROP,
+                  icon: iconImage
+                });
+                // If the user clicks a marker, call setPlace to update the object in the Place component.
+                markers[i].placeResult = results[i];
+                google.maps.event.addListener(markers[i], 'click', setPlace);
+                setTimeout(dropMarker(i), i * 10);
+              }
+            }
+          });
+        } else{
+        //search specifically for hotels for the hotels page
+        places.nearbySearch(hotelSearch, function(results, status) {
+            var hotels = results;
+            context.setState({hotelData: hotels}, function(){
+              browserHistory.push({
+                pathname: '/hotels',
+                state: { hotelData: context.state.hotelData }
+           })
+              hotelSelected = false;
+          });
+        });
+
       }
+    }
         // if ppl are looking for a particular interest in that city;
         else{
           const search = {

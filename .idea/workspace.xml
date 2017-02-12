@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36971713-2bcf-49ae-b354-2891cb745e4c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/data.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Deals.jsx" afterPath="$PROJECT_DIR$/client/components/Deals.jsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/img/logo-explorapedia.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/components/placeItem.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Explore.jsx" afterPath="$PROJECT_DIR$/client/components/Explore.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/MapContainer.jsx" afterPath="$PROJECT_DIR$/client/components/MapContainer.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Nav.jsx" afterPath="$PROJECT_DIR$/client/components/Nav.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Place.jsx" afterPath="$PROJECT_DIR$/client/components/Place.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/bestHotelsInfo.jsx" afterPath="$PROJECT_DIR$/client/components/bestHotelsInfo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.jsx" afterPath="$PROJECT_DIR$/client/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/routes.js" afterPath="$PROJECT_DIR$/server/routes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/styles.css" afterPath="$PROJECT_DIR$/public/styles.css" />
     </list>
     <ignored path="explorabilities-1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,20 +33,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MapContainer.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MapContainer.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.111111">
-              <caret line="188" column="38" selection-start-line="188" selection-start-column="38" selection-end-line="188" selection-end-column="38" />
+            <state vertical-scroll-proportion="-0.4673913">
+              <caret line="140" column="38" selection-start-line="140" selection-start-column="38" selection-end-line="140" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Deals.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Deals.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/components/Deals.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.024752475">
+            <state vertical-scroll-proportion="0.0">
               <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
               <folding />
             </state>
@@ -70,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/client/components/Explore.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+              <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -80,7 +87,7 @@
         <entry file="file://$PROJECT_DIR$/client/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -116,10 +123,10 @@
         <option value="$PROJECT_DIR$/client/index.jsx" />
         <option value="$PROJECT_DIR$/client/components/Nav.jsx" />
         <option value="$PROJECT_DIR$/client/components/Flights.jsx" />
-        <option value="$PROJECT_DIR$/client/components/MapContainer.jsx" />
         <option value="$PROJECT_DIR$/server/data.json" />
         <option value="$PROJECT_DIR$/client/components/data.json" />
         <option value="$PROJECT_DIR$/client/components/Deals.jsx" />
+        <option value="$PROJECT_DIR$/client/components/MapContainer.jsx" />
       </list>
     </option>
   </component>
@@ -315,9 +322,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="724" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -513,7 +520,7 @@
     <entry file="file://$PROJECT_DIR$/client/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -521,7 +528,7 @@
     <entry file="file://$PROJECT_DIR$/client/components/Explore.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+          <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -614,18 +621,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
+    <entry file="file://$PROJECT_DIR$/client/components/Deals.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.111111">
-          <caret line="188" column="38" selection-start-line="188" selection-start-column="38" selection-end-line="188" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/Deals.jsx">
+    <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.024752475">
-          <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+        <state vertical-scroll-proportion="-0.4673913">
+          <caret line="140" column="38" selection-start-line="140" selection-start-column="38" selection-end-line="140" selection-end-column="38" />
           <folding />
         </state>
       </provider>
