@@ -143,14 +143,14 @@ export default class FlightsSearch extends React.Component {
       this.findArrivalAirports(location.searchTargetLocation);
     }
   }
-  handleSubmit(e, context, a, d){
+  handleSubmit(e, context){
     e.preventDefault();
     if (!context.state.departureDate && 
         !context.state.userSelectedDepartureAirport &&
         !context.state.userSelectedArrivalAirport){
       alert('please select the choose city and flight dates')
     } else {
-      console.log('button triggered submit', context.state, a)
+      console.log('button triggered submit', context.state)
 
       console.log(context.state.returnDate.isAfter(context.state.departureDate));
 

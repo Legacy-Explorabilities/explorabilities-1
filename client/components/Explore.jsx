@@ -9,7 +9,7 @@ import Hotels from './bestHotelsInfo.jsx';
 
 export default class Explore extends React.Component {
 
-  constructor(props) {
+  constructor(props) { 
     super(props);
     this.state = {
       place: [],

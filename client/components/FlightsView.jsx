@@ -14,7 +14,7 @@ export default class FlightsSearch extends React.Component {
     let flightsView = this.props.foundFlights.map(function(flights) {
       return (
         <div>
-          {JSON.stringify(flights)}
+          <p>{JSON.stringify(flights)}</p>
         </div>
 
       )
