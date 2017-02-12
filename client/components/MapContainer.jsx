@@ -125,7 +125,6 @@ componentWillMount() {
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
     function onHotelSelected(e){
-      console.log('selecting hotels!');
       e.preventDefault();
       place = autocomplete.getPlace();
       hotelSelected = true;
@@ -159,7 +158,7 @@ componentWillMount() {
       // if the user selects a particular interest in a city, get the details for the city filtered by that interest
       function onInterestChanged(e) {
         e.preventDefault();
-        console.log("place----", place);
+        console.log(place);
         if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(13);
@@ -214,7 +213,6 @@ componentWillMount() {
           places.nearbySearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
-              console.log("search function", results);
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -240,7 +238,6 @@ componentWillMount() {
         } else{
         //search specifically for hotels for the hotels page
         places.nearbySearch(hotelSearch, function(results, status) {
-          console.log("hotels data", results);
             var hotels = results;
             context.setState({hotelData: hotels}, function(){
               browserHistory.push({
@@ -264,7 +261,6 @@ componentWillMount() {
           places.textSearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
-              console.log("search function", results);
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
