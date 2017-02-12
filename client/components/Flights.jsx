@@ -19,7 +19,6 @@ export default class FlightsSearch extends React.Component {
       returnDate: '',
       
     }
-    console.log("PROPSSSSSS TEST", props);
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
@@ -32,7 +31,6 @@ export default class FlightsSearch extends React.Component {
       }, ()=>{
 
       });
-      console.log('setDepartureAirport', airport, e.target.value);
     }
 
     function setArrivalAirport(airport, e){
@@ -42,7 +40,6 @@ export default class FlightsSearch extends React.Component {
       }, () => {
         
       });
-      console.log('setArrivalAirport', airport, e.target.value);
 
     }
 
@@ -140,7 +137,6 @@ export default class FlightsSearch extends React.Component {
   }
   //listen for updates in props (e.g. finding user's location)
   componentWillReceiveProps(location) {
-    console.log('componentWillReceiveProps ', location)
     if (location.currentUserLocation && location.searchTargetLocation) {
       //only after both curent location and target (vacation/trip) location are found
       //invoke findDepartureAirports and ArrivalAirports

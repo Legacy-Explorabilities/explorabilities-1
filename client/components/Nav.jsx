@@ -7,19 +7,32 @@ export default class Nav extends React.Component {
   render() {
     console.log('inside render');
     return (
-      <div className="clearfix nav">
-        <Link to="explore"><h2 className="beautify nav-title">Explorapedia</h2></Link>
-        <Link to="airlines"><p>Airlines</p></Link>
-        <Link id="hotels" to="hotels"><p>Hotels</p></Link>
-        <nav>
-          <Link to="myplaces">
-            <button>My Places</button>
-          </Link>
-          <Link to="auth/signin">
-            <button onClick={authHelpers.logout}>{checkAuth()}</button>
-          </Link>
-        </nav>
-      </div>
+      <nav className="navbar navbar-fixed-top">
+        
+          
+          <div className="col-md-4">
+            <Link to="explore"><img src="img/logo-explorapedia.png" className="logo"/></Link>
+          </div>
+
+          <div className="col-md-1">
+            <Link to="airlines"><p className="navLink">Airlines</p></Link>
+          </div>
+          
+          <div className="col-md-1">
+            <Link to="hotels" id="hotels"><p className="navLink">Hotels</p></Link>
+          </div>
+
+          <div className="col-md-6">
+            <Link to="myplaces">
+              <button>My Places</button>
+            </Link>
+            <Link to="auth/signin">
+              <button onClick={authHelpers.logout}>{checkAuth()}</button>
+            </Link>
+          </div>
+
+        
+      </nav>
     );
   }
 }
@@ -31,3 +44,4 @@ function checkAuth() {
     return 'Log Out';
   }
 }
+
