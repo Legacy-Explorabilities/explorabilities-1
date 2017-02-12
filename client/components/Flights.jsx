@@ -16,7 +16,6 @@ export default class Flights extends React.Component {
       userSelectedDepartureAirport: '',
       userSelectedArrivalAirport: '',
     }
-    console.log("PROPSSSSSS TEST", props);
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
 
@@ -29,7 +28,6 @@ export default class Flights extends React.Component {
       }, ()=>{
 
       });
-      console.log('setDepartureAirport', airport, e.target.value);
     }
 
     function setArrivalAirport(airport, e){
@@ -39,7 +37,6 @@ export default class Flights extends React.Component {
       }, () => {
         
       });
-      console.log('setArrivalAirport', airport, e.target.value);
 
     }
     let departureAirportsView = this.state.departureAirports.map(function(airport) {
@@ -99,7 +96,6 @@ export default class Flights extends React.Component {
   }
   //listen for updates in props (e.g. finding user's location)
   componentWillReceiveProps(location) {
-    console.log('componentWillReceiveProps ', location)
     if (location.currentUserLocation && location.searchTargetLocation) {
       //only after both curent location and target (vacation/trip) location are found
       //invoke findDepartureAirports and ArrivalAirports
@@ -109,15 +105,13 @@ export default class Flights extends React.Component {
   }
   handleSubmit(e, context, a, d){
     e.preventDefault();
-    console.log('button triggered submit', context.state, a)
     context.findFlights(
       context.state.userSelectedDepartureAirport, 
       context.state.userSelectedArrivalAirport
     );
   }
   findFlights(origin, destination) {
-    if (origin && destination) {   
-      console.log('origin and destination present in findFlights', origin, destination);
+    if (origin && destination) {
       var today = new Date();
       var dd = today.getDate();
       //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.

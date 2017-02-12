@@ -91,6 +91,9 @@ componentWillMount() {
       
 
       places = new google.maps.places.PlacesService(map);
+      google.maps.event.addListener(map, 'tilesloaded', function(){
+        search();
+      });
 
       var button = document.getElementById('submitInterest');
       button.addEventListener('click', onInterestChanged);
@@ -125,6 +128,7 @@ componentWillMount() {
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
     function onHotelSelected(e){
+      console.log("hotels selected");
       e.preventDefault();
       place = autocomplete.getPlace();
       hotelSelected = true;
@@ -133,7 +137,6 @@ componentWillMount() {
 
     function onPlaceChanged() {
       place = autocomplete.getPlace();
-      console.log('MapContainer onPlaceChanged (Explore props.query)', place);
       document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
 
@@ -142,7 +145,6 @@ componentWillMount() {
 
       if (place.geometry) {
         map.panTo(place.geometry.location);
-        //console.log(map.getCenter().toUrlValue());
         var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
         //on location change pass location to Explore parent, to be used by flights component
         context.props.searchTargetLocation(exploreDestination);
@@ -158,7 +160,11 @@ componentWillMount() {
       // if the user selects a particular interest in a city, get the details for the city filtered by that interest
       function onInterestChanged(e) {
         e.preventDefault();
+
         console.log(place);
+
+        place = autocomplete.getPlace();
+
         if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(13);
@@ -179,8 +185,10 @@ componentWillMount() {
           types: ['lodging']
         }
 
+        console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
+
           if(hotelSelected === false){
           console.log('not checking for interests');
           const search = {
@@ -246,12 +254,16 @@ componentWillMount() {
            })
               hotelSelected = false;
           });
+
         });
+
+        })
+
+
       }
     }
         // if ppl are looking for a particular interest in that city;
         else{
-          console.log('checking for interests');
           const search = {
             location: map.getCenter(),
             radius: '700',

@@ -10,7 +10,10 @@ export default class Nav extends React.Component {
       <div className="clearfix nav">
         <Link to="explore"><h2 className="beautify nav-title">Explorapedia</h2></Link>
         <Link to="airlines"><p>Airlines</p></Link>
+        <Link to="deals"><p>Deals</p></Link>
+
         <Link id="hotels" to="hotels"><p>Hotels</p></Link>
+
         <nav>
           <Link to="myplaces">
             <button>My Places</button>
