@@ -11,7 +11,7 @@ export default class MapContainer extends React.Component {
     }
 }
 
-  componentWillMount() {
+componentWillMount() {
     console.log('MapContainer props', this.props);
   }
   render() {
@@ -64,6 +64,7 @@ export default class MapContainer extends React.Component {
 
     /* ################### Map Init ################### */
     let map, places, autocomplete, place;
+    let hotelSelected = false;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
 
@@ -86,7 +87,7 @@ export default class MapContainer extends React.Component {
       autocomplete = new google.maps.places.Autocomplete((
           document.getElementById('searchForm')), {
             types: ['geocode']
-          });
+      });
       
 
       places = new google.maps.places.PlacesService(map);
@@ -130,28 +131,8 @@ export default class MapContainer extends React.Component {
       console.log("hotels selected");
       e.preventDefault();
       place = autocomplete.getPlace();
-
-      if (place.geometry) {
-        map.panTo(place.geometry.location);
-        //console.log(map.getCenter().toUrlValue());
-        var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
-        //on location change pass location to Explore parent, to be used by flights component
-        context.props.searchTargetLocation(exploreDestination);
-        map.setZoom(13);
-
-        search();
-        browserHistory.push({
-          pathname: '/hotels',
-          state: {
-            hotelData: context.state.hotelData
-          }
-        })
-        //hotels();
-      } else {
-        // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
-        searchForm.value = '';
-      }
-
+      hotelSelected = true;
+      search();
     }
 
     function onPlaceChanged() {
@@ -179,7 +160,11 @@ export default class MapContainer extends React.Component {
       // if the user selects a particular interest in a city, get the details for the city filtered by that interest
       function onInterestChanged(e) {
         e.preventDefault();
+
+        console.log(place);
+
         place = autocomplete.getPlace();
+
         if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(13);
@@ -203,6 +188,9 @@ export default class MapContainer extends React.Component {
         console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
+
+          if(hotelSelected === false){
+          console.log('not checking for interests');
           const search = {
             bounds: map.getBounds(),
             //radius: radius,
@@ -255,15 +243,25 @@ export default class MapContainer extends React.Component {
               }
             }
           });
+        } else{
         //search specifically for hotels for the hotels page
         places.nearbySearch(hotelSearch, function(results, status) {
             var hotels = results;
-            context.setState({
-              hotelData: hotels
+            context.setState({hotelData: hotels}, function(){
+              browserHistory.push({
+                pathname: '/hotels',
+                state: { hotelData: context.state.hotelData }
+           })
+              hotelSelected = false;
           });
+
+        });
+
         })
 
+
       }
+    }
         // if ppl are looking for a particular interest in that city;
         else{
           const search = {

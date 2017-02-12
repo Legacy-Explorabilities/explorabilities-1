@@ -9,7 +9,6 @@ export default class Hotels extends React.Component {
    super(props);
   }
   componentDidMount() {
-  	console.log("-----", this.props.location.state.hotelData);
   	//this.props.updatePlace;	
   }
 
