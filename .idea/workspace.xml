@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36971713-2bcf-49ae-b354-2891cb745e4c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/components/bestHotelsInfo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Explore.jsx" afterPath="$PROJECT_DIR$/client/components/Explore.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Flights.jsx" afterPath="$PROJECT_DIR$/client/components/Flights.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/MapContainer.jsx" afterPath="$PROJECT_DIR$/client/components/MapContainer.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Nav.jsx" afterPath="$PROJECT_DIR$/client/components/Nav.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Place.jsx" afterPath="$PROJECT_DIR$/client/components/Place.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/Review.jsx" afterPath="$PROJECT_DIR$/client/components/Review.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.jsx" afterPath="$PROJECT_DIR$/client/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/itineraryList.jsx" afterPath="$PROJECT_DIR$/client/components/itineraryList.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/components/itineraryListItem.jsx" afterPath="$PROJECT_DIR$/client/components/itineraryListItem.jsx" />
     </list>
     <ignored path="explorabilities-1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,11 +24,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MapContainer.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MapContainer.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.1111112">
-              <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.48369566">
+              <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Airlines.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/components/Airlines.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bestHotelsInfo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/components/bestHotelsInfo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -102,16 +114,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Nav.jsx" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/components/Nav.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34653464">
-              <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -132,19 +134,19 @@
         <option value="$PROJECT_DIR$/public/bundle.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/client/components/Flights.js" />
-        <option value="$PROJECT_DIR$/client/components/Flights.jsx" />
         <option value="$PROJECT_DIR$/client/components/InterestsSearch.js" />
         <option value="$PROJECT_DIR$/client/components/InterestsSearch.jsx" />
         <option value="$PROJECT_DIR$/public/styles.css" />
         <option value="$PROJECT_DIR$/server/db/dbconfig.js" />
         <option value="$PROJECT_DIR$/client/components/Explore.jsx" />
-        <option value="$PROJECT_DIR$/client/components/MapContainer.jsx" />
         <option value="$PROJECT_DIR$/client/components/Deals.js" />
         <option value="$PROJECT_DIR$/server/data.js" />
         <option value="$PROJECT_DIR$/server/data.json" />
         <option value="$PROJECT_DIR$/client/components/Deals.jsx" />
         <option value="$PROJECT_DIR$/client/index.jsx" />
         <option value="$PROJECT_DIR$/client/components/Nav.jsx" />
+        <option value="$PROJECT_DIR$/client/components/Flights.jsx" />
+        <option value="$PROJECT_DIR$/client/components/MapContainer.jsx" />
       </list>
     </option>
   </component>
@@ -524,32 +526,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/Flights.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="20" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/Airlines.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1111112">
-          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/db/database.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.519802">
@@ -598,14 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/Explore.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/data.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -622,6 +590,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/components/Nav.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34653464">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -630,10 +606,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/components/Nav.jsx">
+    <entry file="file://$PROJECT_DIR$/client/components/Explore.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34653464">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/components/Airlines.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/components/Flights.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.2504318">
+          <caret line="113" column="32" selection-start-line="113" selection-start-column="32" selection-end-line="113" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/components/bestHotelsInfo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/components/MapContainer.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48369566">
+          <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
           <folding />
         </state>
       </provider>

@@ -90,6 +90,9 @@ export default class MapContainer extends React.Component {
       
 
       places = new google.maps.places.PlacesService(map);
+      google.maps.event.addListener(map, 'tilesloaded', function(){
+        search();
+      });
 
       var button = document.getElementById('submitInterest');
       button.addEventListener('click', onInterestChanged);
@@ -124,6 +127,7 @@ export default class MapContainer extends React.Component {
     // When the user selects a city, get the place details for the city and
     // zoom the map in on the city.
     function onHotelSelected(e){
+      console.log("hotels selected");
       e.preventDefault();
       place = autocomplete.getPlace();
 
@@ -152,7 +156,6 @@ export default class MapContainer extends React.Component {
 
     function onPlaceChanged() {
       place = autocomplete.getPlace();
-      console.log('MapContainer onPlaceChanged (Explore props.query)', place);
       document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
 
@@ -161,7 +164,6 @@ export default class MapContainer extends React.Component {
 
       if (place.geometry) {
         map.panTo(place.geometry.location);
-        //console.log(map.getCenter().toUrlValue());
         var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
         //on location change pass location to Explore parent, to be used by flights component
         context.props.searchTargetLocation(exploreDestination);
@@ -178,7 +180,6 @@ export default class MapContainer extends React.Component {
       function onInterestChanged(e) {
         e.preventDefault();
         place = autocomplete.getPlace();
-        console.log(place);
         if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(13);
@@ -199,9 +200,9 @@ export default class MapContainer extends React.Component {
           types: ['lodging']
         }
 
+        console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
-          console.log('not checking for interests');
           const search = {
             bounds: map.getBounds(),
             //radius: radius,
@@ -232,7 +233,6 @@ export default class MapContainer extends React.Component {
           places.nearbySearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
-              console.log(results);
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -262,10 +262,10 @@ export default class MapContainer extends React.Component {
               hotelData: hotels
           });
         })
+
       }
         // if ppl are looking for a particular interest in that city;
         else{
-          console.log('checking for interests');
           const search = {
             location: map.getCenter(),
             radius: '700',
@@ -275,7 +275,6 @@ export default class MapContainer extends React.Component {
           places.textSearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
-              console.log(results);
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
