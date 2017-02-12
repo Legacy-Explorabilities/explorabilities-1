@@ -10,6 +10,7 @@ routes.use(bodyParser.urlencoded({extended: true}));
 routes.use(bodyParser.json());
 
 routes.use(express.static(__dirname + '/../public'));
+routes.use(express.static(__dirname + '/../public/img'));
 
 routes.get('/users/signin', userCtrl.signin);
 routes.post('/users/create', userCtrl.create);

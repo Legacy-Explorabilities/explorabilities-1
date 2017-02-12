@@ -33,6 +33,27 @@ button {
   height: 30px;
 }
 
+.searchBox {
+  background-color: #777;
+  margin-top: 35px;
+  padding-left: 20px;
+}
+
+.searchText {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.navLink {
+  padding-top: 20px;
+  font-weight: bold ;
+}
+
+.logo {
+  width: 400px;
+  padding: 10px 10px 10px 10px;
+}
+
 #itinerary, nav, .save-itinerary, #place button, .itineraryItem button {
   float: right;
 }
@@ -51,13 +72,13 @@ button {
   font-size: 14px;
 }
 
-.container {
+/*.container {
   width: 980px;
   min-height: 100%;
   margin: 0 auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.3);
-}
+}*/
 
 .beautify {
   font-family: 'Maven Pro', sans-serif;
