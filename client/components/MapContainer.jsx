@@ -258,12 +258,7 @@ componentWillMount() {
            })
               hotelSelected = false;
           });
-
         });
-
-        })
-
-
       }
     }
         // if ppl are looking for a particular interest in that city;
