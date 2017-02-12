@@ -225,6 +225,10 @@ componentWillMount() {
           places.nearbySearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
+
+              //hanyen: send the array of objects to Explore.jsx so that Place.jsx can render them
+              context.props.updatePlace(results);
+
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -242,7 +246,7 @@ componentWillMount() {
                 });
                 // If the user clicks a marker, call setPlace to update the object in the Place component.
                 markers[i].placeResult = results[i];
-                google.maps.event.addListener(markers[i], 'click', setPlace);
+                // google.maps.event.addListener(markers[i], 'click', setPlace);
                 setTimeout(dropMarker(i), i * 10);
               }
             }
@@ -272,6 +276,10 @@ componentWillMount() {
           places.textSearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
+
+              //hanyen: send the array of objects to Explore.jsx so that Place.jsx can render them
+              context.props.updatePlace(results);
+              
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -289,7 +297,7 @@ componentWillMount() {
                 });
                 // If the user clicks a marker, call setPlace to update the object in the Place component.
                 markers[i].placeResult = results[i];
-                google.maps.event.addListener(markers[i], 'click', setPlace);
+                // google.maps.event.addListener(markers[i], 'click', setPlace);
                 setTimeout(dropMarker(i), i * 10);
               }
             }

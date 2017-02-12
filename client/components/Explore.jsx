@@ -11,7 +11,7 @@ export default class Explore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      place: {},
+      place: [],
       query: '',
       itinerary: {},
       saveMessage: '',
@@ -38,11 +38,13 @@ export default class Explore extends React.Component {
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
           currentUserLocation={this.currentUserLocation.bind(this)}/>
         <div id="exploreContent" className="clearfix">
-          <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
+          
           <Flights 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
             placeVicinity = {this.state.place.vicinity}/>
+
+          <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
 
         </div>
       </div>

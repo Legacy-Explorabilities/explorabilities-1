@@ -75,7 +75,7 @@ export default class Flights extends React.Component {
                 {departureAirportsView}
               </select>
               <p>&nbsp;</p>
-              <p>Select an Airport near {sessionStorage.targetVicinity}</p>
+              <p>Select an Airport near your destination</p>
               <select name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
               >
