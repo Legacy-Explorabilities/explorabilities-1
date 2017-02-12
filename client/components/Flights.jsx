@@ -63,18 +63,17 @@ export default class Flights extends React.Component {
 
     return (
       <div>
-        <div id='place' className='airport'>
-          <div id="placeContent">
+        <div id='place'>
+          <div id="placeContent" className='airport'>
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
-              <h3 className="placeHeader">Airlines</h3>
-              <p>&nbsp;</p>
+              <button type="submit">Search Airline Deals</button>
+              <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
               <select name="departureAirports" name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
               </select>
-              <p>&nbsp;</p>
               <p>Select an Airport near your destination</p>
               <select name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
@@ -87,7 +86,6 @@ export default class Flights extends React.Component {
               <DatePicker
                 selected={this.state.startDate}
                 onChange={this.handleChange} />
-              <button type="submit">Search Deals</button>
             </form>
           </div>
         </div>

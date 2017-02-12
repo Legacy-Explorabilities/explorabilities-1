@@ -38,6 +38,7 @@ export default class Place extends React.Component {
         <div>
         {this.props.place.map((placeitem, index) => (
           <PlaceItem 
+            type={placeitem.types[0]}
             name={placeitem.name}
             rating={placeitem.rating} 
             vicinity={placeitem.vicinity}

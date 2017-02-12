@@ -22,7 +22,7 @@ export default class Nav extends React.Component {
             <Link to="hotels" id="hotels"><p className="navLink">Hotels</p></Link>
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-6 navMyPlaceLogoutButton">
             <Link to="myplaces">
               <button>My Places</button>
             </Link>

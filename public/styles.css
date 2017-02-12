@@ -42,13 +42,20 @@ button {
 }
 
 .airport {
-  background-color: #777;
+  background-color: #dcdcdc;
+  border-style: solid;
+  border-color: #888;
+
 }
 
 .searchBox {
   background-color: #777;
   margin-top: 35px;
   padding-left: 20px;
+}
+
+.loginSignupPage {
+  margin-top: 35px;
 }
 
 .searchText {
@@ -59,6 +66,10 @@ button {
 .navLink {
   padding-top: 20px;
   font-weight: bold ;
+}
+
+.navMyPlaceLogoutButton {
+  text-align: right;
 }
 
 .logo {
@@ -206,11 +217,11 @@ button {
 #itinerary, #place, #itineraries {
   background-color: rgba(255, 255, 255, 0.9);
   min-height: 100px;
-  width: 47%;
+  width: 46%;
   border-radius: 5px;
   max-height: 700px;
   overflow-y: auto;
-  margin: 0 20px 0 0;
+  margin: 0 20px 20px 20px;
 }
 
 #placeContent {

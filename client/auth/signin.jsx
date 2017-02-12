@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const Signin = (props) => (
-  <div id="signin">
+  <div id="signin" className="loginSignupPage">
     <h2>Log in to Begin Exploring</h2>
     <form name="signinForm" onSubmit={props.signin}>
       <div>

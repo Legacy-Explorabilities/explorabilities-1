@@ -30,6 +30,14 @@ export default class Explore extends React.Component {
   }
   //Flights's searchTargetLocation and currentUserLocation are passed down from here
   render() {
+
+    //Displaying detailed information for places
+    // @@ make sure this.state.place is passed down all the way to placeItem.jsx
+      //> pass down the place id to placeItem.jsx
+    // @@ create a function to do ajax call to Google to get detail information
+      //> put the in placeItem.jsx and make sure each instance of the component has it.
+
+
     return (
       <div id="exploreContainer">
         <MapContainer

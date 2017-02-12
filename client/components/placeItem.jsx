@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import StarRatingComponent from 'react-star-rating-component';
 
 export default class PlaceItem extends React.Component {
@@ -15,7 +16,8 @@ export default class PlaceItem extends React.Component {
       <div id='place'>
         <div id="placeContent">
         <button onClick={this.props.saveItinerary}>Add</button>
-        <h3>{this.props.name}</h3>
+        <p><strong>{this.props.type}</strong></p>
+        <h3><Link to="#">{this.props.name}</Link></h3>
         <table>
           <tbody>
             <tr id="place-address-row" className="place_row">
