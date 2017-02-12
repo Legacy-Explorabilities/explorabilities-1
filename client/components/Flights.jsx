@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 require('style!css!../../node_modules/react-datepicker/dist/react-datepicker.css');
 
-export default class Flights extends React.Component {
+export default class FlightsSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,7 @@ export default class Flights extends React.Component {
       userSelectedArrivalAirport: '',
       departureDate: '',
       returnDate: '',
+      
     }
     console.log("PROPSSSSSS TEST", props);
     //setInterval(function(){console.log('hello', props)}, 1000)
@@ -183,9 +184,6 @@ export default class Flights extends React.Component {
       console.log('origin and destination present in findFlights', origin, destination, context.state);
      
       //TODO: Create an input field for customer to choose the date
-
-      
-
       var params = '';
       if (roundTrip) {
         var roundTripFlightSearch = {
@@ -242,7 +240,108 @@ export default class Flights extends React.Component {
         }
       })
       .then(function(response) {
-        console.log('Success QPX', JSON.stringify(response));
+        function findAirportName(airportCode){
+          var airports = response.data.trips.data.airport;
+          for (var i = 0; i < airports.length; i ++) {
+            if (airports[i].code === airportCode){
+              return airports[i].name
+            }
+          }
+        };
+
+        function findCarrierName(carrierCode){
+          var carriers = response.data.trips.data.carrier;
+
+          for (var i = 0; i < carriers.length; i ++) {
+            if (carriers[i].code === carrierCode){
+              return carriers[i].name
+            }
+          }
+        };
+
+        function findAircraftName(aircraftCode){
+          var aircrafts = response.data.trips.data.aircraft;
+          for (var i = 0; i < aircrafts.length; i ++) {
+            if (aircrafts[i].code === aircraftCode){
+              return aircrafts[i].name
+            }
+          }
+        };
+        function iterateThroughSegments(segment){
+
+          var carrierName = findCarrierName(segment.flight.carrier);
+          var aircraftName = findAircraftName(segment.leg[0].aircraft);
+          var originAirportName = findAirportName(segment.leg[0].origin);
+          var destinationAirportName = findAirportName(segment.leg[0].destination);
+
+          var singleSegment = {
+            duration: segment.duration,
+            carrier: carrierName,
+            flightNumber: segment.flight.carrier + ' ' +segment.flight.number,
+            id: segment.id,
+            cabin: segment.cabin,
+            bookingCode: segment.bookingCode,
+            bookingCodeCount: segment.bookingCodeCount,
+            kind: segment.leg[0].kind,
+            id: segment.leg[0].id,
+            aircraft: aircraftName,
+            arrivalTime: moment(segment.leg[0].arrivalTime).format('MMMM Do YYYY, h:mm:ss a'),
+            departureTime: moment(segment.leg[0].departureTime).format('MMMM Do YYYY, h:mm:ss a'),
+            origin: originAirportName + ' (' + segment.leg[0].origin + ')',
+            destination: destinationAirportName + ' (' + segment.leg[0].destination + ')',
+            originTerminal: segment.leg[0].originTerminal,
+            destinationTerminal: segment.leg[0].destinationTerminal,
+            duration: segment.leg[0].duration,
+            mileage: segment.leg[0].mileage,
+            meal: segment.leg[0].meal,
+            connectionDuration: segment.connectionDuration 
+          }
+          return singleSegment;
+        };
+
+        function iterateThroughSlices(slice){
+          //there will be one slice for one-way flights
+          //two for round-trip
+          var legs = slice.segment.map(function(leg) {
+            return iterateThroughSegments(leg);
+          });
+          //TODO: must iterate through slice.segment
+          var singleSlice = {
+            from: legs[0].origin,
+            to: legs[legs.length-1].destination,
+            departure: legs[0].departureTime,
+            arrival: legs[legs.length-1].arrivalTime,
+            totalTripLength: slice.duration,
+            flightSegments: legs
+          }
+          console.log(singleSlice);
+          return singleSlice;
+        };
+
+        function iterateThroughTripOptions(tripOption){
+          var slices = tripOption.slice.map(function(singleSlice){
+            return iterateThroughSlices(singleSlice);
+          });
+
+          var singleTripOption = {
+            saleTotal: tripOption.saleTotal,
+            outgoingTrip: slices[0],
+            returnTrip: !!slices[1] ? slices[1] : false,
+          };
+          return singleTripOption;
+        }
+
+        function iterateThroguhData(flightData){
+          var result = [];
+          flightData.data.trips.tripOption.forEach(function(singleTripOption){
+            result.push(iterateThroughTripOptions(singleTripOption))
+          });
+          return result;
+        }
+
+        var data = iterateThroguhData(response);
+        context.props.updateFlights(data);
+        console.log('SUCCESS QPX!!!', context);
       })
       .catch(function(error) {
         console.log('ERROR QPX!', error);

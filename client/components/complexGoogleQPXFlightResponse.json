@@ -1694,4 +1694,4 @@ Success QPX {
     },
     "method": "post",
     "url": "https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDAneVe-LTFEqyCEcq2FwgIoXzYalmi3is",
-    "data": "{\"request\":{\"slice\":[{\"origin\":\"SFO\",\"destination\":\"BEG\",\"date\":\"2017-04-19\"},{\"origin\":\"BEG\",\"destination\":\"SFO\",\"date\":\"2017-05-21\"}],\"passengers\":{\"adultCount\":1,\"childCou
+    "data": "{\"request\":{\"slice\":[{\"origin\":\"SFO\",\"destination\":\"BEG\",\"date\":\"2017-04-19\"},{\"origin\":\"BEG\",\"destination\":\"SFO\",\"date\":\"2017-05-21\"}],\"passengers\":{\"adultCount\":1,\"childCout\":0},\"solutions\":5,\"refundable\":false}}"},"request":{}}
