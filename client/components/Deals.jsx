@@ -23,6 +23,7 @@ export default class Deals extends React.Component {
         }
     }
     componentDidMount() {
+        console.log(data);
         console.log(this.state.data);
     }
     render() {

@@ -63,7 +63,8 @@ export default class MapContainer extends React.Component {
     })());
 
     /* ################### Map Init ################### */
-    let map, places, autocomplete, place;
+    let map, places, autocomplete, place
+    let hotelSelected = false;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
 
@@ -129,29 +130,9 @@ export default class MapContainer extends React.Component {
     function onHotelSelected(e){
       console.log("hotels selected");
       e.preventDefault();
+      hotelSelected = true;
       place = autocomplete.getPlace();
-
-      if (place.geometry) {
-        map.panTo(place.geometry.location);
-        //console.log(map.getCenter().toUrlValue());
-        var exploreDestination = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
-        //on location change pass location to Explore parent, to be used by flights component
-        context.props.searchTargetLocation(exploreDestination);
-        map.setZoom(13);
-
-        search();
-        browserHistory.push({
-          pathname: '/hotels',
-          state: {
-            hotelData: context.state.hotelData
-          }
-        })
-        //hotels();
-      } else {
-        // searchForm.placeholder = "Enter Your Destination (E.g. Cancun, Mexico)";
-        searchForm.value = '';
-      }
-
+      search();
     }
 
     function onPlaceChanged() {
@@ -203,66 +184,75 @@ export default class MapContainer extends React.Component {
         console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
-          const search = {
-            bounds: map.getBounds(),
-            //radius: radius,
-            //query: interest
-            //types: someCondition === true ? types = [everything] : types = [lodging]
-            types: [
-              'amusement_park',
-              'aquarium',
-              'art_gallery',
-              'bar',
-              'book_store',
-              'bowling_alley',
-              'cafe',
-              'campground',
-              'casino',
-              'library',
-              //'lodging',
-              'movie_theater',
-              'museum',
-              'night_club',
-              'park',
-              'restaurant',
-              'spa',
-              'stadium',
-              'zoo'
-            ]
-          };
-          places.nearbySearch(search, function(results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              clearMarkers();
-              // Create a marker for each item found
-              for (var i = 0; i < results.length; i++) {
-                let iconImage = {
-                  url: results[i].icon,
-                  size: new google.maps.Size(71, 71),
-                  origin: new google.maps.Point(0, 0),
-                  anchor: new google.maps.Point(17, 34),
-                  scaledSize: new google.maps.Size(15, 15)
-                };
-                // Use marker animation to drop the icons incrementally on the map.
-                markers[i] = new google.maps.Marker({
-                  position: results[i].geometry.location,
-                  animation: google.maps.Animation.DROP,
-                  icon: iconImage
-                });
-                // If the user clicks a marker, call setPlace to update the object in the Place component.
-                markers[i].placeResult = results[i];
-                google.maps.event.addListener(markers[i], 'click', setPlace);
-                setTimeout(dropMarker(i), i * 10);
+          if (hotelSelected === false) {
+            const search = {
+              bounds: map.getBounds(),
+              //radius: radius,
+              //query: interest
+              //types: someCondition === true ? types = [everything] : types = [lodging]
+              types: [
+                'amusement_park',
+                'aquarium',
+                'art_gallery',
+                'bar',
+                'book_store',
+                'bowling_alley',
+                'cafe',
+                'campground',
+                'casino',
+                'library',
+                //'lodging',
+                'movie_theater',
+                'museum',
+                'night_club',
+                'park',
+                'restaurant',
+                'spa',
+                'stadium',
+                'zoo'
+              ]
+            };
+            places.nearbySearch(search, function (results, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                clearMarkers();
+                // Create a marker for each item found
+                for (var i = 0; i < results.length; i++) {
+                  let iconImage = {
+                    url: results[i].icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(15, 15)
+                  };
+                  // Use marker animation to drop the icons incrementally on the map.
+                  markers[i] = new google.maps.Marker({
+                    position: results[i].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    icon: iconImage
+                  });
+                  // If the user clicks a marker, call setPlace to update the object in the Place component.
+                  markers[i].placeResult = results[i];
+                  google.maps.event.addListener(markers[i], 'click', setPlace);
+                  setTimeout(dropMarker(i), i * 10);
+                }
               }
-            }
-          });
-        //search specifically for hotels for the hotels page
-        places.nearbySearch(hotelSearch, function(results, status) {
-            var hotels = results;
-            context.setState({
-              hotelData: hotels
-          });
-        })
-
+            });
+          }
+          else {
+            //search specifically for hotels for the hotels page
+            places.nearbySearch(hotelSearch, function (results, status) {
+              var hotels = results;
+              context.setState({
+                hotelData: hotels
+              }, function () {
+                browserHistory.push({
+                  pathname: '/hotels',
+                  state: {hotelData: context.state.hotelData}
+                })
+                hotelSelected = false;
+              });
+            })
+          }
       }
         // if ppl are looking for a particular interest in that city;
         else{
