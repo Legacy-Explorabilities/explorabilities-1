@@ -298,10 +298,9 @@ componentWillMount() {
                 setTimeout(dropMarker(i), i * 10);
               }
             }
-          }
-        );
+          });
+        }
       }
-    }
 
     function clearMarkers() {
       for (var i = 0; i < markers.length; i++) {
