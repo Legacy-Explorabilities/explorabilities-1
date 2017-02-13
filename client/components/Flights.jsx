@@ -98,61 +98,60 @@ export default class FlightsSearch extends React.Component {
               <button type="submit">Search Airline Deals</button>
               <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
-              <select className="selectFlight" name="departureAirports"
+              <select name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
               </select>
               <p>Select an Airport near your destination</p>
-              <select className="selectFlight" name="arrivalAirports"
+              <select name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
               >
                 {arrivalAirportsView}
               </select>
-              
+              <p>&nbsp;</p>
               <div>
-                <p>Departure date</p>
+                <p>Choose departure date</p>
                 <DatePicker
                   selected={context.state.departureDate}
                   onChange={setDepartureDate}
                 />
               </div>
-              
+              <p>&nbsp;</p>
               <div>
-                <p>Return date (for round-trip flights)</p>
+                <p>Choose return date (for round-trip flights)</p>
                 <DatePicker
                   selected={context.state.returnDate}
                   onChange={setReturnDate}
                 />
               </div>
-
               <p>&nbsp;</p>
-              <button type="submit" data-toggle="modal" data-target="loadingModal">Search Flights!</button>
+              <button type="submit" data-toggle="modal" data-target="#loadingModal">Search Flights!</button>
               <p>&nbsp;</p>
               <p>&nbsp;</p>
-
             </form>
 
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
+                  <div className="modal-body">
                     ...
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
             </div>
-            
+
+
           </div>
         </div>
       </div>
