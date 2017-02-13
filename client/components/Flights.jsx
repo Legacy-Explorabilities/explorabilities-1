@@ -84,7 +84,7 @@ export default class FlightsSearch extends React.Component {
         <option 
           value={airport.code} 
           name="userSelectedArrivalAirport">
-            {airport.code}:{airport.name}
+            {airport.code}: {airport.name}
         </option>
 
       )
@@ -98,7 +98,7 @@ export default class FlightsSearch extends React.Component {
               <button type="submit">Search Airline Deals</button>
               <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
-              <select name="departureAirports" name="departureAirports"
+              <select name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
@@ -216,7 +216,7 @@ export default class FlightsSearch extends React.Component {
               }
             ],
             "passengers": {
-              "adultCount": 1,
+              "adultCount": 1, 
               "childCount": 0,
             },
             "solutions": 5,
@@ -229,7 +229,7 @@ export default class FlightsSearch extends React.Component {
 
       axios({
         method: 'post',
-        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDAneVe-LTFEqyCEcq2FwgIoXzYalmi3is',
+        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDuf6lwcJMGBRt4exA2HdQlCy8PdDSRFDE',
         data: params,
         headers: {
           'content-type': 'application/json'
