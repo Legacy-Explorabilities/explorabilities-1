@@ -3,7 +3,8 @@ import axios from 'axios';
 import MapContainer from './MapContainer.jsx';
 import Place from './Place.jsx';
 import ItineraryList from './itineraryList.jsx';
-import Flights from './Flights.jsx';
+import FlightsSearch from './Flights.jsx';
+import FlightsView from './FlightsView.jsx';
 import Hotels from './bestHotelsInfo.jsx';
 
 export default class Explore extends React.Component {
@@ -19,6 +20,7 @@ export default class Explore extends React.Component {
       localAirports: [],
       hotels:[],
       thePlaceId: '',
+      foundFlights: []
     };
   }
 
@@ -81,17 +83,17 @@ export default class Explore extends React.Component {
           currentUserLocation={this.currentUserLocation.bind(this)}/>
         
         <div id="exploreContent" className="clearfix">
-          
-          <Flights 
+          <FlightsSearch 
             searchTargetLocation   = {this.state.userSearchLocation} 
             currentUserLocation    = {this.state.userLocation} 
-            placeVicinity = {this.state.place.vicinity}/>
-
+            placeVicinity = {this.state.place.vicinity}
+            updateFlights = {this.updateFlights.bind(this)}
+          />
+          <FlightsView foundFlights={this.state.foundFlights}/>
           <Place 
-            place={this.state.place} 
-            saveItinerary={this.saveItinerary.bind(this)}
-            getPlaceId={this.getPlaceId.bind(this)}/>
-
+              place={this.state.place} 
+              saveItinerary={this.saveItinerary.bind(this)}
+              getPlaceId={this.getPlaceId.bind(this)}/>
         </div>
 
       </div>
@@ -110,7 +112,12 @@ export default class Explore extends React.Component {
       place: JSON.parse(localStorage.places)
     });
   }*/
-
+  updateFlights(flights){
+    this.setState({
+      foundFlights: flights
+    });
+    console.log('STATE FROM EXPLORER ', this.state)
+  }
   updatePlace(place) {
     this.setState({
       place: place
