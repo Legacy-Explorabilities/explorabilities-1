@@ -206,7 +206,47 @@ export default class Explore extends React.Component {
   getPlaceId(id) {
     
     console.log('Clicked placeItem id', id);
+    this.setState({
+      thePlaceId: id
+    });
+    
+    /*//build map
+    const key = 'AIzaSyCBb0bm-_wNIf3oDMi-5PN_zeOf1bRWstI';
+    const url = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=places&callback=initMap';
 
+    window.initMap = initMap;
+    const ref = window.document.getElementsByTagName('script')[0];
+    const script = window.document.createElement('script');
+    script.src = url;
+    ref.parentNode.insertBefore(script, ref);
+    script.onload = function () {
+      this.remove();
+    };
+
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 37.775, lng: -122.42 },
+        zoom: 8,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false
+      });
+
+      const service = new google.maps.places.PlacesService(map);
+
+      service.getDetails({
+        placeId: id
+      }, (place, status) => {
+        console.log('===========');
+        console.log('Detailed Place information', place);
+        console.log('===========');
+      });
+      
+    }*/
+  
     // this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
       
     //   //pop up a window with detailed information
@@ -215,6 +255,7 @@ export default class Explore extends React.Component {
     // });  
   }
 
+  
 
 }
 
