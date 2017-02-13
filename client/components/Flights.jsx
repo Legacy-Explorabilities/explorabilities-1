@@ -5,6 +5,7 @@ import React from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import {browserHistory} from 'react-router';
 require('style!css!../../node_modules/react-datepicker/dist/react-datepicker.css');
 
 export default class FlightsSearch extends React.Component {
@@ -270,7 +271,7 @@ export default class FlightsSearch extends React.Component {
           var destinationAirportName = findAirportName(segment.leg[0].destination);
 
           var singleSegment = {
-            duration: segment.duration,
+            duration: moment.duration(segment.duration * 60000) + ' hours and ' + moment.duration(segment.duration * 60000).minutes() + ' minutes',
             carrier: carrierName,
             flightNumber: segment.flight.carrier + ' ' +segment.flight.number,
             id: segment.id,
@@ -286,10 +287,10 @@ export default class FlightsSearch extends React.Component {
             destination: destinationAirportName + ' (' + segment.leg[0].destination + ')',
             originTerminal: segment.leg[0].originTerminal,
             destinationTerminal: segment.leg[0].destinationTerminal,
-            duration: segment.leg[0].duration,
+            duration: moment.duration(segment.leg[0].duration * 60000).hours() + ' hours and ' + moment.duration(segment.leg[0].duration * 60000).minutes() + ' minutes',
             mileage: segment.leg[0].mileage,
             meal: segment.leg[0].meal,
-            connectionDuration: segment.connectionDuration 
+            connectionDuration: moment.duration(segment.connectionDuration  * 60000).hours() + ' hours and ' + moment.duration(segment.connectionDuration  * 60000).minutes() + ' minutes'
           }
           return singleSegment;
         };
@@ -306,7 +307,7 @@ export default class FlightsSearch extends React.Component {
             to: legs[legs.length-1].destination,
             departure: legs[0].departureTime,
             arrival: legs[legs.length-1].arrivalTime,
-            totalTripLength: slice.duration,
+            totalTripLength: moment.duration(slice.duration * 60000).hours() + ' hours and ' + moment.duration(slice.duration * 60000).minutes() + ' minutes',
             flightSegments: legs
           }
           console.log(singleSlice);
@@ -337,6 +338,7 @@ export default class FlightsSearch extends React.Component {
         var data = iterateThroguhData(response);
         context.props.updateFlights(data);
         console.log('SUCCESS QPX!!!', context);
+        
       })
       .catch(function(error) {
         console.log('ERROR QPX!', error);

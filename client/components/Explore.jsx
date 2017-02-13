@@ -6,10 +6,12 @@ import ItineraryList from './itineraryList.jsx';
 import FlightsSearch from './Flights.jsx';
 import FlightsView from './FlightsView.jsx';
 import Hotels from './bestHotelsInfo.jsx';
+import {browserHistory} from 'react-router';
+
 
 export default class Explore extends React.Component {
 
-  constructor(props) { 
+  constructor(props) {
     super(props);
     this.state = {
       place: [],
@@ -115,8 +117,12 @@ export default class Explore extends React.Component {
   updateFlights(flights){
     this.setState({
       foundFlights: flights
+    }, function(){
+      window.flightData = flights;
+      browserHistory.push('/airlines');
+      console.log('CHANGE PAGE TO AIRLINES IN UPDATEFLIGHTS FUNCITON ', this.state)
+
     });
-    console.log('STATE FROM EXPLORER ', this.state)
   }
   updatePlace(place) {
     this.setState({
