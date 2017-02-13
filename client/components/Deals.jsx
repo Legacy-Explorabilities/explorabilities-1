@@ -9,20 +9,28 @@ export default class Deals extends React.Component {
         data: {
             contents: [
             {
-                city: "Los Angeles",
+                cities: ["Los Angeles", "San Diego"],
                 dealName: "10% off at Disneyland!"
             },
             {
-                city: "San Jose",
+                cities: ["San Jose", "San Francisco"],
                 dealName:  "12% off at Great America!"
             },
                 {
-                    city: "San Jose",
+                    cities: ["San Jose", "San Francisco"],
                     dealName:  "Free tours at Winchester Mystery House!"
                 },
                 {
-                    city: "San Francisco",
+                    cities: ["San Jose", "San Francisco"],
                     dealName:  "20% off on wine tasting!"
+                },
+                {
+                    cities: ["Los Angeles", "San Diego"],
+                    dealName: "10% off at Universal Studios!"
+                },
+                {
+                    cities: ["Los Angeles", "San Diego"],
+                    dealName: "Free trip to the Wax Museum!"
                 }
         ]
         }
@@ -35,7 +43,7 @@ export default class Deals extends React.Component {
     render() {
         return (
             <div class="deals">
-                <h2>DEALS</h2>
+                <h2>DEALS for {sessionStorage.place}</h2>
                 {this.state.data.contents.map(function(obj){
                     return (<div><a href="#">{obj.dealName}</a></div>);
                 })}

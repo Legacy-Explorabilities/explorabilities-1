@@ -109,7 +109,7 @@ componentWillMount() {
 
       var hotelButton = document.getElementById('hotels');
       hotelButton.addEventListener('click', onHotelSelected);
-
+      sessionStorage.place = "San Francisco";
 
 
       autocomplete.addListener('place_changed', onPlaceChanged);
@@ -148,6 +148,7 @@ componentWillMount() {
       place = autocomplete.getPlace();
       document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
+      sessionStorage.place = place.name;
 
 
       context.props.updateQuery(place);
