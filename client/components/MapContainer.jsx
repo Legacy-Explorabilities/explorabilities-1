@@ -17,6 +17,9 @@ componentWillMount() {
   render() {
     return (
       <div>
+
+      <div id="googleMaps"></div>
+
         <div className="searchBox">
           <form>
             <label id="searchLabel">
@@ -34,9 +37,7 @@ componentWillMount() {
             &nbsp;&nbsp;&nbsp;<button id="submitInterest" type="submit">Submit</button>
           </form>
         </div>
-
-        <div id="googleMaps"></div>
-
+        
       </div>
     );
   }
@@ -95,6 +96,10 @@ componentWillMount() {
       
 
       places = new google.maps.places.PlacesService(map);
+
+      //Hanyen: pass places up to Explore.jsx so that I can pass it down to Place.jsx and placeItem.jsx
+      context.props.updatePlacesGoogleObject(places);
+
       google.maps.event.addListener(map, 'tilesloaded', function(){
         search();
       });
@@ -279,7 +284,7 @@ componentWillMount() {
 
               //hanyen: send the array of objects to Explore.jsx so that Place.jsx can render them
               context.props.updatePlace(results);
-              
+
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {

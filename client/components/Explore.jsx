@@ -12,11 +12,13 @@ export default class Explore extends React.Component {
     super(props);
     this.state = {
       place: [],
+      placesGoogleObject: {},
       query: '',
       itinerary: {},
       saveMessage: '',
       localAirports: [],
-      hotels:[]
+      hotels:[],
+      thePlaceId: '',
     };
   }
 
@@ -31,20 +33,53 @@ export default class Explore extends React.Component {
   //Flights's searchTargetLocation and currentUserLocation are passed down from here
   render() {
 
-    //Displaying detailed information for places
-    // @@ make sure this.state.place is passed down all the way to placeItem.jsx
-      //> pass down the place id to placeItem.jsx
-    // @@ create a function to do ajax call to Google to get detail information
-      //> put the in placeItem.jsx and make sure each instance of the component has it.
+    /*
+
+    Displaying detailed information for places
+    @@ make sure this.state.place is passed down all the way to placeItem.jsx
+      > pass down the place id to placeItem.jsx
+    @@ create a function to do ajax call to Google to get detail information
+      > put the in placeItem.jsx and make sure each instance of the component has it.
+      > to make ajax call to Google, need to instantiate the google place object
+      > either pass it down from Explore or instantiate it again in placeItem.jsx
+      > instantiate google place object in Place.jsx, then pass it down to placeItem.jsx
+      > make Place.jsx a child of MapContainer.jsx and pass down the google object
+        XXX problem because Place is not rendered from MapContainer, but from Explore.jsx
+      > From Explore.js, bind the method to set places and send it down to Map. Once bound, send it down to Place > placeItem
+        >> Figure out what  // updatePlace // does. ie. what object is being passed back from MapContainer.
+        >> updatePlace grab the summary of the place object so that I can render all the places.
+        >> need to figure out how to pass back the google place object.
+          >>> create updatePlacesGoogleObject method and pass it down to MapContainer
+          >>> on line 100 in MapContainer.jsx, send places object back to Explore
+          >>> send placesGoogleObject state down to Place.jsx and to placeItem.jsx
+          >>> in placeItem.jsx, the getDetails() method needs prints out all the placeIds. Why?
+          XXX dead end
+        >> need to control everything from Explore.jsx level. All we need from placeItem.jsx is the place_id of the component being clicked.
+          >>> remember that the saveItenerary also needs the place_id of the component
+          >>> 
+
+
+    @@ use bootstrap to display the popup
+      > research Bootstrap Popover. https://v4-alpha.getbootstrap.com/components/popovers/#example-enable-popovers-everywhere
+        > include tether.min.js
+        XXX does it work with React?
+    @@ use react-popover
+      > do research https://github.com/littlebits/react-popover
+
+      */
+
 
 
     return (
       <div id="exploreContainer">
+        
         <MapContainer
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
+          updatePlacesGoogleObject={this.updatePlacesGoogleObject.bind(this)}
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
           currentUserLocation={this.currentUserLocation.bind(this)}/>
+        
         <div id="exploreContent" className="clearfix">
           
           <Flights 
@@ -52,9 +87,13 @@ export default class Explore extends React.Component {
             currentUserLocation    = {this.state.userLocation} 
             placeVicinity = {this.state.place.vicinity}/>
 
-          <Place place={this.state.place} saveItinerary={this.saveItinerary.bind(this)}/>
+          <Place 
+            place={this.state.place} 
+            saveItinerary={this.saveItinerary.bind(this)}
+            getPlaceId={this.getPlaceId.bind(this)}/>
 
         </div>
+
       </div>
     );
   }
@@ -77,6 +116,13 @@ export default class Explore extends React.Component {
       place: place
     });
   }
+
+  updatePlacesGoogleObject(placesGoogleObject) {
+    this.setState({
+      placesGoogleObject: placesGoogleObject
+    });
+  }
+
   //user's target location - set from map container
   searchTargetLocation(location){
     //console.log(airports);
@@ -113,6 +159,7 @@ export default class Explore extends React.Component {
   }
 //ItineraryList. This function will save the item to database.
   saveItinerary() {
+    console.log('in saveItinerary');
     if (checkAuth()) {
       const context = this;
       console.log('Exlore.jsx saveItinerary()');
@@ -142,6 +189,20 @@ export default class Explore extends React.Component {
       alert('Please login');
     }
   }
+
+  getPlaceId(id) {
+    
+    console.log('Clicked placeItem id', id);
+
+    this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
+      
+      //pop up a window with detailed information
+      console.log('PlaceItem.jsx getDetails place object', place);
+      
+    });  
+  }
+
+
 }
 
 function checkAuth() {
