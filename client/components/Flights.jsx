@@ -95,7 +95,7 @@ export default class FlightsSearch extends React.Component {
         <div id='place'>
           <div id="placeContent" className='airport'>
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
-              <button type="submit">Search Airline Deals</button>
+              <button type="submit" data-toggle="modal" data-target="#loadingModal">Search Airline Deals</button>
               <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
               <select name="departureAirports"
@@ -126,26 +126,17 @@ export default class FlightsSearch extends React.Component {
                 />
               </div>
               <p>&nbsp;</p>
-              <button type="submit" data-toggle="modal" data-target="#loadingModal">Search Flights!</button>
-              <p>&nbsp;</p>
               <p>&nbsp;</p>
             </form>
 
-            <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="loadingModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                  <div className="modal-header" id="modalHeader">
+                    <h4 className="modal-title" id="exampleModalLabel">Please wait while we find your flights!</h4>
                   </div>
-                  <div className="modal-body">
-                    ...
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Save changes</button>
+                  <div className="modal-body" id="spinnerDiv">
+                    <img id="spinner" src="http://rs1185.pbsrc.com/albums/z358/SapientDevelopment/Images4JSFiddle/spinner-46x46.gif~c200"></img>
                   </div>
                 </div>
               </div>
@@ -358,6 +349,7 @@ export default class FlightsSearch extends React.Component {
         }
 
         var data = iterateThroguhData(response);
+        $("#loadingModal").modal('hide');
         context.props.updateFlights(data);
         console.log('SUCCESS QPX!!!', context);
         
