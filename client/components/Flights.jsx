@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 require('style!css!../../node_modules/react-datepicker/dist/react-datepicker.css');
 
-export default class Flights extends React.Component {
+export default class FlightsSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +15,9 @@ export default class Flights extends React.Component {
       arrivalAirports: [],
       userSelectedDepartureAirport: '',
       userSelectedArrivalAirport: '',
+      departureDate: '',
+      returnDate: '',
+      
     }
     //setInterval(function(){console.log('hello', props)}, 1000)
   }
@@ -39,6 +42,31 @@ export default class Flights extends React.Component {
       });
 
     }
+
+    function setDepartureDate (date) {
+      var now = moment();
+      if (now.isAfter(date)) {
+        alert('You can\'t select a date that has passed. Please select a valid date')
+      } else {
+        context.setState({
+          departureDate: date
+        });
+      } 
+    }
+
+    function setReturnDate (date) {
+      //var now = moment();
+      if (!context.state.departureDate) {
+        alert('Please select a departure date first!');
+      } else if (context.state.departureDate.isAfter(date)) {
+        alert('You can\'t select a date earlier than departure date. Please select a valid date')
+      } else {
+        context.setState({
+          returnDate: date
+        });
+      }
+    }
+
     let departureAirportsView = this.state.departureAirports.map(function(airport) {
       return (
         <option 
@@ -62,7 +90,7 @@ export default class Flights extends React.Component {
     });
 
     return (
-      <div>
+      <div> 
         <div id='place' className='airport'>
           <div id="placeContent">
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
@@ -81,13 +109,26 @@ export default class Flights extends React.Component {
               >
                 {arrivalAirportsView}
               </select>
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange} />
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange} />
-              <button type="submit">Search Deals</button>
+              <p>&nbsp;</p>
+              <div>
+                <p>Choose departure date</p>
+                <DatePicker
+                  selected={context.state.departureDate}
+                  onChange={setDepartureDate}
+                />
+              </div>
+              <p>&nbsp;</p>
+              <div>
+                <p>Choose return date (for round-trip flights)</p>
+                <DatePicker
+                  selected={context.state.returnDate}
+                  onChange={setReturnDate}
+                />
+              </div>
+              <p>&nbsp;</p>
+              <button type="submit">Search Flights!</button>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
             </form>
           </div>
         </div>
@@ -105,48 +146,86 @@ export default class Flights extends React.Component {
   }
   handleSubmit(e, context, a, d){
     e.preventDefault();
-    context.findFlights(
-      context.state.userSelectedDepartureAirport, 
-      context.state.userSelectedArrivalAirport
-    );
-  }
-  findFlights(origin, destination) {
-    if (origin && destination) {
-      var today = new Date();
-      var dd = today.getDate();
-      //The value returned by getMonth is an integer between 0 and 11, referring 0 to January, 1 to February, and so on.
-      var mm = today.getMonth() + 2; 
-      var yyyy = today.getFullYear();
-      var fullDate = yyyy + '-' + mm + '-' + dd;
-      //console.log(fullDate);
+    if (!context.state.departureDate && 
+        !context.state.userSelectedDepartureAirport &&
+        !context.state.userSelectedArrivalAirport){
+      alert('please select the choose city and flight dates')
+    } else {
+      console.log('button triggered submit', context.state, a)
 
-      //TODO: Create an input field for customer to choose the date
+      console.log(context.state.returnDate.isAfter(context.state.departureDate));
 
-      var flightSearchOptions = {
-        "request": {
-          "slice": [
-            {
-              "origin": origin,
-              "destination": destination,
-              "date": "2017-03-29"
-            },
-            {
-              "origin": destination,
-              "destination": origin,
-              "date": "2017-04-29"
-            },
-          ],
-          "passengers": {
-            "adultCount": 1,
-            "childCount": 0,
-          },
-          "solutions": 1,
-          "refundable": false
-        }
+      if (!!context.state.returnDate){
+        context.findFlights(
+          context,
+          context.state.userSelectedDepartureAirport, 
+          context.state.userSelectedArrivalAirport, 
+          true
+        );
+      } else {
+        context.findFlights(
+          context,
+          context.state.userSelectedDepartureAirport, 
+          context.state.userSelectedArrivalAirport, 
+          false
+        );
       }
+    }
     
-      var params = JSON.stringify(flightSearchOptions);
-      //console.log(params);
+  }
+  findFlights(context, origin, destination, roundTrip) {
+    if (!origin || !destination) {
+      alert('please search for destination city')
+    } else if (origin && destination) {   
+      console.log('origin and destination present in findFlights', origin, destination, context.state);
+     
+      //TODO: Create an input field for customer to choose the date
+      var params = '';
+      if (roundTrip) {
+        var roundTripFlightSearch = {
+          "request": {
+            "slice": [
+              {
+                "origin": origin,
+                "destination": destination,
+                "date": context.state.departureDate.format("YYYY-MM-DD")
+              },
+              {
+                "origin": destination,
+                "destination": origin,
+                "date": context.state.returnDate.format("YYYY-MM-DD")
+              },
+            ],
+            "passengers": {
+              "adultCount": 1,
+              "childCount": 0,
+            },
+            "solutions": 5,
+            "refundable": false
+          }
+        }
+        params = JSON.stringify(roundTripFlightSearch); 
+      } else {
+        var oneWayFlightSearch = {
+          "request": {
+            "slice": [
+              {
+                "origin": origin,
+                "destination": destination,
+                "date": context.state.departureDate.format("YYYY-MM-DD")
+              }
+            ],
+            "passengers": {
+              "adultCount": 1,
+              "childCount": 0,
+            },
+            "solutions": 5,
+            "refundable": false
+          }
+        }
+        params = JSON.stringify(oneWayFlightSearch); 
+      }
+      console.log('FLIGHT PARAMETERS', params);
 
       axios({
         method: 'post',
@@ -157,7 +236,108 @@ export default class Flights extends React.Component {
         }
       })
       .then(function(response) {
-        console.log('Success QPX', JSON.stringify(response));
+        function findAirportName(airportCode){
+          var airports = response.data.trips.data.airport;
+          for (var i = 0; i < airports.length; i ++) {
+            if (airports[i].code === airportCode){
+              return airports[i].name
+            }
+          }
+        };
+
+        function findCarrierName(carrierCode){
+          var carriers = response.data.trips.data.carrier;
+
+          for (var i = 0; i < carriers.length; i ++) {
+            if (carriers[i].code === carrierCode){
+              return carriers[i].name
+            }
+          }
+        };
+
+        function findAircraftName(aircraftCode){
+          var aircrafts = response.data.trips.data.aircraft;
+          for (var i = 0; i < aircrafts.length; i ++) {
+            if (aircrafts[i].code === aircraftCode){
+              return aircrafts[i].name
+            }
+          }
+        };
+        function iterateThroughSegments(segment){
+
+          var carrierName = findCarrierName(segment.flight.carrier);
+          var aircraftName = findAircraftName(segment.leg[0].aircraft);
+          var originAirportName = findAirportName(segment.leg[0].origin);
+          var destinationAirportName = findAirportName(segment.leg[0].destination);
+
+          var singleSegment = {
+            duration: segment.duration,
+            carrier: carrierName,
+            flightNumber: segment.flight.carrier + ' ' +segment.flight.number,
+            id: segment.id,
+            cabin: segment.cabin,
+            bookingCode: segment.bookingCode,
+            bookingCodeCount: segment.bookingCodeCount,
+            kind: segment.leg[0].kind,
+            id: segment.leg[0].id,
+            aircraft: aircraftName,
+            arrivalTime: moment(segment.leg[0].arrivalTime).format('MMMM Do YYYY, h:mm:ss a'),
+            departureTime: moment(segment.leg[0].departureTime).format('MMMM Do YYYY, h:mm:ss a'),
+            origin: originAirportName + ' (' + segment.leg[0].origin + ')',
+            destination: destinationAirportName + ' (' + segment.leg[0].destination + ')',
+            originTerminal: segment.leg[0].originTerminal,
+            destinationTerminal: segment.leg[0].destinationTerminal,
+            duration: segment.leg[0].duration,
+            mileage: segment.leg[0].mileage,
+            meal: segment.leg[0].meal,
+            connectionDuration: segment.connectionDuration 
+          }
+          return singleSegment;
+        };
+
+        function iterateThroughSlices(slice){
+          //there will be one slice for one-way flights
+          //two for round-trip
+          var legs = slice.segment.map(function(leg) {
+            return iterateThroughSegments(leg);
+          });
+          //TODO: must iterate through slice.segment
+          var singleSlice = {
+            from: legs[0].origin,
+            to: legs[legs.length-1].destination,
+            departure: legs[0].departureTime,
+            arrival: legs[legs.length-1].arrivalTime,
+            totalTripLength: slice.duration,
+            flightSegments: legs
+          }
+          console.log(singleSlice);
+          return singleSlice;
+        };
+
+        function iterateThroughTripOptions(tripOption){
+          var slices = tripOption.slice.map(function(singleSlice){
+            return iterateThroughSlices(singleSlice);
+          });
+
+          var singleTripOption = {
+            saleTotal: tripOption.saleTotal,
+            outgoingTrip: slices[0],
+            returnTrip: !!slices[1] ? slices[1] : false,
+          };
+          return singleTripOption;
+        }
+
+        function iterateThroguhData(flightData){
+          var result = [];
+          flightData.data.trips.tripOption.forEach(function(singleTripOption){
+            result.push(iterateThroughTripOptions(singleTripOption))
+          });
+          return result;
+        }
+
+        var data = iterateThroguhData(response);
+        context.props.updateFlights(data);
+        console.log('SUCCESS QPX!!!', context);
       })
       .catch(function(error) {
         console.log('ERROR QPX!', error);
@@ -170,6 +350,7 @@ export default class Flights extends React.Component {
     console.log('findDepartureAirports');
     /*Make a request to the server which will make ghe get request
     when data comes back, set this (Flights) component's state to that data*/
+
     this.getAirportDataFromServer(currentUserLocation, function (data){
       
       var filteredAirports = data.filter(function(airport){
