@@ -98,13 +98,13 @@ export default class FlightsSearch extends React.Component {
               <button type="submit">Search Airline Deals</button>
               <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
-              <select name="departureAirports"
+              <select className="selectFlight" name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
               </select>
               <p>Select an Airport near your destination</p>
-              <select name="arrivalAirports"
+              <select className="selectFlight" name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
               >
                 {arrivalAirportsView}

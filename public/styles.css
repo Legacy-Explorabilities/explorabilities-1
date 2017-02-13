@@ -48,6 +48,10 @@ button {
 
 }
 
+.selectFlight {
+  font-size: 18px;
+}
+
 .searchBox {
   background-color: #777;
   /*margin-top: 35px;*/
@@ -65,6 +69,10 @@ button {
 
 .hotelPage {
    margin-top: 65px;
+}
+
+.hotelPageComponent {
+  padding-top: 30px;
 }
 
 .navLink {
@@ -229,7 +237,7 @@ button {
 }
 
 #placeContent {
-  padding: 15px;
+  padding: 20px;
 }
 
 #authHeader {
