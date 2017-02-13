@@ -5,6 +5,7 @@ import React from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import {browserHistory} from 'react-router';
 require('style!css!../../node_modules/react-datepicker/dist/react-datepicker.css');
 
 export default class FlightsSearch extends React.Component {
@@ -83,52 +84,48 @@ export default class FlightsSearch extends React.Component {
         <option 
           value={airport.code} 
           name="userSelectedArrivalAirport">
-            {airport.code}:{airport.name}
+            {airport.code}: {airport.name}
         </option>
 
       )
     });
 
     return (
-      <div> 
-        <div id='place' className='airport'>
-          <div id="placeContent">
+      <div>
+        <div id='place'>
+          <div id="placeContent" className='airport'>
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
-              <h3 className="placeHeader">Airlines</h3>
-              <p>&nbsp;</p>
+              <button type="submit">Search Airline Deals</button>
+              <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
-              <select name="departureAirports" name="departureAirports"
+              <select className="selectFlight" name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
               </select>
-              <p>&nbsp;</p>
-              <p>Select an Airport near {sessionStorage.targetVicinity}</p>
-              <select name="arrivalAirports"
+              <p>Select an Airport near your destination</p>
+              <select className="selectFlight" name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
               >
                 {arrivalAirportsView}
               </select>
-              <p>&nbsp;</p>
+              
               <div>
-                <p>Choose departure date</p>
+                <p>Departure date</p>
                 <DatePicker
                   selected={context.state.departureDate}
                   onChange={setDepartureDate}
                 />
               </div>
-              <p>&nbsp;</p>
+              
               <div>
-                <p>Choose return date (for round-trip flights)</p>
+                <p>Return date (for round-trip flights)</p>
                 <DatePicker
                   selected={context.state.returnDate}
                   onChange={setReturnDate}
                 />
               </div>
-              <p>&nbsp;</p>
-              <button type="submit">Search Flights!</button>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
+              
             </form>
           </div>
         </div>
@@ -144,14 +141,14 @@ export default class FlightsSearch extends React.Component {
       this.findArrivalAirports(location.searchTargetLocation);
     }
   }
-  handleSubmit(e, context, a, d){
+  handleSubmit(e, context){
     e.preventDefault();
     if (!context.state.departureDate && 
         !context.state.userSelectedDepartureAirport &&
         !context.state.userSelectedArrivalAirport){
       alert('please select the choose city and flight dates')
     } else {
-      console.log('button triggered submit', context.state, a)
+      console.log('button triggered submit', context.state)
 
       console.log(context.state.returnDate.isAfter(context.state.departureDate));
 
@@ -216,7 +213,7 @@ export default class FlightsSearch extends React.Component {
               }
             ],
             "passengers": {
-              "adultCount": 1,
+              "adultCount": 1, 
               "childCount": 0,
             },
             "solutions": 5,
@@ -229,7 +226,7 @@ export default class FlightsSearch extends React.Component {
 
       axios({
         method: 'post',
-        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDAneVe-LTFEqyCEcq2FwgIoXzYalmi3is',
+        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyDuf6lwcJMGBRt4exA2HdQlCy8PdDSRFDE',
         data: params,
         headers: {
           'content-type': 'application/json'
@@ -271,7 +268,7 @@ export default class FlightsSearch extends React.Component {
           var destinationAirportName = findAirportName(segment.leg[0].destination);
 
           var singleSegment = {
-            duration: segment.duration,
+            duration: moment.duration(segment.duration * 60000) + ' hours and ' + moment.duration(segment.duration * 60000).minutes() + ' minutes',
             carrier: carrierName,
             flightNumber: segment.flight.carrier + ' ' +segment.flight.number,
             id: segment.id,
@@ -287,10 +284,10 @@ export default class FlightsSearch extends React.Component {
             destination: destinationAirportName + ' (' + segment.leg[0].destination + ')',
             originTerminal: segment.leg[0].originTerminal,
             destinationTerminal: segment.leg[0].destinationTerminal,
-            duration: segment.leg[0].duration,
+            duration: moment.duration(segment.leg[0].duration * 60000).hours() + ' hours and ' + moment.duration(segment.leg[0].duration * 60000).minutes() + ' minutes',
             mileage: segment.leg[0].mileage,
             meal: segment.leg[0].meal,
-            connectionDuration: segment.connectionDuration 
+            connectionDuration: moment.duration(segment.connectionDuration  * 60000).hours() + ' hours and ' + moment.duration(segment.connectionDuration  * 60000).minutes() + ' minutes'
           }
           return singleSegment;
         };
@@ -307,7 +304,7 @@ export default class FlightsSearch extends React.Component {
             to: legs[legs.length-1].destination,
             departure: legs[0].departureTime,
             arrival: legs[legs.length-1].arrivalTime,
-            totalTripLength: slice.duration,
+            totalTripLength: moment.duration(slice.duration * 60000).hours() + ' hours and ' + moment.duration(slice.duration * 60000).minutes() + ' minutes',
             flightSegments: legs
           }
           console.log(singleSlice);
@@ -338,6 +335,7 @@ export default class FlightsSearch extends React.Component {
         var data = iterateThroguhData(response);
         context.props.updateFlights(data);
         console.log('SUCCESS QPX!!!', context);
+        
       })
       .catch(function(error) {
         console.log('ERROR QPX!', error);

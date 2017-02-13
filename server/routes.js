@@ -42,6 +42,7 @@ routes.post('/iatacodes/', function(req, res) {
 });
 
 routes.get('/itinerary', itineraryCtrl.retreive);
+routes.get('/itinerary', itineraryCtrl.retreive);
 routes.post('/itinerary', itineraryCtrl.save);
 
 routes.get('/*', function(req, res) {

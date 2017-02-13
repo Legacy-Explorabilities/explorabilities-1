@@ -17,6 +17,9 @@ componentWillMount() {
   render() {
     return (
       <div>
+
+      <div id="googleMaps"></div>
+
         <div className="searchBox">
           <form>
             <label id="searchLabel">
@@ -34,9 +37,7 @@ componentWillMount() {
             &nbsp;&nbsp;&nbsp;<button id="submitInterest" type="submit">Submit</button>
           </form>
         </div>
-
-        <div id="googleMaps"></div>
-
+        
       </div>
     );
   }
@@ -98,6 +99,7 @@ componentWillMount() {
       
 
       places = new google.maps.places.PlacesService(map);
+
       google.maps.event.addListener(map, 'tilesloaded', function(){
         search();
       });
@@ -299,6 +301,10 @@ componentWillMount() {
           places.nearbySearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
+
+              //hanyen: send the array of objects to Explore.jsx so that Place.jsx can render them
+              context.props.updatePlace(results);
+
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -347,6 +353,10 @@ componentWillMount() {
           places.textSearch(search, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               clearMarkers();
+
+              //hanyen: send the array of objects to Explore.jsx so that Place.jsx can render them
+              context.props.updatePlace(results);
+
               // Create a marker for each item found
               for (var i = 0; i < results.length; i++) {
                 let iconImage = {
@@ -395,7 +405,10 @@ componentWillMount() {
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;
           }
-          context.props.updatePlace(place);
+          console.log('===================')
+          console.log('Detailed place info', place);
+          console.log('===================')
+          // context.props.updatePlace(place);
         });
     }
     };

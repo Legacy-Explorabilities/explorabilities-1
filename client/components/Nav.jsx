@@ -5,7 +5,6 @@ import authHelpers from '../auth/auth-helpers.js';
 export default class Nav extends React.Component {
 
   render() {
-    console.log('inside render');
     return (
       <nav className="navbar navbar-fixed-top">
         
@@ -26,7 +25,7 @@ export default class Nav extends React.Component {
               <Link to="deals"><p className="navLink">Deals</p></Link>
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-6 navMyPlaceLogoutButton">
             <Link to="myplaces">
               <button>My Places</button>
             </Link>

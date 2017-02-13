@@ -9,6 +9,7 @@ import Signup from './auth/signup.jsx';
 import Explore from './components/Explore.jsx';
 import MyPlaces from './components/MyPlaces.jsx';
 import Airlines from './components/Airlines.jsx';
+import FlightDetails from './components/FlightDetails.jsx';
 // import Flights from './components/Flights.jsx';
 import Deals from './components/Deals.jsx';
 
@@ -29,6 +30,12 @@ ReactDOM.render(
         <Route path="/explore" component={Explore}/>
         <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
         <Route path="/airlines" component={Airlines} onEnter={requireAuth}/>
+        <Route path="/option1" component={FlightDetails} onEnter={requireAuth}/>
+        <Route path="/option2" component={FlightDetails} onEnter={requireAuth}/>
+        <Route path="/option3" component={FlightDetails} onEnter={requireAuth}/>
+        <Route path="/option4" component={FlightDetails} onEnter={requireAuth}/>
+        <Route path="/option5" component={FlightDetails} onEnter={requireAuth}/>
+
         <Route path="/deals" component={Deals} onEnter={requireAuth}/>
 
          <Route path="/hotels" component={Hotels}/>

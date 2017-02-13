@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Signup = (props) => (
-  <div id="signup">
-    <h2>Manage your next vacation. Find things-to-do and local events and store it all in one place.</h2>
+  <div id="signup" className="loginSignupPage">
+    <h2>Manage your next vacation with us!</h2>
     <form name="signupForm" onSubmit={props.signup}>
       <div>
         <input type="email" name="email" placeholder="Email" required />
