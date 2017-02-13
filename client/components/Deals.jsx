@@ -45,7 +45,9 @@ export default class Deals extends React.Component {
             <div class="deals">
                 <h2>DEALS for {sessionStorage.place}</h2>
                 {this.state.data.contents.map(function(obj){
-                    return (<div><a href="#">{obj.dealName}</a></div>);
+                    if (obj.includes(sessionStorage.place)) {
+                        return (<div><a href="#">{obj.dealName}</a></div>);
+                    }
                 })}
             </div>
         );
