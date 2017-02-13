@@ -171,8 +171,16 @@ export default class Explore extends React.Component {
     });
   }
 //ItineraryList. This function will save the item to database.
-  saveItinerary() {
+  saveItinerary(id) {
+    console.log('==================');
+    console.log(this.state.query);
+    console.log('==================');
     console.log('in saveItinerary');
+    console.log('token', localStorage.token);
+    console.log('itineraryID', this.state.query.place_id);
+    console.log('itineraryName', this.state.query.name);
+    console.log('placeIDs', id);
+    console.log('==================');
     if (checkAuth()) {
       const context = this;
       console.log('Exlore.jsx saveItinerary()');
@@ -185,7 +193,7 @@ export default class Explore extends React.Component {
         token: localStorage.token,
         itineraryID: this.state.query.place_id,
         itineraryName: this.state.query.name,
-        placeIDs: Object.keys(this.state.itinerary)
+        placeIDs: id
       })
       .then(function(res) {
         if (res.status === 200) {
