@@ -5,7 +5,6 @@ import authHelpers from '../auth/auth-helpers.js';
 export default class Nav extends React.Component {
 
   render() {
-    console.log('inside render');
     return (
       <nav className="navbar navbar-fixed-top">
         

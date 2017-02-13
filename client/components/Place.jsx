@@ -31,15 +31,13 @@ export default class Place extends React.Component {
   }*/
 
   render() {
-    console.log('Place.jsx props.place: ', this.props.place); //Find out what's in props
-    console.log('this.props.place.length', this.props.place.length);
     if (this.props.place.length > 0) {
       return (
         <div>
         {this.props.place.map((placeitem) => (
           <PlaceItem 
             key={placeitem.id}
-            thePlaceId={placeitem.id}
+            thePlaceId={placeitem.place_id}
             type={placeitem.types[0]}
             name={placeitem.name}
             rating={placeitem.rating} 
