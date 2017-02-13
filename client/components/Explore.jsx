@@ -173,7 +173,7 @@ export default class Explore extends React.Component {
 //ItineraryList. This function will save the item to database.
   saveItinerary(id) {
     console.log('==================');
-    console.log(this.state.query);
+    console.log('state.query', this.state.query);
     console.log('==================');
     console.log('in saveItinerary');
     console.log('token', localStorage.token);
