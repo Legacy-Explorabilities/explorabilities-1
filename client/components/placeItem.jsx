@@ -11,7 +11,7 @@ export default class PlaceItem extends React.Component {
   }
 
   componentDidMount() {
-    console.log('PlaceItem.jsx props', this.props);
+    // console.log('PlaceItem.jsx props', this.props);
     this.state.thePlaceId = this.props.thePlaceId;
   }
 

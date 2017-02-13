@@ -80,7 +80,6 @@ export default class Explore extends React.Component {
         <MapContainer
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
-          updatePlacesGoogleObject={this.updatePlacesGoogleObject.bind(this)}
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
           currentUserLocation={this.currentUserLocation.bind(this)}/>
         
@@ -127,12 +126,6 @@ export default class Explore extends React.Component {
   updatePlace(place) {
     this.setState({
       place: place
-    });
-  }
-
-  updatePlacesGoogleObject(placesGoogleObject) {
-    this.setState({
-      placesGoogleObject: placesGoogleObject
     });
   }
 
@@ -183,17 +176,16 @@ export default class Explore extends React.Component {
     console.log('==================');
     if (checkAuth()) {
       const context = this;
-      console.log('Exlore.jsx saveItinerary()');
-      this.state.itinerary[this.state.place.place_id] = this.state.place;
-      this.setState({
-        itinerary: this.state.itinerary
-      });
+      // this.state.itinerary[this.state.place.place_id] = this.state.place;
+      // this.setState({
+      //   itinerary: this.state.itinerary
+      // });
 
       axios.post('/itinerary', {
         token: localStorage.token,
         itineraryID: this.state.query.place_id,
         itineraryName: this.state.query.name,
-        placeIDs: id
+        placeIDs: [id]
       })
       .then(function(res) {
         if (res.status === 200) {
@@ -215,12 +207,12 @@ export default class Explore extends React.Component {
     
     console.log('Clicked placeItem id', id);
 
-    this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
+    // this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
       
-      //pop up a window with detailed information
-      console.log('PlaceItem.jsx getDetails place object', place);
+    //   //pop up a window with detailed information
+    //   console.log('PlaceItem.jsx getDetails place object', place);
       
-    });  
+    // });  
   }
 
 

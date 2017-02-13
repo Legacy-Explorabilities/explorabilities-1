@@ -97,9 +97,6 @@ componentWillMount() {
 
       places = new google.maps.places.PlacesService(map);
 
-      //Hanyen: pass places up to Explore.jsx so that I can pass it down to Place.jsx and placeItem.jsx
-      context.props.updatePlacesGoogleObject(places);
-
       google.maps.event.addListener(map, 'tilesloaded', function(){
         search();
       });
@@ -251,7 +248,7 @@ componentWillMount() {
                 });
                 // If the user clicks a marker, call setPlace to update the object in the Place component.
                 markers[i].placeResult = results[i];
-                // google.maps.event.addListener(markers[i], 'click', setPlace);
+                google.maps.event.addListener(markers[i], 'click', setPlace);
                 setTimeout(dropMarker(i), i * 10);
               }
             }
@@ -303,7 +300,7 @@ componentWillMount() {
                 });
                 // If the user clicks a marker, call setPlace to update the object in the Place component.
                 markers[i].placeResult = results[i];
-                // google.maps.event.addListener(markers[i], 'click', setPlace);
+                google.maps.event.addListener(markers[i], 'click', setPlace);
                 setTimeout(dropMarker(i), i * 10);
               }
             }
@@ -334,7 +331,10 @@ componentWillMount() {
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;
           }
-          context.props.updatePlace(place);
+          console.log('===================')
+          console.log('Detailed place info', place);
+          console.log('===================')
+          // context.props.updatePlace(place);
         });
     }
     };
