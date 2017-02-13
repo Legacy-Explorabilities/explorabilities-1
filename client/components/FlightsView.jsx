@@ -17,3 +17,7 @@ export default class FlightsSearch extends React.Component {
     )
   }
 }
+
+/*$('.spinner img').show();
+ $('.spinner img').fadeOut('fast');
+ <div class="spinner"><img src="images/spiffygif_46x46.gif"></div>*/
