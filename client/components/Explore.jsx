@@ -80,7 +80,6 @@ export default class Explore extends React.Component {
         <MapContainer
           updatePlace={this.updatePlace.bind(this)} 
           updateQuery={this.updateQuery.bind(this)} 
-          updatePlacesGoogleObject={this.updatePlacesGoogleObject.bind(this)}
           searchTargetLocation={this.searchTargetLocation.bind(this)} 
           currentUserLocation={this.currentUserLocation.bind(this)}/>
         
@@ -130,12 +129,6 @@ export default class Explore extends React.Component {
     });
   }
 
-  updatePlacesGoogleObject(placesGoogleObject) {
-    this.setState({
-      placesGoogleObject: placesGoogleObject
-    });
-  }
-
   //user's target location - set from map container
   searchTargetLocation(location){
     //console.log(airports);
@@ -171,21 +164,28 @@ export default class Explore extends React.Component {
     });
   }
 //ItineraryList. This function will save the item to database.
-  saveItinerary() {
+  saveItinerary(id) {
+    console.log('==================');
+    console.log('state.query', this.state.query);
+    console.log('==================');
     console.log('in saveItinerary');
+    console.log('token', localStorage.token);
+    console.log('itineraryID', this.state.query.place_id);
+    console.log('itineraryName', this.state.query.name);
+    console.log('placeIDs', id);
+    console.log('==================');
     if (checkAuth()) {
       const context = this;
-      console.log('Exlore.jsx saveItinerary()');
-      this.state.itinerary[this.state.place.place_id] = this.state.place;
-      this.setState({
-        itinerary: this.state.itinerary
-      });
+      // this.state.itinerary[this.state.place.place_id] = this.state.place;
+      // this.setState({
+      //   itinerary: this.state.itinerary
+      // });
 
       axios.post('/itinerary', {
         token: localStorage.token,
         itineraryID: this.state.query.place_id,
         itineraryName: this.state.query.name,
-        placeIDs: Object.keys(this.state.itinerary)
+        placeIDs: [id]
       })
       .then(function(res) {
         if (res.status === 200) {
@@ -206,15 +206,56 @@ export default class Explore extends React.Component {
   getPlaceId(id) {
     
     console.log('Clicked placeItem id', id);
+    this.setState({
+      thePlaceId: id
+    });
+    
+    /*//build map
+    const key = 'AIzaSyCBb0bm-_wNIf3oDMi-5PN_zeOf1bRWstI';
+    const url = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=places&callback=initMap';
 
-    this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
+    window.initMap = initMap;
+    const ref = window.document.getElementsByTagName('script')[0];
+    const script = window.document.createElement('script');
+    script.src = url;
+    ref.parentNode.insertBefore(script, ref);
+    script.onload = function () {
+      this.remove();
+    };
+
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 37.775, lng: -122.42 },
+        zoom: 8,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false
+      });
+
+      const service = new google.maps.places.PlacesService(map);
+
+      service.getDetails({
+        placeId: id
+      }, (place, status) => {
+        console.log('===========');
+        console.log('Detailed Place information', place);
+        console.log('===========');
+      });
       
-      //pop up a window with detailed information
-      console.log('PlaceItem.jsx getDetails place object', place);
+    }*/
+  
+    // this.state.placesGoogleObject.getDetails({placeId: '9d8f15a1eeb97beb2644f06bfa08a72384c4fc2a'}, function(place, status) {
       
-    });  
+    //   //pop up a window with detailed information
+    //   console.log('PlaceItem.jsx getDetails place object', place);
+      
+    // });  
   }
 
+  
 
 }
 

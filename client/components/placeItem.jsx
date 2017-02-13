@@ -11,7 +11,7 @@ export default class PlaceItem extends React.Component {
   }
 
   componentDidMount() {
-    console.log('PlaceItem.jsx props', this.props);
+    // console.log('PlaceItem.jsx props', this.props);
     this.state.thePlaceId = this.props.thePlaceId;
   }
 
@@ -19,10 +19,10 @@ export default class PlaceItem extends React.Component {
     return (
       <div id='place'>
         <div id="placeContent">
-        <button onClick={this.props.saveItinerary}>Add</button>
+        <button onClick={() => this.props.saveItinerary(this.state.thePlaceId)}>Add</button>
         <div></div>
         <p><strong>{this.props.type}</strong></p>
-        <h3><Link to="#" onClick={this.props.getPlaceId(this.state.thePlaceId)}>{this.props.name}</Link></h3>
+        <h3><Link to="#" onClick={() => this.props.getPlaceId(this.state.thePlaceId)}>{this.props.name}</Link></h3>
         <table>
           <tbody>
             <tr id="place-address-row" className="place_row">
