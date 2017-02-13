@@ -109,26 +109,23 @@ export default class FlightsSearch extends React.Component {
               >
                 {arrivalAirportsView}
               </select>
-              <p>&nbsp;</p>
+              
               <div>
-                <p>Choose departure date</p>
+                <p>Departure date</p>
                 <DatePicker
                   selected={context.state.departureDate}
                   onChange={setDepartureDate}
                 />
               </div>
-              <p>&nbsp;</p>
+              
               <div>
-                <p>Choose return date (for round-trip flights)</p>
+                <p>Return date (for round-trip flights)</p>
                 <DatePicker
                   selected={context.state.returnDate}
                   onChange={setReturnDate}
                 />
               </div>
-              <p>&nbsp;</p>
-              <button type="submit">Search Flights!</button>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
+              
             </form>
           </div>
         </div>
