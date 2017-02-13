@@ -5,16 +5,18 @@ const itineraryCtrl = require('./db/itinerary/itineraryController.js');
 const routes = express();
 const request = require('request');
 
-const db = require('../database.js');
 
-const Deal = db.define('deal', {
-  city: {
-    type: Sequelize.STRING
-  },
-  dealName: {
-    type: Sequelize.STRING
-  }
-});
+//push dummy deal data to the db
+//const db = require('../database.js');
+//
+//const Deal = db.define('deal', {
+//  city: {
+//    type: Sequelize.STRING
+//  },
+//  dealName: {
+//    type: Sequelize.STRING
+//  }
+//});
 
 //Parse incoming body
 routes.use(bodyParser.urlencoded({extended: true}));
