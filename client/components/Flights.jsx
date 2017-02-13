@@ -90,20 +90,19 @@ export default class FlightsSearch extends React.Component {
     });
 
     return (
-      <div> 
-        <div id='place' className='airport'>
-          <div id="placeContent">
+      <div>
+        <div id='place'>
+          <div id="placeContent" className='airport'>
             <form onSubmit={(e)=>{context.handleSubmit(e, context)}}>
-              <h3 className="placeHeader">Airlines</h3>
-              <p>&nbsp;</p>
+              <button type="submit">Search Airline Deals</button>
+              <h2 className="placeHeader">Airlines</h2>
               <p>Select an Airport near you</p>
               <select name="departureAirports" name="departureAirports"
               onChange={setDepartureAirport.bind(this, 'departureAirports')}
               >
                 {departureAirportsView}
               </select>
-              <p>&nbsp;</p>
-              <p>Select an Airport near {sessionStorage.targetVicinity}</p>
+              <p>Select an Airport near your destination</p>
               <select name="arrivalAirports"
               onChange={setArrivalAirport.bind(this, 'arrivalAirports')}
               >

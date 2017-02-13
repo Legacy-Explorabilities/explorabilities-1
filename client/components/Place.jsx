@@ -36,12 +36,16 @@ export default class Place extends React.Component {
     if (this.props.place.length > 0) {
       return (
         <div>
-        {this.props.place.map((placeitem, index) => (
+        {this.props.place.map((placeitem) => (
           <PlaceItem 
+            key={placeitem.id}
+            thePlaceId={placeitem.id}
+            type={placeitem.types[0]}
             name={placeitem.name}
             rating={placeitem.rating} 
             vicinity={placeitem.vicinity}
             saveItinerary={this.props.saveItinerary}
+            getPlaceId={this.props.getPlaceId}
           />
         ))}
         </div>
@@ -55,4 +59,8 @@ export default class Place extends React.Component {
       </div>
     );
   }
+
+
+
+
 }
