@@ -68,7 +68,10 @@ componentWillMount() {
     })());
 
     /* ################### Map Init ################### */
+
+
     let map, places, autocomplete, place;
+
     let hotelSelected = false;
     let markers = [];
     const searchForm = document.getElementById('searchForm');
@@ -106,7 +109,7 @@ componentWillMount() {
 
       var hotelButton = document.getElementById('hotels');
       hotelButton.addEventListener('click', onHotelSelected);
-
+      sessionStorage.place = "San Francisco";
 
 
       autocomplete.addListener('place_changed', onPlaceChanged);
@@ -136,8 +139,8 @@ componentWillMount() {
     function onHotelSelected(e){
       console.log("hotels selected");
       e.preventDefault();
-      place = autocomplete.getPlace();
       hotelSelected = true;
+      place = autocomplete.getPlace();
       search();
     }
 
@@ -145,6 +148,7 @@ componentWillMount() {
       place = autocomplete.getPlace();
       document.getElementById('interestSearch').value = '';
       sessionStorage.targetVicinity = place.vicinity;
+      sessionStorage.place = place.name;
 
 
       context.props.updateQuery(place);
@@ -194,6 +198,77 @@ componentWillMount() {
         console.log(map.getBounds());
         // if ppl are looking for a new city;
         if (interest === ''){
+
+          if (hotelSelected === false) {
+            const search = {
+              bounds: map.getBounds(),
+              //radius: radius,
+              //query: interest
+              //types: someCondition === true ? types = [everything] : types = [lodging]
+              types: [
+                'amusement_park',
+                'aquarium',
+                'art_gallery',
+                'bar',
+                'book_store',
+                'bowling_alley',
+                'cafe',
+                'campground',
+                'casino',
+                'library',
+                //'lodging',
+                'movie_theater',
+                'museum',
+                'night_club',
+                'park',
+                'restaurant',
+                'spa',
+                'stadium',
+                'zoo'
+              ]
+            };
+            places.nearbySearch(search, function (results, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                clearMarkers();
+                // Create a marker for each item found
+                for (var i = 0; i < results.length; i++) {
+                  let iconImage = {
+                    url: results[i].icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(15, 15)
+                  };
+                  // Use marker animation to drop the icons incrementally on the map.
+                  markers[i] = new google.maps.Marker({
+                    position: results[i].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    icon: iconImage
+                  });
+                  // If the user clicks a marker, call setPlace to update the object in the Place component.
+                  markers[i].placeResult = results[i];
+                  google.maps.event.addListener(markers[i], 'click', setPlace);
+                  setTimeout(dropMarker(i), i * 10);
+                }
+              }
+            });
+          }
+          else {
+            //search specifically for hotels for the hotels page
+            places.nearbySearch(hotelSearch, function (results, status) {
+              var hotels = results;
+              context.setState({
+                hotelData: hotels
+              }, function () {
+                browserHistory.push({
+                  pathname: '/hotels',
+                  state: {hotelData: context.state.hotelData}
+                })
+                hotelSelected = false;
+              });
+            })
+          }
+
 
           if(hotelSelected === false){
           console.log('not checking for interests');

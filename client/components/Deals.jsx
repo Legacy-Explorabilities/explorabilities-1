@@ -9,28 +9,45 @@ export default class Deals extends React.Component {
         data: {
             contents: [
             {
-                productID: 34,
-                productName: "SuperWidget",
-                quantity: 1
+                cities: ["Los Angeles", "San Diego"],
+                dealName: "10% off at Disneyland!"
             },
             {
-                productID: 56,
-                productName: "WonderWidget",
-                quantity: 3
-            }
+                cities: ["San Jose", "San Francisco"],
+                dealName:  "12% off at Great America!"
+            },
+                {
+                    cities: ["San Jose", "San Francisco"],
+                    dealName:  "Free tours at Winchester Mystery House!"
+                },
+                {
+                    cities: ["San Jose", "San Francisco"],
+                    dealName:  "20% off on wine tasting!"
+                },
+                {
+                    cities: ["Los Angeles", "San Diego"],
+                    dealName: "10% off at Universal Studios!"
+                },
+                {
+                    cities: ["Los Angeles", "San Diego"],
+                    dealName: "Free trip to the Wax Museum!"
+                }
         ]
         }
         }
     }
     componentDidMount() {
+        console.log(data);
         console.log(this.state.data);
     }
     render() {
         return (
-            <div>
-                <h2>DEALS</h2>
+            <div class="deals">
+                <h2>DEALS for {sessionStorage.place}</h2>
                 {this.state.data.contents.map(function(obj){
-                    return (<h3>{obj.productName}</h3>);
+                    if (obj.cities.includes(sessionStorage.place)) {
+                        return (<div><a href="#">{obj.dealName}</a></div>);
+                    }
                 })}
             </div>
         );
