@@ -34,6 +34,7 @@ export default class Airlines/*!!!!!*/ extends React.Component {
     let flightsViewRender = window.flightData.map(function(flight, index) {
         return (
           <div>
+            <p>&nbsp;</p>
             <h3>Option: {index + 1}</h3>
             <button class="btn btn-info" onClick={(e)=>{flightDetails(e, index + 1);}}>See details</button>
             <p></p>
@@ -107,7 +108,7 @@ export default class Airlines/*!!!!!*/ extends React.Component {
     return (
       <div>
         <p>&nbsp;</p>
-        <div className='col-lg-6'>
+        <div className='airlinesView'>
           <div>
               {flightsViewRender}  
           </div>

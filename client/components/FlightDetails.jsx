@@ -19,7 +19,7 @@ export default class FlightDetails/*!!!!!*/ extends React.Component {
     let outgoingTripSegments = window.flightData[flightOptionNum].outgoingTrip.flightSegments.map(function(outgoingTrip, index) {
         return (
         <div>
-          <p></p>
+          <p>&nbsp;</p>
           <h4>Segment: {index + 1}</h4> 
           <p></p>
           <table className="table table-hover table-bordered">
@@ -126,7 +126,7 @@ export default class FlightDetails/*!!!!!*/ extends React.Component {
 
 
     return(
-      <div>
+      <div className='airlinesView'>
       <p>&nbsp;</p>
         <div>
           <h3>Outgoing Trip Segments</h3>
