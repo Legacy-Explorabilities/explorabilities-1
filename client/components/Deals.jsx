@@ -9,15 +9,21 @@ export default class Deals extends React.Component {
         data: {
             contents: [
             {
-                productID: 34,
-                productName: "SuperWidget",
-                quantity: 1
+                city: "Los Angeles",
+                dealName: "10% off at Disneyland!"
             },
             {
-                productID: 56,
-                productName: "WonderWidget",
-                quantity: 3
-            }
+                city: "San Jose",
+                dealName:  "12% off at Great America!"
+            },
+                {
+                    city: "San Jose",
+                    dealName:  "Free tours at Winchester Mystery House!"
+                },
+                {
+                    city: "San Francisco",
+                    dealName:  "20% off on wine tasting!"
+                }
         ]
         }
         }
@@ -28,10 +34,10 @@ export default class Deals extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div class="deals">
                 <h2>DEALS</h2>
                 {this.state.data.contents.map(function(obj){
-                    return (<h3>{obj.productName}</h3>);
+                    return (<div><a href="#">{obj.dealName}</a></div>);
                 })}
             </div>
         );

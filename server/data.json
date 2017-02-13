@@ -1,0 +1,24 @@
+{
+  "contents": [
+    {
+      "productName": "SuperWidget",
+      "city": "Los Angeles",
+      "dealName": "10% off at Disneyland!"
+    },
+    {
+      "productName": "WonderWidget",
+      "city": "San Jose",
+      "dealName": "12% off at Great America!"
+    },
+    {
+      "productName": "WonderWidget",
+      "city": "San Jose",
+      "dealName": "Free tours at Winchester Mystery House!"
+    },
+    {
+      "productName": "WonderWidget",
+      "city": "San Francisco",
+      "dealName": "20% off on wine tasting!"
+    }
+  ]
+}

@@ -29,7 +29,6 @@ ReactDOM.render(
         <Route path="/explore" component={Explore}/>
         <Route path="/myplaces" component={MyPlaces} onEnter={requireAuth}/>
         <Route path="/airlines" component={Airlines} onEnter={requireAuth}/>
-
         <Route path="/deals" component={Deals} onEnter={requireAuth}/>
 
          <Route path="/hotels" component={Hotels}/>
