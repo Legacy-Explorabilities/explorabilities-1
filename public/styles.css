@@ -20,6 +20,9 @@ h1, h2, h3, h4, p {
 h1 {
   font-size: 50px;
 }
+.airlinesView {
+  background-color: white !important;
+}
 
 #spinner {
   height: 50px;
