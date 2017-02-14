@@ -85,8 +85,16 @@ button {
    margin-top: 65px;
 }
 
+.extraPaddingTop {
+  padding-top: 15px;
+}
+
 .hotelPageComponent {
   padding-top: 30px;
+}
+
+.dealsPage {
+  margin-top: 65px;
 }
 
 .navLink {
